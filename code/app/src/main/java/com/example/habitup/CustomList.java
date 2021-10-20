@@ -12,14 +12,15 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class CustomList extends ArrayAdapter<City> {
+public class CustomList extends ArrayAdapter<Habit> {
 
-    private ArrayList<City> cities;
+//    private ArrayList<City> cities;
+    private ArrayList<Habit> habits;
     private Context context;
 
-    public CustomList(Context context, ArrayList<City> cities){
-        super(context,0, cities);
-        this.cities = cities;
+    public CustomList(Context context, ArrayList<Habit> habits){
+        super(context, 0, habits);
+        this.habits = habits;
         this.context = context;
     }
 
@@ -27,22 +28,20 @@ public class CustomList extends ArrayAdapter<City> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//        return super.getView(position, convertView, parent);
         View view = convertView;
-
         if(view == null){
             view = LayoutInflater.from(context).inflate(R.layout.content, parent,false);
         }
 
-        City city = cities.get(position);
+        Habit habit = habits.get(position);
 
-        TextView habitName = view.findViewById(R.id.city_text);
-        TextView provinceName = view.findViewById(R.id.province_text);
-
-        habitName.setText(city.getCityName());
-        provinceName.setText(city.getProvinceName());
+        // Get text views
+        TextView habitName = view.findViewById(R.id.name_text);
+        TextView provinceName = view.findViewById(R.id.frequency_text);
+        // Set text views
+        habitName.setText(habit.getName());
+        provinceName.setText(String.valueOf(habit.getFrequency()));
 
         return view;
-
     }
 }

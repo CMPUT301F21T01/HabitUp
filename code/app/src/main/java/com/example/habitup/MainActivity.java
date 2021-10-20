@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
         cityList = findViewById(R.id.city_list);
 
-        String []cities ={"Edmonton", "Vancouver", "Toronto", "Hamilton", "Denver", "Los Angeles"};
-        String []provinces = {"AB", "BC", "ON", "ON", "CO", "CA"};
+        String []cities ={"Take a daily nap", "Eat salads", "Smile", "Read a book","Make your bed","Do your homework","Workout"};
+        String []provinces = {"AB", "BC", "ON", "ON","DS","SD","DS"};
 
 
         cityDataList = new ArrayList<>();

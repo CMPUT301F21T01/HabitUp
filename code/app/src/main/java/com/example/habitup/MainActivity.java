@@ -7,11 +7,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AddHabitEventFragment.OnFragmentInterationListner {
 
     // Declare the variables so that you will be able to reference it later.
     ListView cityList;
@@ -41,15 +43,15 @@ public class MainActivity extends AppCompatActivity {
 
         cityList.setAdapter(cityAdapter);
 
-//        dataList = new ArrayList<>();
-//        dataList.addAll(Arrays.asList(cities));
-//
-//        cityAdapter = new ArrayAdapter<>(this, R.layout.content, dataList);
-//
-//        cityList.setAdapter(cityAdapter);
+        final FloatingActionButton addCityButton = findViewById(R.id.add_city_button);
+        addCityButton.setOnClickListener((v) -> {
+            new AddHabitEventFragment().show(getSupportFragmentManager(), "ADD_CITY");
+        });
+    }
 
-
-
+    @Override
+    public void onOkPressed(City newCity) {
+        cityAdapter.add(newCity);
     }
 
 

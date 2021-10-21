@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -75,17 +77,18 @@ public class MainActivity extends AppCompatActivity {
                 data.put("Frequency", habitFrequency);
 
                 db.collection("John")
-                        .add(data)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        .document(String.valueOf(habitDataList.size()))
+                        .set(data)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                            public void onSuccess(Void unused) {
+                                Log.d(TAG, "Document added.");
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.d(TAG, "Error adding doc", e);
+                                Log.d(TAG, "Document not added: " + e.toString());
                             }
                         });
 
@@ -112,62 +115,43 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Delete habit (on click) listener
+        habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                alert.setTitle("Delete habit?");
+                final String selectedName = habitDataList.get(pos).getName();
+                alert.setMessage("Do you want to delete '" + selectedName + "'?");
+                alert.setNegativeButton("Cancel", null);
+                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
-//
-//        // db fetch
-//        db.collection("John")
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if(task.isSuccessful()) {
-//                            Log.d(TAG, "THIS WAS A SUCCESS");
-//                        }
-//                        else {
-//                            Log.d(TAG, "THIS WAS AN ERROR: ", task.getException());
-//                        }
-//                    }
-//                });
-//
-//
-//
-//        // Delete habit (on click) listener
-//        habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-//                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-//                alert.setTitle("Delete habit?");
-//                final String selectedName = habitDataList.get(pos).getName();
-//                alert.setMessage("Do you want to delete '" + selectedName + "'?");
-//                alert.setNegativeButton("Cancel", null);
-//                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        // Delete from our database
-//                        db.collection("Users/John/Habits")
-//                                .document("habit" + String.valueOf(pos))
-//                                .delete()
-//                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                    @Override
-//                                    public void onSuccess(Void unused) {
-//                                        Log.d(TAG, "Document successfully deleted!");
-//                                    }
-//                                })
-//                                .addOnFailureListener(new OnFailureListener() {
-//                                    @Override
-//                                    public void onFailure(@NonNull Exception e) {
-//                                        Log.d(TAG, "Error: delete document failed" + e.toString());
-//                                    }
-//                                });
-//
-//                        // Notify adapter of change
-//                        habitAdapter.notifyDataSetChanged();
-//                    }
-//                });
-//            }
-//        });
-//
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // Delete from our database
+                        collectionRef.document(String.valueOf(pos))
+                                .delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Log.d(TAG, "Document deleted.");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d(TAG, "Document failed to be deleted: " + e.toString());
+                                    }
+                                });
+
+                        // Notify adapter of change
+                        habitAdapter.notifyDataSetChanged();
+                    }
+                });
+
+                alert.show();
+            }
+        });
 
     }
 

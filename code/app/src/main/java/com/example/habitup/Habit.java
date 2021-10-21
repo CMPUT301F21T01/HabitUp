@@ -2,9 +2,9 @@ package com.example.habitup;
 
 public class Habit {
     private String name;
-    private int frequency;
+    private String frequency;
 
-    public Habit(String name, int frequency) {
+    public Habit(String name, String frequency) {
         this.name = name;
         this.frequency = frequency;
     }
@@ -18,11 +18,11 @@ public class Habit {
         this.name = name;
     }
 
-    public int getFrequency() {
+    public String getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(int frequency) {
+    public void setFrequency(String frequency) {
         this.frequency = frequency;
     }
     //endregion

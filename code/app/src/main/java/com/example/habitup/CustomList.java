@@ -40,7 +40,7 @@ public class CustomList extends ArrayAdapter<Habit> {
         TextView provinceName = view.findViewById(R.id.frequency_text);
         // Set text views
         habitName.setText(habit.getName());
-        provinceName.setText(String.valueOf(habit.getFrequency()));
+        provinceName.setText(habit.getFrequency());
 
         return view;
     }

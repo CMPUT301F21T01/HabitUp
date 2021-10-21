@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,7 +21,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -51,32 +54,14 @@ public class MainActivity extends AppCompatActivity {
         addHabitButton   = findViewById(R.id.add_habit_btn);
         addNameText      = findViewById(R.id.add_name_field);
         addFrequencyText = findViewById(R.id.add_freq_field);
-//
-//        String []names       = {"Go to gym", "Go for run", "Play soccer"};
-//        int    []frequencies = {3, 2, 1};
-//
+
         habitDataList = new ArrayList<>();
         habitAdapter = new CustomList(this, habitDataList);
         habitList.setAdapter(habitAdapter);
 
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionRef = db.collection("John");
-//
-//        // db fetch
-//        db.collection("John")
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if(task.isSuccessful()) {
-//                            Log.d(TAG, "THIS WAS A SUCCESS");
-//                        }
-//                        else {
-//                            Log.d(TAG, "THIS WAS AN ERROR: ", task.getException());
-//                        }
-//                    }
-//                });
-//
+
         // Add habit button listener
         addHabitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +93,41 @@ public class MainActivity extends AppCompatActivity {
                 addFrequencyText.setText("");
             }
         });
+
+        // Collection event listener
+        collectionRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException error) {
+                habitDataList.clear();
+
+                for(QueryDocumentSnapshot doc : documentSnapshots) {
+                    String name = (String)doc.getData().get("Name");
+                    String freq = (String)doc.getData().get("Frequency");
+
+                    // Add each habit from database
+                    habitDataList.add(new Habit(name, freq));
+                }
+
+                habitAdapter.notifyDataSetChanged();
+            }
+        });
+
+
+//
+//        // db fetch
+//        db.collection("John")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if(task.isSuccessful()) {
+//                            Log.d(TAG, "THIS WAS A SUCCESS");
+//                        }
+//                        else {
+//                            Log.d(TAG, "THIS WAS AN ERROR: ", task.getException());
+//                        }
+//                    }
+//                });
 //
 //
 //

@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionRef = db.collection("John");
+        final CollectionReference habitsRef     = db.collection("John/habits/habitList");
 
         // Add habit button listener
         addHabitButton.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 data.put("Name", habitName);
                 data.put("Frequency", habitFrequency);
 
-                db.collection("John")
-                        .document(String.valueOf(habitDataList.size()))
+                habitsRef.document("habit" + String.valueOf(habitDataList.size()))
                         .set(data)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Collection event listener
-        collectionRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        habitsRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException error) {
                 habitDataList.clear();
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // Delete from our database
-                        collectionRef.document(String.valueOf(pos))
+                        habitsRef.document("habit" + String.valueOf(pos))
                                 .delete()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override

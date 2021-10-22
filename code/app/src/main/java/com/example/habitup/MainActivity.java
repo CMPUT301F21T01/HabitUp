@@ -1,6 +1,7 @@
 package com.example.habitup;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -35,6 +37,7 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 
     // Declaration of variables
+    FloatingActionButton searchBtn;
     ListView habitList;
     ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
@@ -56,14 +59,14 @@ public class MainActivity extends AppCompatActivity {
         addHabitButton   = findViewById(R.id.add_habit_btn);
         addNameText      = findViewById(R.id.add_name_field);
         addFrequencyText = findViewById(R.id.add_freq_field);
+        searchBtn        = findViewById(R.id.search_activity_btn);
 
         habitDataList = new ArrayList<>();
         habitAdapter = new CustomList(this, habitDataList);
         habitList.setAdapter(habitAdapter);
 
         db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionRef = db.collection("John");
-        final CollectionReference habitsRef     = db.collection("John/habits/habitList");
+        final CollectionReference habitsRef     = db.collection("john23/habits/habitList");
 
         // Add habit button listener
         addHabitButton.setOnClickListener(new View.OnClickListener() {
@@ -74,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
                 /*  ^^ Could fail to parse, implement try catch exception clause later ^^  */
 
                 HashMap<String, String> data = new HashMap<>();
-                data.put("Name", habitName);
-                data.put("Frequency", habitFrequency);
+                data.put("name", habitName);
+                data.put("frequency", habitFrequency);
 
                 habitsRef.document("habit" + String.valueOf(habitDataList.size()))
                         .set(data)
@@ -104,8 +107,8 @@ public class MainActivity extends AppCompatActivity {
                 habitDataList.clear();
 
                 for(QueryDocumentSnapshot doc : documentSnapshots) {
-                    String name = (String)doc.getData().get("Name");
-                    String freq = (String)doc.getData().get("Frequency");
+                    String name = (String)doc.getData().get("name");
+                    String freq = (String)doc.getData().get("frequency");
 
                     // Add each habit from database
                     habitDataList.add(new Habit(name, freq));
@@ -153,6 +156,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Switch to SearchActivity
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent switchIntent = new Intent(view.getContext(), SearchActivity.class);
+                startActivity(switchIntent);
+            }
+        });
     }
 
 }

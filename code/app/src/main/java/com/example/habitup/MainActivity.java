@@ -2,10 +2,14 @@ package com.example.habitup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -47,7 +51,14 @@ public class MainActivity extends AppCompatActivity {
 //        cityAdapter = new ArrayAdapter<>(this, R.layout.content, dataList);
 //
 //        cityList.setAdapter(cityAdapter);
-
+        FloatingActionButton floatingActionButton = findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,HabitEventActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
     }

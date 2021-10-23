@@ -5,8 +5,10 @@
       <map>
         <entry key="..\:/HabitUp/code/app/src/main/res/drawable/circle_progress_bar.xml" value="0.5427083333333333" />
         <entry key="..\:/HabitUp/code/app/src/main/res/drawable/circle_shape.xml" value="0.5427083333333333" />
+        <entry key="..\:/HabitUp/code/app/src/main/res/layout/activity_habit_event.xml" value="0.5223958333333333" />
         <entry key="..\:/HabitUp/code/app/src/main/res/layout/activity_main.xml" value="0.5223958333333333" />
         <entry key="..\:/HabitUp/code/app/src/main/res/layout/content.xml" value="0.5223958333333333" />
+        <entry key="..\:/HabitUp/code/app/src/main/res/layout/habiteventcontent.xml" value="0.5223958333333333" />
       </map>
     </option>
   </component>

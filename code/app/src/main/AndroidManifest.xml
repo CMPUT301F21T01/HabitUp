@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HabitUp">
         <activity
+            android:name=".HabitEventActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HabitEvent"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

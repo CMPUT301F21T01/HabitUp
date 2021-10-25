@@ -51,4 +51,3 @@ public class DatePickerFragment extends AppCompatDialogFragment implements DateP
         );
     }
 }
-

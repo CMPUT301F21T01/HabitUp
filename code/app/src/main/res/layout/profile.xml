@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/btn_capture_photo"
+        android:layout_width="180dp"
+        android:layout_height="191dp"
+        android:layout_marginStart="300dp"
+        android:layout_marginTop="150dp"
+
+        android:gravity="center"
+        android:src="@drawable/circle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ImageView>
+
+    <Button
+        android:id="@+id/view_requests_button"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="215dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="300dp"
+        android:layout_marginBottom="549dp"
+        android:background="@android:color/holo_blue_dark"
+        android:bottomLeftRadius="10dp"
+        android:bottomRightRadius="10dp"
+        android:gravity="center_horizontal"
+        android:text="View Requests"
+        android:topLeftRadius="10dp"
+        android:topRightRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ListView
+        android:id="@+id/friend_list"
+        android:layout_width="453dp"
+        android:layout_height="566dp"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="376dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

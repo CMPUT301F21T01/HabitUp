@@ -25,7 +25,7 @@ public class AddHabitEventFragment extends DialogFragment {
     private OnFragmentInterationListner listner;
 
     public interface OnFragmentInterationListner {
-        void onOkPressed(City newCity);
+        void onOkPressed();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class AddHabitEventFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String reflectionText = addReflections.getText().toString();
-                        listner.onOkPressed(new City(reflectionText, reflectionText));
+                        listner.onOkPressed();
                     }
                 }).create();
     }

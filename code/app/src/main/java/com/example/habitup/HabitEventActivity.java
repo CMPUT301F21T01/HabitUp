@@ -44,7 +44,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
         });
     }
 
-    public void onOkPressed(City newCity) {
+    public void onOkPressed() {
 
     }
 

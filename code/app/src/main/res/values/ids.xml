@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="habit_list" type="id">habit_list</item>
+    <item name="add_habit_btn" type="id">add_habit_btn</item>
+    <item name="add_name_field" type="id">add_name_field</item>
+    <item name="add_freq_field" type="id">add_freq_field</item>
+</resources>

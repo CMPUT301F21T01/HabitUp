@@ -10,16 +10,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
-public class CustomList extends ArrayAdapter<City> {
+public class HabitList extends ArrayAdapter<Habit> {
 
-    private ArrayList<City> cities;
+    private ArrayList<Habit> habits;
     private Context context;
 
-    public CustomList(Context context, ArrayList<City> cities){
-        super(context,0, cities);
-        this.cities = cities;
+    public HabitList(Context context, ArrayList<Habit> habits){
+        super(context,0, habits);
+        this.habits = habits;
         this.context = context;
     }
 
@@ -34,13 +36,11 @@ public class CustomList extends ArrayAdapter<City> {
             view = LayoutInflater.from(context).inflate(R.layout.content, parent,false);
         }
 
-        City city = cities.get(position);
+        Habit habit = habits.get(position);
 
-        TextView habitName = view.findViewById(R.id.city_text);
-        TextView provinceName = view.findViewById(R.id.province_text);
+        TextView habitTitle = view.findViewById(R.id.habit_title);
 
-        habitName.setText(city.getCityName());
-        provinceName.setText(city.getProvinceName());
+        habitTitle.setText(habit.getTitle());
 
         return view;
 

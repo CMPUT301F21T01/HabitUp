@@ -59,7 +59,6 @@ public class UserControllerActivity extends AppCompatActivity
         FirebaseFirestore userDb;
         userDb = FirebaseFirestore.getInstance();
         String g_TAG = "TEST_LOG";
-        CollectionReference collRef = userDb.collection("habitup-d4738");
 
         enterButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -67,6 +66,7 @@ public class UserControllerActivity extends AppCompatActivity
                     public void onClick(View view) {
 
                         name[0] = userName.getText().toString();
+                        CollectionReference collRef = userDb.collection(name[0]);
                         collRef.get()
                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
@@ -88,12 +88,12 @@ public class UserControllerActivity extends AppCompatActivity
                                                 ;
                                             }
                                             else if (!userFound ) {
-                                                final CollectionReference userRef = userDb.collection(name[0]);
+                                                //final CollectionReference userRef = userDb.collection(name[0]);
                                                 //auth collection
                                                 HashMap<String, String> data = new HashMap<>();
                                                 data.put("name", "Harry S");
                                                 data.put("password", "1b1d1d");
-                                                userRef.document("auth")
+                                                collRef.document("auth")
                                                         .set(data)
                                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                             @Override
@@ -108,7 +108,7 @@ public class UserControllerActivity extends AppCompatActivity
                                                             }
                                                         });
                                                 //friends collection
-                                                userRef.document("friends")
+                                                collRef.document("friends")
                                                         .set("")
                                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                             @Override
@@ -122,7 +122,7 @@ public class UserControllerActivity extends AppCompatActivity
                                                                 Log.d(g_TAG, "Document not added: " + e.toString());
                                                             }
                                                         });
-                                                userRef.document("habits")
+                                                collRef.document("habits")
                                                         .set("")
                                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                             @Override
@@ -146,6 +146,7 @@ public class UserControllerActivity extends AppCompatActivity
                                         Intent nameIntent = new Intent(view.getContext(), MainActivity.class);
                                         nameIntent.putExtra(Intent.EXTRA_TEXT, name[0]);
                                         startActivity(nameIntent);
+                                        //get this to go to main activity
 
 
                                     }

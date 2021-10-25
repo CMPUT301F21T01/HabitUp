@@ -5,10 +5,12 @@
       <map>
         <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/activity_add_location.xml" value="0.25416666666666665" />
         <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/activity_add_photograph.xml" value="0.25416666666666665" />
+        <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/activity_habit_event.xml" value="0.25416666666666665" />
         <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/activity_maps.xml" value="0.25416666666666665" />
         <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/add_habit_event_fragment_layout.xml" value="0.18981481481481483" />
-        <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/content.xml" value="0.21666666666666667" />
+        <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/content.xml" value="0.4" />
+        <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/habiteventcontent.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

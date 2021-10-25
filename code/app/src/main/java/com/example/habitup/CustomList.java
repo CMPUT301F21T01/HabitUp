@@ -37,10 +37,10 @@ public class CustomList extends ArrayAdapter<City> {
         City city = cities.get(position);
 
         TextView habitName = view.findViewById(R.id.city_text);
-        TextView provinceName = view.findViewById(R.id.province_text);
+        //TextView provinceName = view.findViewById(R.id.province_text);
 
         habitName.setText(city.getCityName());
-        provinceName.setText(city.getProvinceName());
+        //provinceName.setText(city.getProvinceName());
 
         return view;
 

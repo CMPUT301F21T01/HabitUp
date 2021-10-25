@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Declaration of variables
     FloatingActionButton searchBtn;
+    FloatingActionButton profileBtn;
     ListView habitList;
     ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         addNameText      = findViewById(R.id.add_name_field);
         addFrequencyText = findViewById(R.id.add_freq_field);
         searchBtn        = findViewById(R.id.search_activity_btn);
+        profileBtn       = findViewById(R.id.profile_activity_btn);
 
         habitDataList = new ArrayList<>();
         habitAdapter = new CustomList(this, habitDataList);
@@ -163,6 +165,17 @@ public class MainActivity extends AppCompatActivity {
                 Intent switchIntent = new Intent(view.getContext(), SearchActivity.class);
                 startActivity(switchIntent);
             }
+        });
+
+        // Switch to ProfileActivity
+        profileBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Intent profileSwitchIntent = new Intent(view.getContext(), ProfileActivity.class);
+                startActivity(profileSwitchIntent);
+            }
+
         });
     }
 

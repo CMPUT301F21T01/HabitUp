@@ -36,7 +36,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         addHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AddHabitFragment().show(getSupportFragmentManager(), "ADD_MED");
+                new AddHabitFragment().show(getSupportFragmentManager(), "ADD_HABIT");
             }
         });
 

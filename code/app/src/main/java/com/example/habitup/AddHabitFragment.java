@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,15 +21,13 @@ import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 
-public class AddHabitFragment extends DialogFragment implements DatePickerFragment.onDateSetListener {
+public class AddHabitFragment extends DialogFragment {
 
-    private EditText title;
-    private ImageButton startDate;
-    private ImageButton endDate;
-    private EditText reason;
+    private EditText title, reason;
+    private ImageButton startButton, endButton;
+    private TextView startText, endText;
     private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck;
     private ArrayList<String> daysSelected;
-    public static final int REQUEST_CODE = 9;
     private OnFragmentInteractionListener listener;
 
     public interface OnFragmentInteractionListener {
@@ -54,8 +53,10 @@ public class AddHabitFragment extends DialogFragment implements DatePickerFragme
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_habit_fragment_layout, null);
         title = view.findViewById(R.id.habitEdit);
         reason = view.findViewById(R.id.reasonEdit);
-        startDate = (ImageButton) view.findViewById(R.id.startButton);
-        endDate = (ImageButton) view.findViewById(R.id.endButton);
+        startButton = view.findViewById(R.id.startButton);
+        endButton = view.findViewById(R.id.endButton);
+        startText = view.findViewById(R.id.start_text);
+        endText = view.findViewById(R.id.end_text);
 
         uCheck = view.findViewById(R.id.sunday_check);
         mCheck = view.findViewById(R.id.monday_check);
@@ -65,8 +66,6 @@ public class AddHabitFragment extends DialogFragment implements DatePickerFragme
         fCheck = view.findViewById(R.id.friday_check);
         sCheck = view.findViewById(R.id.saturday_check);
         daysSelected = new ArrayList<>();
-
-        final FragmentManager fm = ((AppCompatActivity)getActivity()).getSupportFragmentManager();
 
 
         // Dealing with the Sunday-Saturday checkboxes:
@@ -143,12 +142,23 @@ public class AddHabitFragment extends DialogFragment implements DatePickerFragme
 
 
 
-        startDate.setOnClickListener(new View.OnClickListener() {
+        startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppCompatDialogFragment newFragment = new DatePickerFragment();
-                newFragment.setTargetFragment(AddHabitFragment.this, REQUEST_CODE);
-                newFragment.show(fm, "datePicker");
+                DialogFragment newFragment = new DatePickerFragment();
+                assert getFragmentManager() != null;
+                newFragment.show(getFragmentManager(), "DatePicker");
+                startText.setText(getArguments().getString("date"));
+            }
+        });
+
+        endButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment newFragment = new DatePickerFragment();
+                assert getFragmentManager() != null;
+                newFragment.show(getFragmentManager(), "DatePicker");
+                endText.setText(getArguments().getString("date"));
             }
         });
 
@@ -162,6 +172,8 @@ public class AddHabitFragment extends DialogFragment implements DatePickerFragme
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String newTitle = title.getText().toString();
                         String newReason = reason.getText().toString();
+                        String startDate = startText.getText().toString();
+                        String endDate = endText.getText().toString();
                         listener.onSavePressedAdd(new Habit(newTitle, startDate, endDate, daysSelected, newReason, 0.0));
                     }
                 }).create();

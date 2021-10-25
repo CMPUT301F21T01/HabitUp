@@ -17,7 +17,7 @@ public class CustomList extends ArrayAdapter<City> {
     private ArrayList<City> cities;
     private Context context;
 
-    public CustomList(Context context, ArrayList<City> cities){
+    public CustomList(Context context, ArrayList<Habit> cities){
         super(context,0, cities);
         this.cities = cities;
         this.context = context;

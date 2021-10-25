@@ -13,7 +13,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/add_habit_fragment_layout.xml" value="0.335" />
         <entry key="app/src/main/res/layout/content.xml" value="0.20833333333333334" />
-        <entry key="app/src/main/res/layout/view_habit.xml" value="0.20833333333333334" />
+        <entry key="app/src/main/res/layout/view_habit.xml" value="0.25" />
       </map>
     </option>
   </component>

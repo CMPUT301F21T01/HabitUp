@@ -62,6 +62,18 @@
         android:layout_marginStart="5dp"/>
 
     <TextView
+        android:id="@+id/startText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/habitTitle"
+        android:layout_marginTop="45dp"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/startButton"
+        android:textSize="30sp">
+
+    </TextView>
+
+    <TextView
         android:id="@+id/endTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -83,6 +95,18 @@
         android:layout_marginTop="45dp"
         android:layout_toEndOf="@+id/endTitle"
         android:layout_marginStart="5dp"/>
+
+    <TextView
+        android:id="@+id/endText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startTitle"
+        android:layout_marginTop="45dp"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/endButton"
+        android:textSize="30sp">
+
+    </TextView>
 
     <TextView
         android:id="@+id/reasonTitle"

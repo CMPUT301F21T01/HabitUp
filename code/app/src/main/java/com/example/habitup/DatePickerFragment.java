@@ -2,16 +2,13 @@ package com.example.habitup;
 
 // https://stackoverflow.com/questions/13577272/how-to-return-the-date-value-from-datepickerdialog-in-android
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.DatePicker;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.fragment.app.DialogFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -19,9 +16,9 @@ import java.util.Locale;
 
 public class DatePickerFragment extends AppCompatDialogFragment implements DatePickerDialog.OnDateSetListener {
 
-    private static final String TAG = "DatePickerFragment";
     final Calendar c = Calendar.getInstance();
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -41,14 +38,8 @@ public class DatePickerFragment extends AppCompatDialogFragment implements DateP
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, day);
         String selectedDate = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH).format(c.getTime());
-
-        Log.d(TAG, "onDateSet: " + selectedDate);
-        // send date back to the target fragment
-        getTargetFragment().onActivityResult(
-                getTargetRequestCode(),
-                Activity.RESULT_OK,
-                new Intent().putExtra("selectedDate", selectedDate)
-        );
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("date", selectedDate);
     }
 }
 

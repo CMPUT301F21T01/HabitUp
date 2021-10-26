@@ -42,7 +42,6 @@ public class User
         return followers;
     }
 
-
     public ArrayList<String> getFollowerRequests()
     {
         return followerRequests;

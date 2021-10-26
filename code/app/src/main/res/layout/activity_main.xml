@@ -41,20 +41,37 @@
         android:layout_weight="1">
     </ListView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/search_activity_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_weight="0"
-        android:clickable="true" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/profile_activity_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_weight="0"
-        android:clickable="true" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/home_activity_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:layout_weight="0"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_baseline_home_24" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/profile_activity_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_weight="0"
+            android:clickable="true"
+            app:srcCompat="@drawable/profile" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/search_activity_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_weight="0"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_baseline_search_24" />
+
+    </FrameLayout>
 
 </LinearLayout>

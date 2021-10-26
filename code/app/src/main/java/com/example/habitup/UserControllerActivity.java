@@ -46,132 +46,71 @@ import java.util.Map;
 
 public class UserControllerActivity extends AppCompatActivity
 {
+    // Variable declarations
+    Button enterButton;
+    EditText usernameField;
+    FirebaseFirestore db;
+    final String TAG = "DEBUG_LOG";
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
-
-        final String[] name = new String[1];
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_controller);
 
-        Button enterButton = findViewById(R.id.enter_button);
-        EditText userName = findViewById(R.id.username);
+        // Variable initializations
+        final String[] name = new String[1];
+        enterButton = findViewById(R.id.enter_button);
+        usernameField = findViewById(R.id.username);
 
-        FirebaseFirestore userDb;
-        userDb = FirebaseFirestore.getInstance();
-        String g_TAG = "TEST_LOG";
+        db = FirebaseFirestore.getInstance();
 
-        enterButton.setOnClickListener(
-                new View.OnClickListener() {
+        enterButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
-                        name[0] = userName.getText().toString();
-                        CollectionReference collRef = userDb.collection(name[0]);
-                        collRef.get()
+                        name[0] = usernameField.getText().toString();
+                        CollectionReference userRef = db.collection(name[0]);
+                        userRef.get()
                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if(task.isSuccessful()) {
+
+                                            // Check if user exists
                                             boolean userFound = false;
-                                            for(DocumentSnapshot doc : task.getResult()) {
-                                                if(doc.getId().equals("auth")) {
-                                                    if(!userFound) {
-                                                        Log.d(g_TAG, "Found user!");
-                                                        userFound = true;
-                                                    }
-
-
-                                                }
-                                            }
+                                            if(!task.getResult().isEmpty())
+                                                userFound = true;
 
                                             if(userFound) {
                                                 ;
                                             }
                                             else if (!userFound ) {
-                                                //final CollectionReference userRef = userDb.collection(name[0]);
-                                                //auth collection
+                                                // Create auth document
                                                 HashMap<String, String> data = new HashMap<>();
-                                                data.put("name", "Harry S");
-                                                data.put("password", "1b1d1d");
-                                                collRef.document("auth")
+                                                data.put("name", "Harry S.");
+                                                data.put("password", "1b1ddd");
+                                                userRef.document("auth")
                                                         .set(data)
-                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                            @Override
-                                                            public void onSuccess(Void unused) {
-                                                                Log.d(g_TAG, "Document added.");
-                                                            }
-                                                        })
                                                         .addOnFailureListener(new OnFailureListener() {
                                                             @Override
                                                             public void onFailure(@NonNull Exception e) {
-                                                                Log.d(g_TAG, "Document not added: " + e.toString());
+                                                                Log.d(TAG, "Document not added: " + e.toString());
                                                             }
                                                         });
-                                                //friends collection
-                                                collRef.document("friends")
-                                                        .set("")
-                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                            @Override
-                                                            public void onSuccess(Void unused) {
-                                                                Log.d(g_TAG, "Document added.");
-                                                            }
-                                                        })
-                                                        .addOnFailureListener(new OnFailureListener() {
-                                                            @Override
-                                                            public void onFailure(@NonNull Exception e) {
-                                                                Log.d(g_TAG, "Document not added: " + e.toString());
-                                                            }
-                                                        });
-                                                collRef.document("habits")
-                                                        .set("")
-                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                            @Override
-                                                            public void onSuccess(Void unused) {
-                                                                Log.d(g_TAG, "Document added.");
-                                                            }
-                                                        })
-                                                        .addOnFailureListener(new OnFailureListener() {
-                                                            @Override
-                                                            public void onFailure(@NonNull Exception e) {
-                                                                Log.d(g_TAG, "Document not added: " + e.toString());
-                                                            }
-                                                        });
-
-
-
                                             }
+
+                                            // Pass username to MainActivity intent and start activity
+                                            Intent intent = new Intent(view.getContext(), MainActivity.class);
+                                            intent.putExtra(Intent.EXTRA_TEXT, name[0]);
+                                            startActivity(intent);
                                         } else {
-                                            Log.d(g_TAG, "Error getting document: ", task.getException());
+                                            Log.d(TAG, "Error getting document: ", task.getException());
                                         }
-                                        Intent nameIntent = new Intent(view.getContext(), MainActivity.class);
-                                        nameIntent.putExtra(Intent.EXTRA_TEXT, name[0]);
-                                        startActivity(nameIntent);
-                                        //get this to go to main activity
-
-
                                     }
                                 });
-
-
-
-                        //check if username exists and start next intent --> main activity
-                        // if this test fails then create in db
-                        //add to the XML, enter your real name
-                        //take both of those and make a new collection where the fields are name, username
-                        //go into the db, create a new user or go to an existing user
-                        //db = FirebaseFirestore.getInstance();
-                        //make a new Collection
-                        //final CollectionReference collectionRef = db.collection("John");
                     }
                 }
         );
-
-
-        //creates in db, everything will be empty
-
         // firestore authentication: https://firebase.google.com/docs/auth/android/start
-
-
     }
 }
 

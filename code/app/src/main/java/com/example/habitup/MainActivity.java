@@ -28,6 +28,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -36,9 +37,10 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Declaration of variables
+    // Variable declarations
     FloatingActionButton searchBtn;
     FloatingActionButton profileBtn;
+    FloatingActionButton homeBtn;
     ListView habitList;
     ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
@@ -48,27 +50,91 @@ public class MainActivity extends AppCompatActivity {
     EditText addFrequencyText;
     FirebaseFirestore db;
 
-    final String TAG = "TEST_LOG";
+    final String TAG = "DEBUG_LOG";
+
+    // Initialize HabitList method
+    private void initHabitList(CollectionReference collRef) {
+        collRef.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            habitDataList.clear();
+
+                            String name, freq;
+                            if(!task.getResult().isEmpty()) {
+                                for(QueryDocumentSnapshot doc : task.getResult()) {
+                                    name = (String)doc.getData().get("name");
+                                    freq = (String)doc.getData().get("frequency");
+
+                                    // Add each habit from database
+                                    habitDataList.add(new Habit(name, freq));
+                                }
+                            } else {
+                                name = "No habits yet";
+                                freq = "";
+
+                                habitDataList.add(new Habit(name, freq));
+                            }
+                            habitAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.d(TAG, "Error getting document(s): " + task.getException().toString());
+                        }
+                    }
+                });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize variables
+        // Variable initializations
         habitList        = findViewById(R.id.habit_list);
         addHabitButton   = findViewById(R.id.add_habit_btn);
         addNameText      = findViewById(R.id.add_name_field);
         addFrequencyText = findViewById(R.id.add_freq_field);
         searchBtn        = findViewById(R.id.search_activity_btn);
         profileBtn       = findViewById(R.id.profile_activity_btn);
+        homeBtn          = findViewById(R.id.home_activity_btn);
 
         habitDataList = new ArrayList<>();
         habitAdapter = new CustomList(this, habitDataList);
         habitList.setAdapter(habitAdapter);
 
         db = FirebaseFirestore.getInstance();
-        final CollectionReference habitsRef     = db.collection("john23/habits/habitList");
+
+        // Get username passed from intent that started this activity
+        Intent intent = getIntent();
+        String username = (String) intent.getStringExtra(Intent.EXTRA_TEXT);
+        final CollectionReference habitsRef = db.collection(username+"/habits/habitList");
+
+        // Initialize list
+        initHabitList(habitsRef);
+
+//        *************************************************************************************
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CollectionReference newRef = db.collection("tester");
+                HashMap<String, String> data = new HashMap();
+                data.put("name", "Flappy");
+                data.put("password", "buzz23");
+                newRef.document("friends")
+                        .set(data)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) { ; }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                ;
+                            }
+                        });
+            }
+        });
+//        *************************************************************************************
 
         // Add habit button listener
         addHabitButton.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final String habitName   = addNameText.getText().toString();
                 final String habitFrequency = addFrequencyText.getText().toString();
-                /*  ^^ Could fail to parse, implement try catch exception clause later ^^  */
 
                 HashMap<String, String> data = new HashMap<>();
                 data.put("name", habitName);
@@ -84,12 +149,6 @@ public class MainActivity extends AppCompatActivity {
 
                 habitsRef.document("habit" + String.valueOf(habitDataList.size()))
                         .set(data)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Log.d(TAG, "Document added.");
-                            }
-                        })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
@@ -102,12 +161,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         // Collection event listener
         habitsRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException error) {
                 habitDataList.clear();
-
                 for(QueryDocumentSnapshot doc : documentSnapshots) {
                     String name = (String)doc.getData().get("name");
                     String freq = (String)doc.getData().get("frequency");
@@ -136,12 +196,6 @@ public class MainActivity extends AppCompatActivity {
                         // Delete from our database
                         habitsRef.document("habit" + String.valueOf(pos))
                                 .delete()
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Log.d(TAG, "Document deleted.");
-                                    }
-                                })
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
@@ -153,7 +207,6 @@ public class MainActivity extends AppCompatActivity {
                         habitAdapter.notifyDataSetChanged();
                     }
                 });
-
                 alert.show();
             }
         });
@@ -173,6 +226,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent profileSwitchIntent = new Intent(view.getContext(), ProfileActivity.class);
+                // Get and pass friends
+
+                // Get and pass friend requests
+
+                // Get and pass name
+
+
+                // Switch activities
                 startActivity(profileSwitchIntent);
             }
 

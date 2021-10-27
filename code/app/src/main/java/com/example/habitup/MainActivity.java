@@ -161,8 +161,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
         // Collection event listener
         habitsRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -231,7 +229,6 @@ public class MainActivity extends AppCompatActivity {
                 // Get and pass friend requests
 
                 // Get and pass name
-
 
                 // Switch activities
                 startActivity(profileSwitchIntent);

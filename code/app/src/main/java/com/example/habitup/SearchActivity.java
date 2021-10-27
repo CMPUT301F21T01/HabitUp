@@ -28,7 +28,6 @@ public class SearchActivity extends AppCompatActivity {
 
     // Global variables
     String g_TAG;
-    int g_collectionCount;
 
     // Declare variables
     Button backButton;
@@ -76,7 +75,6 @@ public class SearchActivity extends AppCompatActivity {
                 String name = searchNameText.getText().toString();
                 // Get reference to name
                 CollectionReference collRef = db.collection(name);
-
 
                 collRef.get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

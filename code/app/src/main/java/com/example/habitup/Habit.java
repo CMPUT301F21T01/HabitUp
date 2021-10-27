@@ -12,6 +12,11 @@ public class Habit {
     private Float progress;
     //private HabitEvent[] habitEvent;
 
+    // Temporary until we fully implement Habit + storage of a Habit in our database
+    Habit(String title) {
+        this.title = title;
+    }
+
     Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Double progress){
         this.title = title;
         this.startDate = startDate;

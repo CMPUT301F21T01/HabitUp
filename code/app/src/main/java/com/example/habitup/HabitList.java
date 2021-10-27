@@ -33,14 +33,15 @@ public class HabitList extends ArrayAdapter<Habit> {
         View view = convertView;
 
         if(view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.habiteventcontent, parent,false);
+            view = LayoutInflater.from(context).inflate(R.layout.content, parent,false);
         }
 
         Habit habit = habits.get(position);
 
+        // Get and set text view
         TextView habitTitle = view.findViewById(R.id.habit_title);
-
         habitTitle.setText(habit.getTitle());
+
         return view;
 
     }

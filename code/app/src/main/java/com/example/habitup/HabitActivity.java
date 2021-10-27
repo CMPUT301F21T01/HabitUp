@@ -45,6 +45,8 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         // Variable initializations
         habitList       = findViewById(R.id.habit_list);
         searchBtn       = findViewById(R.id.search_activity_btn);
+        profileBtn       = findViewById(R.id.profile_activity_btn);
+        homeBtn          = findViewById(R.id.home_activity_btn);
         addHabitBtn     = findViewById(R.id.add_fab);
 
         habitDataList   = new ArrayList<>();
@@ -61,6 +63,24 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                 Intent switchIntent = new Intent(view.getContext(), SearchActivity.class);
                 startActivity(switchIntent);
             }
+        });
+
+        // Switch to ProfileActivity
+        profileBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Intent profileSwitchIntent = new Intent(view.getContext(), ProfileActivity.class);
+                // Get and pass friends
+
+                // Get and pass friend requests
+
+                // Get and pass name
+
+                // Switch activities
+                startActivity(profileSwitchIntent);
+            }
+
         });
 
         // Add habit listener

@@ -62,7 +62,7 @@
         android:layout_marginStart="5dp"/>
 
     <TextView
-        android:id="@+id/startText"
+        android:id="@+id/start_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/habitTitle"
@@ -72,6 +72,19 @@
         android:textSize="30sp">
 
     </TextView>
+
+    <TextView
+        android:id="@+id/end_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startTitle"
+        android:layout_marginTop="45dp"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/endButton"
+        android:textSize="30sp">
+
+    </TextView>
+
 
     <TextView
         android:id="@+id/endTitle"
@@ -90,21 +103,163 @@
         android:id="@+id/endButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_menu_my_calendar"
         android:layout_below="@+id/startTitle"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="45dp"
         android:layout_toEndOf="@+id/endTitle"
-        android:layout_marginStart="5dp"/>
+        app:srcCompat="@android:drawable/ic_menu_my_calendar" />
 
     <TextView
-        android:id="@+id/endText"
-        android:layout_width="match_parent"
+        android:id="@+id/frequency_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/startTitle"
+        android:layout_below="@+id/endTitle"
         android:layout_marginTop="45dp"
-        android:layout_marginStart="5dp"
-        android:layout_toEndOf="@+id/endButton"
+        android:layout_alignParentLeft="true"
+        android:text="Frequency:"
         android:textSize="30sp">
+
+    </TextView>
+
+    <CheckBox
+        android:id="@+id/sunday_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frequency_title"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp">
+
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/monday_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frequency_title"
+        android:layout_toRightOf="@+id/sunday_check"
+        android:layout_marginTop="15dp">
+
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/tuesday_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frequency_title"
+        android:layout_toRightOf="@id/monday_check"
+        android:layout_marginTop="15dp">
+
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/wednesday_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frequency_title"
+        android:layout_toRightOf="@+id/tuesday_check"
+        android:layout_marginTop="15dp">
+
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/thursday_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frequency_title"
+        android:layout_toRightOf="@+id/wednesday_check"
+        android:layout_marginTop="15dp">
+
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/friday_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frequency_title"
+        android:layout_toRightOf="@+id/thursday_check"
+        android:layout_marginTop="15dp">
+
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/saturday_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frequency_title"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/friday_check">
+
+    </CheckBox>
+
+
+    <TextView
+        android:id="@+id/u_symbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sunday_check"
+        android:layout_marginStart="17dp"
+        android:text="Su">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/m_symbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sunday_check"
+        android:layout_marginStart="68dp"
+        android:text="M">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/t_symbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sunday_check"
+        android:layout_marginStart="118dp"
+        android:text="T">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/w_symbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sunday_check"
+        android:layout_marginStart="163dp"
+        android:text="W">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/r_symbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sunday_check"
+        android:layout_marginStart="212dp"
+        android:text="R">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/f_symbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sunday_check"
+        android:layout_marginStart="262dp"
+        android:text="F">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/s_symbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sunday_check"
+        android:layout_marginStart="310dp"
+        android:text="S">
 
     </TextView>
 
@@ -112,9 +267,9 @@
         android:id="@+id/reasonTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/endTitle"
+        android:layout_below="@+id/frequency_title"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="100dp"
         android:text= "Reason: "
         android:textSize="30sp">
 
@@ -124,10 +279,10 @@
         android:id="@+id/reasonEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/endTitle"
+        android:layout_below="@+id/frequency_title"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="100dp"
         android:layout_toEndOf="@+id/reasonTitle"
-        android:layout_marginTop="120dp"
         android:textSize="30sp">
 
     </EditText>

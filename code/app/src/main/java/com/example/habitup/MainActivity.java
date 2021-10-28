@@ -11,7 +11,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class HabitActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
 
     // Declare the variables so that you will be able to reference it later.
     ListView habitList;

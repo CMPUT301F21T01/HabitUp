@@ -1,21 +1,24 @@
 package com.example.habitup;
 
+import java.util.ArrayList;
+
 public class Habit {
 
     private String title;
     private String startDate;
     private String endDate;
-    //private String[] frequency;
+    private ArrayList<String> frequency;
     private String reason;
-    private Float progress;
-    //private HabitEvent[] habitEvent;
+    private Double progress;
+    //private ArrayList<HabitEvent> habitEvent;
 
-    Habit(String title, String startDate, String endDate, String reason, Double progress){
+    Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Double progress){
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
-        //this.frequency = frequency;
+        this.frequency = frequency;
         this.reason = reason;
+        this.progress = progress;
     }
 
     public String getTitle() {
@@ -30,15 +33,15 @@ public class Habit {
         return endDate;
     }
 
-  //  public String[] getFrequency() {
-    //    return frequency;
-   // }
+    public ArrayList<String> getFrequency() {
+        return frequency;
+    }
 
     public String getReason(){
         return reason;
     }
 
-    public Float getProgress(){
+    public Double getProgress(){
         return progress;
     }
 
@@ -54,15 +57,15 @@ public class Habit {
         this.endDate = endDate;
     }
 
-    //public void setFrequency(String[] frequency) {
-      //  this.frequency = frequency;
-    //}
+    public void setFrequency(ArrayList<String> frequency) {
+        this.frequency = frequency;
+    }
 
     public void setReason(String reason){
         this.reason = reason;
     }
 
-    public void setProgress(Float progress){
+    public void setProgress(Double progress){
         this.progress = progress;
     }
 }

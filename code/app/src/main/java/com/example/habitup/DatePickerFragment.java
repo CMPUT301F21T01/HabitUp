@@ -5,11 +5,16 @@ package com.example.habitup;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.constraintlayout.widget.ConstraintSet;
 
+import java.text.BreakIterator;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -23,7 +28,6 @@ public class DatePickerFragment extends AppCompatDialogFragment implements DateP
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         // Set the current date as the default date
-        final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
@@ -38,8 +42,5 @@ public class DatePickerFragment extends AppCompatDialogFragment implements DateP
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, day);
         String selectedDate = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH).format(c.getTime());
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("date", selectedDate);
     }
 }
-

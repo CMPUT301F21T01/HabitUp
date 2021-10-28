@@ -1,8 +1,9 @@
 package com.example.habitup;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Habit {
+public class Habit implements Serializable {
 
     private String title;
     private String startDate;

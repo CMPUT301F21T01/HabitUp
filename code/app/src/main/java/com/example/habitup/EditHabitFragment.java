@@ -1,5 +1,3 @@
-// https://stackoverflow.com/questions/50909962/how-to-set-start-date-and-end-date-in-android
-
 package com.example.habitup;
 
 import android.app.AlertDialog;
@@ -25,35 +23,43 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class AddHabitFragment extends DialogFragment {
-
+public class EditHabitFragment extends DialogFragment {
     private EditText title;
     private EditText reason;
     private TextView startText;
     private TextView endText;
     private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck;
     private ArrayList<String> daysSelected;
-    private OnFragmentInteractionListener listener;
+    private EditHabitFragment.OnFragmentInteractionListener listener;
 
     public interface OnFragmentInteractionListener {
-        void onSavePressedAdd(Habit newHabit);
+        void onSavePressedEdit(Habit editHabit);
     }
 
     @Override
     public void onAttach(@NonNull Context context){
         super.onAttach(context);
-        if (context instanceof  OnFragmentInteractionListener){
-            listener = (OnFragmentInteractionListener) context;
+        if (context instanceof EditHabitFragment.OnFragmentInteractionListener){
+            listener = (EditHabitFragment.OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-            + "must implement OnFragmentInteractionListener");
+                    + "must implement OnFragmentInteractionListener");
         }
+    }
+
+    public static EditHabitFragment newInstance(Habit habit) {
+        EditHabitFragment fragment = new EditHabitFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("habits", habit);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        Habit habit = (Habit) getArguments().getSerializable("habits");
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_habit_fragment_layout, null);
         title = view.findViewById(R.id.habitEdit);
@@ -70,7 +76,14 @@ public class AddHabitFragment extends DialogFragment {
         rCheck = view.findViewById(R.id.thursday_check);
         fCheck = view.findViewById(R.id.friday_check);
         sCheck = view.findViewById(R.id.saturday_check);
-        daysSelected = new ArrayList<>();
+
+        title.setText(habit.getTitle());
+        reason.setText(habit.getReason());
+        startText.setText(habit.getStartDate());
+        endText.setText(habit.getEndDate());
+        daysSelected = habit.getFrequency();
+
+        checkBoxInit(daysSelected);
 
         uCheck.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,8 +160,8 @@ public class AddHabitFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 getCurrentDate(startText);
-                    }
-            });
+            }
+        });
 
         endButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,7 +182,7 @@ public class AddHabitFragment extends DialogFragment {
                         String newReason = reason.getText().toString();
                         String startDate = startText.getText().toString();
                         String endDate = endText.getText().toString();
-                        listener.onSavePressedAdd(new Habit(newTitle, startDate, endDate, daysSelected, newReason, 0.0));
+                        listener.onSavePressedEdit(new Habit(newTitle, startDate, endDate, daysSelected, newReason, 0.0));
                     }
                 }).create();
     }
@@ -178,17 +191,47 @@ public class AddHabitFragment extends DialogFragment {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                 new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-                calendar.set(Calendar.DAY_OF_MONTH, day);
-                SimpleDateFormat selectedDate = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-                setDate.setText(selectedDate.format(calendar.getTime()));
-            }
-        }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, day);
+                        SimpleDateFormat selectedDate = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+                        setDate.setText(selectedDate.format(calendar.getTime()));
+                    }
+                }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
     }
+
+    public void checkBoxInit(ArrayList<String> check){
+        if(check.isEmpty()){}
+        else {
+            for (int i = 0; i < check.size(); i++) {
+                if (check.get(i).equals("U")) {
+                    uCheck.setChecked(true);
+                }
+                if (check.get(i).equals("M")) {
+                    mCheck.setChecked(true);
+                }
+                if (check.get(i).equals("T")) {
+                    tCheck.setChecked(true);
+                }
+                if (check.get(i).equals("W")) {
+                    wCheck.setChecked(true);
+                }
+                if (check.get(i).equals("R")) {
+                    rCheck.setChecked(true);
+                }
+                if (check.get(i).equals("F")) {
+                    fCheck.setChecked(true);
+                }
+                if (check.get(i).equals("S")) {
+                    sCheck.setChecked(true);
+                }
+            }
+        }
+    }
 }
+

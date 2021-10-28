@@ -1,4 +1,6 @@
 // https://stackoverflow.com/questions/50909962/how-to-set-start-date-and-end-date-in-android
+// https://stackoverflow.com/questions/8573250/android-how-can-i-convert-string-to-date
+// https://stackoverflow.com/questions/67090316/progress-bar-between-two-given-dates-android-studio
 
 package com.example.habitup;
 
@@ -20,9 +22,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class AddHabitFragment extends DialogFragment {
@@ -33,6 +37,7 @@ public class AddHabitFragment extends DialogFragment {
     private TextView endText;
     private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck;
     private ArrayList<String> daysSelected;
+    private int newProgress;
     private OnFragmentInteractionListener listener;
 
     public interface OnFragmentInteractionListener {
@@ -55,7 +60,7 @@ public class AddHabitFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_habit_fragment_layout, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.habit_fragment_layout, null);
         title = view.findViewById(R.id.habitEdit);
         reason = view.findViewById(R.id.reasonEdit);
         ImageButton startButton = view.findViewById(R.id.startButton);
@@ -169,7 +174,8 @@ public class AddHabitFragment extends DialogFragment {
                         String newReason = reason.getText().toString();
                         String startDate = startText.getText().toString();
                         String endDate = endText.getText().toString();
-                        listener.onSavePressedAdd(new Habit(newTitle, startDate, endDate, daysSelected, newReason, 0.0));
+                        setProgress(startDate, endDate);
+                        listener.onSavePressedAdd(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress));
                     }
                 }).create();
     }
@@ -190,5 +196,26 @@ public class AddHabitFragment extends DialogFragment {
         }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
+    }
+
+    public void setProgress(String startString, String endString){
+        Date sDate = new Date();
+        Date eDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        try{
+            sDate = format.parse(startString);
+            eDate = format.parse(endString);
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
+
+        long current = calendar.getTimeInMillis();
+        long difference = eDate.getTime() - sDate.getTime();
+        long currentDifference = current - sDate.getTime();
+
+        float progress = (float) currentDifference/difference * 100;
+        newProgress = ((int) progress);
     }
 }

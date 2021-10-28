@@ -10,10 +10,10 @@ public class Habit implements Serializable {
     private String endDate;
     private ArrayList<String> frequency;
     private String reason;
-    private Double progress;
+    private Integer progress;
     //private ArrayList<HabitEvent> habitEvent;
 
-    Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Double progress){
+    Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Integer progress){
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -42,7 +42,7 @@ public class Habit implements Serializable {
         return reason;
     }
 
-    public Double getProgress(){
+    public Integer getProgress(){
         return progress;
     }
 
@@ -66,7 +66,7 @@ public class Habit implements Serializable {
         this.reason = reason;
     }
 
-    public void setProgress(Double progress){
+    public void setProgress(Integer progress){
         this.progress = progress;
     }
 }

@@ -18,9 +18,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class EditHabitFragment extends DialogFragment {
@@ -30,6 +32,7 @@ public class EditHabitFragment extends DialogFragment {
     private TextView endText;
     private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck;
     private ArrayList<String> daysSelected;
+    private int newProgress;
     private EditHabitFragment.OnFragmentInteractionListener listener;
 
     public interface OnFragmentInteractionListener {
@@ -61,7 +64,7 @@ public class EditHabitFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         Habit habit = (Habit) getArguments().getSerializable("habits");
 
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_habit_fragment_layout, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.habit_fragment_layout, null);
         title = view.findViewById(R.id.habitEdit);
         reason = view.findViewById(R.id.reasonEdit);
         ImageButton startButton = view.findViewById(R.id.startButton);
@@ -182,7 +185,8 @@ public class EditHabitFragment extends DialogFragment {
                         String newReason = reason.getText().toString();
                         String startDate = startText.getText().toString();
                         String endDate = endText.getText().toString();
-                        listener.onSavePressedEdit(new Habit(newTitle, startDate, endDate, daysSelected, newReason, 0.0));
+                        setProgress(startDate, endDate);
+                        listener.onSavePressedEdit(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress));
                     }
                 }).create();
     }
@@ -232,6 +236,27 @@ public class EditHabitFragment extends DialogFragment {
                 }
             }
         }
+    }
+
+    public void setProgress(String startString, String endString){
+        Date sDate = new Date();
+        Date eDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        try{
+            sDate = format.parse(startString);
+            eDate = format.parse(endString);
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
+
+        long current = calendar.getTimeInMillis();
+        long difference = eDate.getTime() - sDate.getTime();
+        long currentDifference = current - sDate.getTime();
+
+        float progress = (float) currentDifference/difference * 100;
+        newProgress = ((int) progress);
     }
 }
 

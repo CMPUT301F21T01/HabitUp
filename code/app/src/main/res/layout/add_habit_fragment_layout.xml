@@ -126,7 +126,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/frequency_title"
-        android:layout_marginStart="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="15dp">
 
     </CheckBox>
@@ -186,8 +187,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/frequency_title"
-        android:layout_toRightOf="@+id/friday_check"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/friday_check">
 
     </CheckBox>
 
@@ -197,8 +198,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sunday_check"
-        android:layout_marginStart="50dp"
-        android:text="U">
+        android:layout_marginStart="17dp"
+        android:text="Su">
 
     </TextView>
 
@@ -207,7 +208,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sunday_check"
-        android:layout_marginStart="98dp"
+        android:layout_marginStart="68dp"
         android:text="M">
 
     </TextView>
@@ -217,7 +218,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sunday_check"
-        android:layout_marginStart="147dp"
+        android:layout_marginStart="118dp"
         android:text="T">
 
     </TextView>
@@ -227,7 +228,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sunday_check"
-        android:layout_marginStart="194dp"
+        android:layout_marginStart="163dp"
         android:text="W">
 
     </TextView>
@@ -237,7 +238,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sunday_check"
-        android:layout_marginStart="243dp"
+        android:layout_marginStart="212dp"
         android:text="R">
 
     </TextView>
@@ -247,7 +248,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sunday_check"
-        android:layout_marginStart="291dp"
+        android:layout_marginStart="262dp"
         android:text="F">
 
     </TextView>
@@ -257,7 +258,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sunday_check"
-        android:layout_marginStart="340dp"
+        android:layout_marginStart="310dp"
         android:text="S">
 
     </TextView>

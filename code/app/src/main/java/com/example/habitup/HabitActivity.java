@@ -31,16 +31,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class HabitActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
+public class HabitActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener, ViewHabitFragment.OnFragmentInteractionListener, EditHabitFragment.OnFragmentInteractionListener {
 
     // Variable declarations
     FloatingActionButton searchBtn;
     FloatingActionButton profileBtn;
     FloatingActionButton homeBtn;
     FloatingActionButton addHabitBtn;
+    FloatingActionButton realAddButton;
     ListView habitList;
-    ArrayAdapter<Habit> habitAdapter;
-    ArrayList<Habit> habitDataList;
+    public static ArrayAdapter<Habit> habitAdapter;
+    public static ArrayList<Habit> habitDataList;
 
     FirebaseFirestore db;
     final String TAG = "DEBUG_LOG";
@@ -56,14 +57,14 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         setContentView(R.layout.activity_main);
 
         // Variable initializations
-        habitList       = findViewById(R.id.habit_list);
-        searchBtn       = findViewById(R.id.search_activity_btn);
-        profileBtn       = findViewById(R.id.profile_activity_btn);
-        homeBtn          = findViewById(R.id.home_activity_btn);
-        addHabitBtn     = findViewById(R.id.add_fab);
+        habitList = findViewById(R.id.habit_list);
+        searchBtn = findViewById(R.id.search_activity_btn);
+        profileBtn = findViewById(R.id.profile_activity_btn);
+        homeBtn = findViewById(R.id.home_activity_btn);
+        addHabitBtn = findViewById(R.id.add_fab);
 
-        habitDataList   = new ArrayList<>();
-        habitAdapter    = new HabitList(this, habitDataList);
+        habitDataList = new ArrayList<>();
+        habitAdapter = new HabitList(this, habitDataList);
         habitList.setAdapter(habitAdapter);
 
         db = FirebaseFirestore.getInstance();
@@ -113,7 +114,6 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             }
         });
 
-
         // Temporary until we fully implement addHabit button                                   *****
 
         // Add habit button listener
@@ -138,6 +138,18 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                 tempAddNameText.setText("");
             }
         });
+
+        // view habit:
+        habitList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Habit selectedHabit = habitDataList.get(position);
+                ViewHabitFragment viewFrag = ViewHabitFragment.newInstance(selectedHabit);
+                viewFrag.show(getSupportFragmentManager(), "VIEW_HABIT");
+                return true;
+            }
+        });
+
 
         // Delete habit (on click) listener
         habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -191,7 +203,13 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
 
     @Override
     public void onSavePressedAdd(Habit newHabit) {
+        //firebase stuff goes here
         habitAdapter.add(newHabit);
         habitAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onSavePressedEdit(Habit editHabit) {
+        // firebase stuff goes here
     }
 }

@@ -1,28 +1,32 @@
 package com.example.habitup;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Habit {
+public class Habit implements Serializable {
 
     private String title;
     private String startDate;
     private String endDate;
     private ArrayList<String> frequency;
     private String reason;
-    private Float progress;
-    //private HabitEvent[] habitEvent;
+    private Integer progress;
+    //alex and vivian add your habit event variable here
+
 
     // Temporary until we fully implement Habit + storage of a Habit in our database
+
     Habit(String title) {
         this.title = title;
     }
 
-    Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Double progress){
+    Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Integer progress){
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.frequency = frequency;
         this.reason = reason;
+        this.progress = progress;
     }
 
     public String getTitle() {
@@ -45,7 +49,7 @@ public class Habit {
         return reason;
     }
 
-    public Float getProgress(){
+    public Integer getProgress(){
         return progress;
     }
 
@@ -69,7 +73,7 @@ public class Habit {
         this.reason = reason;
     }
 
-    public void setProgress(Float progress){
+    public void setProgress(Integer progress){
         this.progress = progress;
     }
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,7 +41,14 @@ public class HabitList extends ArrayAdapter<Habit> {
 
         // Get and set text view
         TextView habitTitle = view.findViewById(R.id.habit_title);
+        // to be uncommented when firebase is able to add:
+        //ProgressBar progressBar = view.findViewById(R.id.progress_bar);
+        //TextView progressText = view.findViewById(R.id.progress_text);
+
         habitTitle.setText(habit.getTitle());
+        // to be uncommented when firebase is ready to add:
+        //progressBar.setProgress(habit.getProgress());
+        //progressText.setText(habit.getProgress().toString());
 
         return view;
 

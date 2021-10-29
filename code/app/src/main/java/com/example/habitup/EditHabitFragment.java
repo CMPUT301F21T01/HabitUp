@@ -1,7 +1,3 @@
-// https://stackoverflow.com/questions/50909962/how-to-set-start-date-and-end-date-in-android
-// https://stackoverflow.com/questions/8573250/android-how-can-i-convert-string-to-date
-// https://stackoverflow.com/questions/67090316/progress-bar-between-two-given-dates-android-studio
-
 package com.example.habitup;
 
 import android.app.AlertDialog;
@@ -29,8 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class AddHabitFragment extends DialogFragment {
-
+public class EditHabitFragment extends DialogFragment {
     private EditText title;
     private EditText reason;
     private TextView startText;
@@ -38,27 +33,36 @@ public class AddHabitFragment extends DialogFragment {
     private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck;
     private ArrayList<String> daysSelected;
     private int newProgress;
-    private OnFragmentInteractionListener listener;
+    private EditHabitFragment.OnFragmentInteractionListener listener;
 
     public interface OnFragmentInteractionListener {
-        void onSavePressedAdd(Habit newHabit);
+        void onSavePressedEdit(Habit editHabit);
     }
 
     @Override
     public void onAttach(@NonNull Context context){
         super.onAttach(context);
-        if (context instanceof  OnFragmentInteractionListener){
-            listener = (OnFragmentInteractionListener) context;
+        if (context instanceof EditHabitFragment.OnFragmentInteractionListener){
+            listener = (EditHabitFragment.OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + "must implement OnFragmentInteractionListener");
         }
     }
 
+    public static EditHabitFragment newInstance(Habit habit) {
+        EditHabitFragment fragment = new EditHabitFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("habits", habit);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        Habit habit = (Habit) getArguments().getSerializable("habits");
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_habit_fragment_layout, null);
         title = view.findViewById(R.id.habitEdit);
@@ -75,7 +79,14 @@ public class AddHabitFragment extends DialogFragment {
         rCheck = view.findViewById(R.id.thursday_check);
         fCheck = view.findViewById(R.id.friday_check);
         sCheck = view.findViewById(R.id.saturday_check);
-        daysSelected = new ArrayList<>();
+
+        title.setText(habit.getTitle());
+        reason.setText(habit.getReason());
+        startText.setText(habit.getStartDate());
+        endText.setText(habit.getEndDate());
+        daysSelected = habit.getFrequency();
+
+        checkBoxInit(daysSelected);
 
         uCheck.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,7 +186,7 @@ public class AddHabitFragment extends DialogFragment {
                         String startDate = startText.getText().toString();
                         String endDate = endText.getText().toString();
                         setProgress(startDate, endDate);
-                        listener.onSavePressedAdd(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress));
+                        listener.onSavePressedEdit(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress));
                     }
                 }).create();
     }
@@ -196,6 +207,35 @@ public class AddHabitFragment extends DialogFragment {
                 }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
+    }
+
+    public void checkBoxInit(ArrayList<String> check){
+        if(check.isEmpty()){}
+        else {
+            for (int i = 0; i < check.size(); i++) {
+                if (check.get(i).equals("U")) {
+                    uCheck.setChecked(true);
+                }
+                if (check.get(i).equals("M")) {
+                    mCheck.setChecked(true);
+                }
+                if (check.get(i).equals("T")) {
+                    tCheck.setChecked(true);
+                }
+                if (check.get(i).equals("W")) {
+                    wCheck.setChecked(true);
+                }
+                if (check.get(i).equals("R")) {
+                    rCheck.setChecked(true);
+                }
+                if (check.get(i).equals("F")) {
+                    fCheck.setChecked(true);
+                }
+                if (check.get(i).equals("S")) {
+                    sCheck.setChecked(true);
+                }
+            }
+        }
     }
 
     public void setProgress(String startString, String endString){

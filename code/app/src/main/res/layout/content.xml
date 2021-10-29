@@ -44,7 +44,7 @@
             android:textAlignment="center" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/progress_text"
             android:layout_width="52dp"
             android:layout_height="29dp"
             android:layout_alignStart="@+id/progress_bar"

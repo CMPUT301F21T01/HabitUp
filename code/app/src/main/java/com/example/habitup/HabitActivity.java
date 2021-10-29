@@ -55,12 +55,16 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
 
     @Override
     public void onSavePressedAdd(Habit newHabit) {
+        // THIS IS WHERE THE FIREBASE CODE GOES
+
         habitAdapter.add(newHabit);
         habitAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onSavePressedEdit(Habit editHabit){
+        // THIS IS WHERE THE FIREBASE CODE GOES
+        
         habitAdapter.add(editHabit);
         habitAdapter.notifyDataSetChanged();
     }

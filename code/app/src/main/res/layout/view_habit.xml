@@ -10,7 +10,7 @@
         android:layout_marginTop="60dp"
         android:gravity="center"
         android:text="Habit Title"
-        android:textSize="60sp">
+        android:textSize="40sp">
 
     </TextView>
 

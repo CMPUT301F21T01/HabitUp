@@ -12,7 +12,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener,
+public class HabitActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener,
         EditHabitFragment.OnFragmentInteractionListener, ViewHabitFragment.OnFragmentInteractionListener {
 
     // Declare the variables so that you will be able to reference it later.
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.habit_activity);
 
         habitList = findViewById(R.id.habit_list);
         habitDataList = new ArrayList<>();

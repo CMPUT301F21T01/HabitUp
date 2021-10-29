@@ -32,7 +32,7 @@ public class HabitList extends ArrayAdapter<Habit> {
         View view = convertView;
 
         if(view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.habitList, parent,false);
+            view = LayoutInflater.from(context).inflate(R.layout.habit_list, parent,false);
         }
 
         Habit habit = habits.get(position);

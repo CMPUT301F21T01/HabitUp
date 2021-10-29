@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ public class ViewHabitFragment extends DialogFragment {
     private TextView endText;
     private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck;
     private ArrayList<String> daysSelected;
+    private ProgressBar progressBar;
     private ViewHabitFragment.OnFragmentInteractionListener listener;
 
     public interface OnFragmentInteractionListener {
@@ -59,6 +61,7 @@ public class ViewHabitFragment extends DialogFragment {
         reason = view.findViewById(R.id.view_reason);
         startText = view.findViewById(R.id.start_date);
         endText = view.findViewById(R.id.end_date);
+        progressBar = view.findViewById(R.id.view_progress_bar);
 
         uCheck = view.findViewById(R.id.view_sunday_check);
         mCheck = view.findViewById(R.id.view_monday_check);
@@ -73,6 +76,7 @@ public class ViewHabitFragment extends DialogFragment {
         startText.setText(habit.getStartDate());
         endText.setText(habit.getEndDate());
         daysSelected = habit.getFrequency();
+        progressBar.setProgress(habit.getProgress());
 
         checkBoxInit(daysSelected);
 

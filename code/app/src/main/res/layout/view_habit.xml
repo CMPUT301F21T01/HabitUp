@@ -227,8 +227,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/frequency_title"
-        android:layout_marginTop="100dp"
         android:layout_marginLeft="30dp"
+        android:layout_marginTop="100dp"
         android:text="Reason: "
         android:textSize="30sp">
 
@@ -260,12 +260,12 @@
 
     <ProgressBar
         android:id="@+id/view_progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:scaleY="5"
+        android:layout_below="@id/progress_title"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/progress_title">
+        android:scaleY="5">
 
     </ProgressBar>
 

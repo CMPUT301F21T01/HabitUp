@@ -30,8 +30,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
-public class HabitActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener, ViewHabitFragment.OnFragmentInteractionListener, EditHabitFragment.OnFragmentInteractionListener {
+public class HabitActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
 
     // Variable declarations
     FloatingActionButton searchBtn;
@@ -42,6 +43,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
     ListView habitList;
     public static ArrayAdapter<Habit> habitAdapter;
     public static ArrayList<Habit> habitDataList;
+    public static CollectionReference habitsRef;
 
     FirebaseFirestore db;
     final String TAG = "DEBUG_LOG";
@@ -72,7 +74,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         // Get username passed from intent that started this activity
         Intent intent = getIntent();
         String username = (String) intent.getStringExtra(Intent.EXTRA_TEXT);
-        final CollectionReference habitsRef = db.collection(username+"/habits/habitList");
+        habitsRef = db.collection(username + "/habits/habitList");
 
         // Temporary until we fully implement addHabit button *****
         tempAddNameText = findViewById(R.id.tempAddNameText);
@@ -89,8 +91,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         });
 
         // Switch to ProfileActivity
-        profileBtn.setOnClickListener(new View.OnClickListener()
-        {
+        profileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent profileSwitchIntent = new Intent(view.getContext(), ProfileActivity.class);
@@ -120,7 +121,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         tempAddHabitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String habitName   = tempAddNameText.getText().toString();
+                final String habitName = tempAddNameText.getText().toString();
 
                 HashMap<String, String> data = new HashMap<>();
                 data.put("name", habitName);
@@ -144,8 +145,10 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Habit selectedHabit = habitDataList.get(position);
-                ViewHabitFragment viewFrag = ViewHabitFragment.newInstance(selectedHabit);
-                viewFrag.show(getSupportFragmentManager(), "VIEW_HABIT");
+                Intent intent = new Intent(HabitActivity.this, ViewHabitActivity.class);
+                intent.putExtra("habit", selectedHabit);
+                intent.putExtra("position", position);
+                startActivityForResult(intent, 1);
                 return true;
             }
         });
@@ -165,7 +168,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // Delete from our database
-                        habitsRef.document("habit" + String.valueOf(pos))
+                        habitsRef.document(selectedName) // CHANGED THIS *********
                                 .delete()
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -187,29 +190,101 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             @Override
             public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException error) {
                 habitDataList.clear();
-                for(QueryDocumentSnapshot doc : documentSnapshots) {
-                    String name = (String)doc.getData().get("name");
+                for (QueryDocumentSnapshot doc : documentSnapshots) {
+                    // TODO: change things back from strings to their OG types
+                    String name = (String) doc.getData().get("name");
+                    String startDate = (String) doc.getData().get("start date");
+                    String endDate = (String) doc.getData().get("end date");
+                    String reason = (String) doc.getData().get("reason");
+                    String freq = (String) doc.getData().get("frequency");
+                    String prog = (String) doc.getData().get("progress");
+                    ArrayList<String> frequency = new ArrayList<String>(Arrays.asList(freq.split(",")));
+                    int progress = Integer.parseInt(prog);
+
 
                     // Add each habit from database
-                    habitDataList.add(new Habit(name));
+                    habitDataList.add(new Habit(name, startDate, endDate, frequency, reason, progress));
                 }
-
                 habitAdapter.notifyDataSetChanged();
             }
         });
-
-        //                                                                                      *****
     }
 
     @Override
     public void onSavePressedAdd(Habit newHabit) {
-        //firebase stuff goes here
-        habitAdapter.add(newHabit);
-        habitAdapter.notifyDataSetChanged();
+        // add habit to firebase:
+
+        String frequencyString = String.join(",", newHabit.getFrequency());
+
+        HashMap<String, String> data = new HashMap<>();
+        data.put("name", newHabit.getTitle());
+        data.put("start date", newHabit.getStartDate());
+        data.put("end date", newHabit.getEndDate());
+        data.put("frequency", frequencyString);
+        data.put("reason", newHabit.getReason());
+        data.put("progress", newHabit.getProgress().toString());
+
+        habitsRef.document(newHabit.getTitle())  // CHANGED THIS ******
+        //"habit" + String.valueOf(habitDataList.size())
+                .set(data)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Document not added: " + e.toString());
+                    }
+                });
     }
 
+    // overriding onStart() for updating info whenever user goes back to MainActivity:
+    // used this image ot help me understand how onStart() works: https://developer.android.com/images/activity_lifecycle.png
     @Override
-    public void onSavePressedEdit(Habit editHabit) {
-        // firebase stuff goes here
+    protected void onStart() {
+        super.onStart();
+
+        // update the medicine list and the adapter:
+        habitAdapter = new HabitList(this, habitDataList);
+        habitList.setAdapter(habitAdapter);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                if (data.getExtras().containsKey("position")) {
+                    int pos = data.getIntExtra("position", -1);
+                    String selectedName = habitDataList.get(pos).getTitle();
+                    habitsRef.document(selectedName)
+                            .delete()
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG, "Document failed to be deleted: " + e.toString());
+                                }
+                            });
+
+                    // Notify adapter of change
+                    habitAdapter.notifyDataSetChanged();
+                }
+                if (data.getExtras().containsKey("editHabit")) {
+                    // TODO: finish updating firestore for edit functionality to work
+                    Habit editedHabit = (Habit) data.getSerializableExtra("editedHabit");
+                    int pos = data.getIntExtra("position", -1);
+                    String selectedName = habitDataList.get(pos).getTitle();
+
+                    String frequencyString = String.join(",", editedHabit.getFrequency());
+
+                    HashMap<String, String> updateData = new HashMap<>();
+                    updateData.put("name", editedHabit.getTitle());
+                    updateData.put("start date", editedHabit.getStartDate());
+                    updateData.put("end date", editedHabit.getEndDate());
+                    updateData.put("frequency", frequencyString);
+                    updateData.put("reason", editedHabit.getReason());
+                    updateData.put("progress", editedHabit.getProgress().toString());
+
+                    //habitsRef.document(selectedName).update("name": edited)
+
+                }
+            }
+        }
     }
 }

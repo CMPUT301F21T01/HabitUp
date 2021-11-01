@@ -10,11 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HabitUp">
         <activity
-            android:name=".UserControllerActivity"
+            android:name=".HabitEventActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -28,6 +27,32 @@
             android:name=".HabitActivity"
             android:exported="false">
         </activity>
+
+        <!-- DON'T DELETE! Google map API and photo permission related stuff by Vivian -->
+
+        <activity
+            android:name=".MapsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".AddLocation"
+            android:exported="false" />
+        <activity
+            android:name=".AddPhotograph"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
     </application>
+
+    <!-- DON'T DELETE! Google map API and photo permission related stuff by Vivian -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>

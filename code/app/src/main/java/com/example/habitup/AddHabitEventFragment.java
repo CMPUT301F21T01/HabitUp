@@ -6,7 +6,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Adapter;
@@ -22,29 +24,42 @@ public class AddHabitEventFragment extends DialogFragment {
     private EditText addReflections;
     private Button addPhoto;
     private Button addLocation;
-    private OnFragmentInterationListner listner;
+    private OnFragmentInterationListener listner;
 
-    public interface OnFragmentInterationListner {
-        void onOkPressed();
+    private HabitEventInstance habitEventInstance = HabitEventInstance.getInstance();
+    private String location = "";
+    private String reflection = "";
+    private Bitmap photo = null;
+
+    public interface OnFragmentInterationListener {
+        void onOkPressed(HabitEvent habitEvent);
     }
 
     @Override
     public void onAttach(Context context) {
 
         super.onAttach(context);
-        if (context instanceof OnFragmentInterationListner) {
-            listner = (OnFragmentInterationListner) context;
+        if (context instanceof OnFragmentInterationListener) {
+            listner = (OnFragmentInterationListener) context;
         } else {
             throw new RuntimeException(context.toString());
         }
 
     }
 
+
     @NonNull
     @Override
     public Dialog onCreateDialog (@Nullable Bundle savedInstanceState) {
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_habit_event_fragment_layout, null);
+
+        // Create the habit event instance
+        HabitEventInstance.getInstance(location, reflection);
+        habitEventInstance = HabitEventInstance.getInstance();
+        habitEventInstance.setLocation(location);
+        habitEventInstance.setReflection(reflection);
+        habitEventInstance.setPhoto(photo);
 
         addReflections = view.findViewById(R.id.add_reflections);
 
@@ -53,8 +68,8 @@ public class AddHabitEventFragment extends DialogFragment {
         addLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(AddHabitEventFragment.this.getActivity(), AddLocation.class);
-                startActivity(myIntent);
+                Intent locationIntent = new Intent(AddHabitEventFragment.this.getActivity(), AddLocation.class);
+                startActivity(locationIntent);
             }
         });
 
@@ -63,8 +78,9 @@ public class AddHabitEventFragment extends DialogFragment {
         addPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(AddHabitEventFragment.this.getActivity(), AddPhotograph.class);
-                startActivity(myIntent);
+                Intent photoIntent = new Intent(AddHabitEventFragment.this.getActivity(), AddPhotograph.class);
+                startActivity(photoIntent);
+                // photo = (Bitmap) photoIntent.getExtras().get("habit_event_photo");;
             }
         });
 
@@ -75,8 +91,9 @@ public class AddHabitEventFragment extends DialogFragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String reflectionText = addReflections.getText().toString();
-                        listner.onOkPressed();
+                        String reflection = addReflections.getText().toString();
+                        habitEventInstance.setReflection(reflection);
+                        listner.onOkPressed(habitEventInstance.getHabitEvent());
                     }
                 }).create();
     }

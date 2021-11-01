@@ -28,6 +28,10 @@
             android:name=".HabitActivity"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".ViewHabitActivity"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>

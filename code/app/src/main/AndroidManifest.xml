@@ -28,7 +28,10 @@
             android:exported="false">
         </activity>
 
-        <!-- DON'T DELETE! Google map API and photo permission related stuff by Vivian -->
+		<activity
+            android:name=".ViewHabitActivity"
+            android:exported="false">
+        </activity>
 
         <activity
             android:name=".MapsActivity"

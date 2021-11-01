@@ -191,7 +191,6 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException error) {
                 habitDataList.clear();
                 for (QueryDocumentSnapshot doc : documentSnapshots) {
-                    // TODO: change things back from strings to their OG types
                     String name = (String) doc.getData().get("name");
                     String startDate = (String) doc.getData().get("start date");
                     String endDate = (String) doc.getData().get("end date");
@@ -250,7 +249,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if(resultCode == RESULT_OK) {
-                if (data.getExtras().containsKey("position")) {
+                if (data.getExtras().containsKey("position") && !data.getExtras().containsKey("editedHabit")) {
                     int pos = data.getIntExtra("position", -1);
                     String selectedName = habitDataList.get(pos).getTitle();
                     habitsRef.document(selectedName)
@@ -265,11 +264,20 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                     // Notify adapter of change
                     habitAdapter.notifyDataSetChanged();
                 }
-                if (data.getExtras().containsKey("editHabit")) {
-                    // TODO: finish updating firestore for edit functionality to work
+                if (data.getExtras().containsKey("editedHabit")) {
                     Habit editedHabit = (Habit) data.getSerializableExtra("editedHabit");
                     int pos = data.getIntExtra("position", -1);
                     String selectedName = habitDataList.get(pos).getTitle();
+
+                    habitsRef.document(selectedName)
+                            .delete()
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG, "Document failed to be deleted: " + e.toString());
+                                }
+                            });
+                    habitAdapter.notifyDataSetChanged();
 
                     String frequencyString = String.join(",", editedHabit.getFrequency());
 
@@ -281,8 +289,15 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                     updateData.put("reason", editedHabit.getReason());
                     updateData.put("progress", editedHabit.getProgress().toString());
 
-                    //habitsRef.document(selectedName).update("name": edited)
-
+                    habitsRef.document(editedHabit.getTitle())
+                            .set(updateData)
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG, "Document not added: " + e.toString());
+                                }
+                            });
+                    habitAdapter.notifyDataSetChanged();
                 }
             }
         }

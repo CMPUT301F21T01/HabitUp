@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class HabitList extends ArrayAdapter<Habit> {
@@ -32,18 +34,21 @@ public class HabitList extends ArrayAdapter<Habit> {
         View view = convertView;
 
         if(view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.habit_list, parent,false);
+            view = LayoutInflater.from(context).inflate(R.layout.content, parent,false);
         }
 
         Habit habit = habits.get(position);
 
+        // Get and set text view
         TextView habitTitle = view.findViewById(R.id.habit_title);
-        ProgressBar progressBar = view.findViewById(R.id.progress_bar);
-        TextView progressText = view.findViewById(R.id.progress_text);
+        // to be uncommented when firebase is able to add:
+        //ProgressBar progressBar = view.findViewById(R.id.progress_bar);
+        //TextView progressText = view.findViewById(R.id.progress_text);
 
         habitTitle.setText(habit.getTitle());
-        progressBar.setProgress(habit.getProgress());
-        progressText.setText(habit.getProgress().toString());
+        // to be uncommented when firebase is ready to add:
+        //progressBar.setProgress(habit.getProgress());
+        //progressText.setText(habit.getProgress().toString());
 
         return view;
 

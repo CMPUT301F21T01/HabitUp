@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "725918022210",
+    "project_id": "habitup-d4738",
+    "storage_bucket": "habitup-d4738.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:725918022210:android:464d42d2c6c57302edcbdb",
+        "android_client_info": {
+          "package_name": "com.example.habitup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "725918022210-jts3hcro499mltaeqajnarkqtuh5ucjs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAv6KT61n60Dg1VpVyjUTI_hZkvCnIXm1Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "725918022210-jts3hcro499mltaeqajnarkqtuh5ucjs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

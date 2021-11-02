@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,7 +37,7 @@ public class EditHabitFragment extends DialogFragment {
     private EditHabitFragment.OnFragmentInteractionListener listener;
 
     public interface OnFragmentInteractionListener {
-        void onSavePressedEdit(Habit editHabit);
+        void onSavePressedEdit(Habit editHabit, int position);
     }
 
     @Override
@@ -50,10 +51,11 @@ public class EditHabitFragment extends DialogFragment {
         }
     }
 
-    public static EditHabitFragment newInstance(Habit habit) {
+    public static EditHabitFragment newInstance(Habit habit, int position) {
         EditHabitFragment fragment = new EditHabitFragment();
         Bundle args = new Bundle();
         args.putSerializable("habits", habit);
+        args.putSerializable("position", position);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,8 +65,9 @@ public class EditHabitFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         Habit habit = (Habit) getArguments().getSerializable("habits");
+        int pos = getArguments().getInt("position");
 
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.habit_fragment_layout, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_habit_fragment_layout, null);
         title = view.findViewById(R.id.habitEdit);
         reason = view.findViewById(R.id.reasonEdit);
         ImageButton startButton = view.findViewById(R.id.startButton);
@@ -186,7 +189,7 @@ public class EditHabitFragment extends DialogFragment {
                         String startDate = startText.getText().toString();
                         String endDate = endText.getText().toString();
                         setProgress(startDate, endDate);
-                        listener.onSavePressedEdit(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress));
+                        listener.onSavePressedEdit(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress), pos);
                     }
                 }).create();
     }
@@ -259,4 +262,3 @@ public class EditHabitFragment extends DialogFragment {
         newProgress = ((int) progress);
     }
 }
-

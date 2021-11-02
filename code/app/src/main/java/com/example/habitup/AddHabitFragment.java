@@ -51,7 +51,7 @@ public class AddHabitFragment extends DialogFragment {
             listener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-            + "must implement OnFragmentInteractionListener");
+                    + "must implement OnFragmentInteractionListener");
         }
     }
 
@@ -60,7 +60,7 @@ public class AddHabitFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.habit_fragment_layout, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_habit_fragment_layout, null);
         title = view.findViewById(R.id.habitEdit);
         reason = view.findViewById(R.id.reasonEdit);
         ImageButton startButton = view.findViewById(R.id.startButton);
@@ -152,8 +152,8 @@ public class AddHabitFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 getCurrentDate(startText);
-                    }
-            });
+            }
+        });
 
         endButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,16 +184,16 @@ public class AddHabitFragment extends DialogFragment {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                 new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-                calendar.set(Calendar.DAY_OF_MONTH, day);
-                SimpleDateFormat selectedDate = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-                setDate.setText(selectedDate.format(calendar.getTime()));
-            }
-        }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, day);
+                        SimpleDateFormat selectedDate = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+                        setDate.setText(selectedDate.format(calendar.getTime()));
+                    }
+                }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
     }

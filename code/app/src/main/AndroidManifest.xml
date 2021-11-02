@@ -27,12 +27,13 @@
             android:name=".HabitActivity"
             android:exported="false">
         </activity>
-
+        <activity
+            android:name=".HabitEventActivity"
+            android:exported="false" />
 		<activity
             android:name=".ViewHabitActivity"
             android:exported="false">
         </activity>
-
         <activity
             android:name=".MapsActivity"
             android:exported="false"

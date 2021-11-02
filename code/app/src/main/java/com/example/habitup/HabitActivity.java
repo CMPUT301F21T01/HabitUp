@@ -48,11 +48,6 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
     FirebaseFirestore db;
     final String TAG = "DEBUG_LOG";
 
-    // Temporary until we fully implement the addHabit button *****
-    Button tempAddHabitBtn;
-    EditText tempAddNameText;
-    //                                                        *****
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +70,6 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         Intent intent = getIntent();
         String username = (String) intent.getStringExtra(Intent.EXTRA_TEXT);
         habitsRef = db.collection(username + "/habits/habitList");
-
-        // Temporary until we fully implement addHabit button *****
-        tempAddNameText = findViewById(R.id.tempAddNameText);
-        tempAddHabitBtn = findViewById(R.id.tempAddHabitBtn);
-        //                                                    *****
 
         // Switch to SearchActivity
         searchBtn.setOnClickListener(new View.OnClickListener() {
@@ -115,73 +105,15 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             }
         });
 
-        // Temporary until we fully implement addHabit button                                   *****
-
-        // Add habit button listener
-        tempAddHabitBtn.setOnClickListener(new View.OnClickListener() {
+        // view habit
+        habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                final String habitName = tempAddNameText.getText().toString();
-
-                HashMap<String, String> data = new HashMap<>();
-                data.put("name", habitName);
-
-                habitsRef.document("habit" + String.valueOf(habitDataList.size()))
-                        .set(data)
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.d(TAG, "Document not added: " + e.toString());
-                            }
-                        });
-
-                // Reset EditText view to blank
-                tempAddNameText.setText("");
-            }
-        });
-
-        // view habit:
-        habitList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Habit selectedHabit = habitDataList.get(position);
                 Intent intent = new Intent(HabitActivity.this, ViewHabitActivity.class);
                 intent.putExtra("habit", selectedHabit);
                 intent.putExtra("position", position);
                 startActivityForResult(intent, 1);
-                return true;
-            }
-        });
-
-
-        // Delete habit (on click) listener
-        habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(HabitActivity.this);
-                alert.setTitle("Delete habit?");
-                final String selectedName = habitDataList.get(pos).getTitle();
-                alert.setMessage("Do you want to delete '" + selectedName + "'?");
-                alert.setNegativeButton("Cancel", null);
-                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Delete from our database
-                        habitsRef.document(selectedName) // CHANGED THIS *********
-                                .delete()
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.d(TAG, "Document failed to be deleted: " + e.toString());
-                                    }
-                                });
-
-                        // Notify adapter of change
-                        habitAdapter.notifyDataSetChanged();
-                    }
-                });
-                alert.show();
             }
         });
 
@@ -191,11 +123,14 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException error) {
                 habitDataList.clear();
                 for (QueryDocumentSnapshot doc : documentSnapshots) {
+
+
                     String name = (String) doc.getData().get("name");
                     String startDate = (String) doc.getData().get("start date");
                     String endDate = (String) doc.getData().get("end date");
                     String reason = (String) doc.getData().get("reason");
                     String freq = (String) doc.getData().get("frequency");
+                    if(freq == null) continue;
                     String prog = (String) doc.getData().get("progress");
                     ArrayList<String> frequency = new ArrayList<String>(Arrays.asList(freq.split(",")));
                     int progress = Integer.parseInt(prog);
@@ -234,7 +169,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                 });
     }
 
-    // overriding onStart() for updating info whenever user goes back to MainActivity:
+    // overriding onStart() for updating info whenever user goes back to HabitActivity:
     // used this image ot help me understand how onStart() works: https://developer.android.com/images/activity_lifecycle.png
     @Override
     protected void onStart() {

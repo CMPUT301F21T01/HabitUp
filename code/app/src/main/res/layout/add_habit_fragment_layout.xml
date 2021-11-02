@@ -34,7 +34,8 @@
         android:layout_below="@+id/addHabitTitle"
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/habitTitle"
-        android:textSize="30sp">
+        android:textSize="30sp"
+        android:maxLength="20">
 
     </EditText>
 
@@ -271,7 +272,8 @@
         android:layout_alignParentLeft="true"
         android:layout_marginTop="100dp"
         android:text= "Reason: "
-        android:textSize="30sp">
+        android:textSize="30sp"
+        android:maxLength="30">
 
     </TextView>
 
@@ -283,7 +285,8 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="100dp"
         android:layout_toEndOf="@+id/reasonTitle"
-        android:textSize="30sp">
+        android:textSize="30sp"
+        android:maxLength="30">
 
     </EditText>
 

@@ -25,7 +25,7 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
     private TextView reason;
     private TextView startText;
     private TextView endText;
-    private Button deleteButton, editButton;
+    private Button deleteButton, editButton, showListButton;
     private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck;
     private ArrayList<String> daysSelected;
     private ProgressBar progressBar;
@@ -88,6 +88,16 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
                 myIntent.putExtra("position", positionOfHabit);
                 setResult(RESULT_OK, myIntent);
                 finish();
+            }
+        });
+
+        // Habit event list button - Vivian
+        showListButton = findViewById(R.id.habit_event_list_button);
+        showListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewHabitActivity.this, HabitEventActivity.class);
+                startActivity(intent);
             }
         });
     }

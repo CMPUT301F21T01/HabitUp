@@ -48,11 +48,6 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
     FirebaseFirestore db;
     final String TAG = "DEBUG_LOG";
 
-    // Temporary until we fully implement the addHabit button *****
-    Button tempAddHabitBtn;
-    EditText tempAddNameText;
-    //                                                        *****
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +70,6 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         Intent intent = getIntent();
         String username = (String) intent.getStringExtra(Intent.EXTRA_TEXT);
         habitsRef = db.collection(username + "/habits/habitList");
-
-        // Temporary until we fully implement addHabit button *****
-        tempAddNameText = findViewById(R.id.tempAddNameText);
-        tempAddHabitBtn = findViewById(R.id.tempAddHabitBtn);
-        //                                                    *****
 
         // Switch to SearchActivity
         searchBtn.setOnClickListener(new View.OnClickListener() {
@@ -112,31 +102,6 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             @Override
             public void onClick(View view) {
                 new AddHabitFragment().show(getSupportFragmentManager(), "ADD_HABIT");
-            }
-        });
-
-        // Temporary until we fully implement addHabit button                                   *****
-
-        // Add habit button listener
-        tempAddHabitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String habitName = tempAddNameText.getText().toString();
-
-                HashMap<String, String> data = new HashMap<>();
-                data.put("name", habitName);
-
-                habitsRef.document("habit" + String.valueOf(habitDataList.size()))
-                        .set(data)
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.d(TAG, "Document not added: " + e.toString());
-                            }
-                        });
-
-                // Reset EditText view to blank
-                tempAddNameText.setText("");
             }
         });
 
@@ -191,11 +156,14 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException error) {
                 habitDataList.clear();
                 for (QueryDocumentSnapshot doc : documentSnapshots) {
+
+
                     String name = (String) doc.getData().get("name");
                     String startDate = (String) doc.getData().get("start date");
                     String endDate = (String) doc.getData().get("end date");
                     String reason = (String) doc.getData().get("reason");
                     String freq = (String) doc.getData().get("frequency");
+                    if(freq == null) continue;
                     String prog = (String) doc.getData().get("progress");
                     ArrayList<String> frequency = new ArrayList<String>(Arrays.asList(freq.split(",")));
                     int progress = Integer.parseInt(prog);

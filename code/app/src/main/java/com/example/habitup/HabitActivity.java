@@ -48,6 +48,10 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
     FirebaseFirestore db;
     final String TAG = "DEBUG_LOG";
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +75,10 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         String username = (String) intent.getStringExtra(Intent.EXTRA_TEXT);
         habitsRef = db.collection(username + "/habits/habitList");
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         // Switch to SearchActivity
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,8 +113,14 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             }
         });
 
+<<<<<<< Updated upstream
         // view habit
         habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+=======
+
+        // view habit:
+        habitList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+>>>>>>> Stashed changes
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Habit selectedHabit = habitDataList.get(position);

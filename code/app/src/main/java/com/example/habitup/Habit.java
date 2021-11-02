@@ -14,12 +14,6 @@ public class Habit implements Serializable {
     //alex and vivian add your habit event variable here
 
 
-    // Temporary until we fully implement Habit + storage of a Habit in our database
-
-    Habit(String title) {
-        this.title = title;
-    }
-
     Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Integer progress){
         this.title = title;
         this.startDate = startDate;

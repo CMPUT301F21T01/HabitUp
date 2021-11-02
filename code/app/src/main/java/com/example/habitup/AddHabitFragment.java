@@ -216,6 +216,12 @@ public class AddHabitFragment extends DialogFragment {
         long currentDifference = current - sDate.getTime();
 
         float progress = (float) currentDifference/difference * 100;
+        if(progress > 1){
+            progress = 1;
+        }
+        if(progress < 0){
+            progress = 0;
+        }
         newProgress = ((int) progress);
     }
 }

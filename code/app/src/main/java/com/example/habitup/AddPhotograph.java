@@ -25,6 +25,9 @@ public class AddPhotograph extends Activity
     private ImageView imageView;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
+    private Bitmap selectedPhoto;
+    HabitEventInstance habitEventInstance;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -66,6 +69,10 @@ public class AddPhotograph extends Activity
             @Override
             public void onClick(View v)
             {
+                // Refer to the habit event instance
+                habitEventInstance = HabitEventInstance.getInstance();
+                habitEventInstance.setPhoto(selectedPhoto);
+
                 finish();
             }
         });
@@ -96,6 +103,7 @@ public class AddPhotograph extends Activity
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK)
         {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
+            selectedPhoto = photo;
             imageView.setImageBitmap(photo);
         }
 
@@ -106,6 +114,7 @@ public class AddPhotograph extends Activity
             Bitmap bitmap = null;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                selectedPhoto = bitmap;
                 imageView.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block

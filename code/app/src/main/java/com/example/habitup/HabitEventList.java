@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,11 +36,15 @@ class HabitEventList extends ArrayAdapter<HabitEvent> {
 
         HabitEvent habitEvent = habitEvents.get(position);
 
+        TextView habitDate = view.findViewById(R.id.textViewDate);
         TextView habitLocation = view.findViewById(R.id.textViewLocation);
         TextView habitReflection = view.findViewById(R.id.textViewReflection);
+        ImageView habitPhoto = view.findViewById(R.id.imageViewPhoto);
 
+        habitDate.setText(habitEvent.getDate());
         habitLocation.setText(habitEvent.getLocation());
         habitReflection.setText(habitEvent.getReflection());
+        habitPhoto.setImageBitmap(habitEvent.getImage());
 
         return view;
 

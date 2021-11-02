@@ -2,6 +2,7 @@ package com.example.habitup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -10,7 +11,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class HabitEventActivity extends AppCompatActivity implements AddHabitEventFragment.OnFragmentInterationListner {
+public class HabitEventActivity extends AppCompatActivity implements AddHabitEventFragment.OnFragmentInterationListener {
 
 
     ListView habitEventList;
@@ -24,15 +25,15 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
 
         habitEventList = findViewById(R.id.habitEvent_list);
 
-        String []Locations ={"Take a daily nap", "Eat salads", "Smile", "Read a book","Make your bed","Do your homework","Workout"};
-        String []Reflections = {"AB", "BC", "ON", "ON","DS","SD","DS"};
-
+//        String []Locations ={"Take a daily nap", "Eat salads", "Smile", "Read a book","Make your bed","Do your homework","Workout"};
+//        String []Reflections = {"AB", "BC", "ON", "ON","DS","SD","DS"};
+//
 
         habitEventDataList = new ArrayList<>();
 
-        for(int i=0;i<Locations.length;i++){
-            habitEventDataList.add((new HabitEvent(Reflections[i], Locations[i])));
-        }
+//        for(int i=0;i<Locations.length;i++){
+//            habitEventDataList.add((new HabitEvent(Reflections[i], Locations[i])));
+//        }
 
         habitEventAdapter = new HabitEventList(this, habitEventDataList);
 
@@ -40,12 +41,12 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
 
         final FloatingActionButton addCityButton = findViewById(R.id.add_habit_event_button);
         addCityButton.setOnClickListener((v) -> {
-            new AddHabitEventFragment().show(getSupportFragmentManager(), "ADD_CITY");
+            new AddHabitEventFragment().show(getSupportFragmentManager(), "ADD_HABIT_EVENT");
         });
     }
 
-    public void onOkPressed() {
-
+    public void onOkPressed(HabitEvent habitEvent) {
+        habitEventAdapter.add(habitEvent);
     }
 
 }

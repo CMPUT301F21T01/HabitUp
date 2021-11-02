@@ -15,12 +15,14 @@
 
 package com.example.habitup;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,15 +44,22 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.text.DecimalFormat;
+
 /**
  * An activity that displays a Google map with a marker (pin) to indicate a particular location.
  */
 // [START maps_marker_on_map_ready]
-public class AddLocation extends AppCompatActivity
-        implements OnMapReadyCallback {
+public class AddLocation extends AppCompatActivity implements OnMapReadyCallback {
 
     // https://developer.android.com/training/location/retrieve-current
     private FusedLocationProviderClient fusedLocationClient;
+
+    private LatLng location = new LatLng(53.5232, -113.5263);
+    private String selected_location = "53.5232, -113.5263";
+
+    GoogleMap myMap;
+    HabitEventInstance habitEventInstance;
 
     // [START_EXCLUDE]
     // [START maps_marker_get_map_async]
@@ -66,10 +75,18 @@ public class AddLocation extends AppCompatActivity
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        habitEventInstance = HabitEventInstance.getInstance();
+        habitEventInstance.setLocation(selected_location);
+
         Button confirmButton = (Button) this.findViewById(R.id.confirm_location_button);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.v("Location: ", selected_location);
+
+                // Refer to the habit event instance
+                habitEventInstance.setLocation(selected_location);
+
                 finish();
             }
         });
@@ -95,7 +112,7 @@ public class AddLocation extends AppCompatActivity
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
         // [END_EXCLUDE]
-        LatLng location = new LatLng(53.5232, -113.5263);
+        myMap = googleMap;
 
         Marker marker = googleMap.addMarker(
                 new MarkerOptions()
@@ -105,14 +122,17 @@ public class AddLocation extends AppCompatActivity
         );
         // [START_EXCLUDE silent]
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+        float size = googleMap.getMaxZoomLevel();
+        googleMap.setMaxZoomPreference(size);
         // [END_EXCLUDE]
 
         TextView locationText = (TextView) this.findViewById(R.id.location_text);
         double lat = marker.getPosition().latitude;
         double lng = marker.getPosition().longitude;
 
-        String content = lat + ", " + lng;
-        locationText.setText(content);
+        DecimalFormat df = new DecimalFormat("#.0000");
+        selected_location = df.format(lat) + ", " + df.format(lng);
+        locationText.setText(selected_location);
 
         googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener()
         {
@@ -129,8 +149,12 @@ public class AddLocation extends AppCompatActivity
                 double lat = marker.getPosition().latitude;
                 double lng = marker.getPosition().longitude;
 
-                String content = lat + ", " + lng;
-                locationText.setText(content);
+                location = new LatLng(lat, lng);
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+
+                DecimalFormat df = new DecimalFormat("#.0000");
+                selected_location = df.format(lat) + ", " + df.format(lng);
+                locationText.setText(selected_location);
             }
 
             @Override
@@ -143,6 +167,17 @@ public class AddLocation extends AppCompatActivity
 
     }
     // [END maps_marker_on_map_ready_add_marker]
+
+    // Zoom in and zoom out buttons
+    // https://www.youtube.com/watch?v=B4OCSRBFjkM
+    public void onZoom(View view) {
+        if (view.getId() == R.id.zoom_in) {
+            myMap.animateCamera(CameraUpdateFactory.zoomIn());
+        }
+        if (view.getId() == R.id.zoom_out) {
+            myMap.animateCamera(CameraUpdateFactory.zoomOut());
+        }
+    }
 
 }
 // [END maps_marker_on_map_ready]

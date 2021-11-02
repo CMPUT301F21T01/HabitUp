@@ -9,6 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:insetLeft="10dp"
+        android:insetRight="10dp"
         android:text="Add Location" />
 
     <Button
@@ -16,6 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:insetLeft="10dp"
+        android:insetRight="10dp"
         android:text="Add Photograph" />
 
     <EditText
@@ -23,6 +27,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Reflections" />
+        android:hint="Comments" />
 
 </LinearLayout>

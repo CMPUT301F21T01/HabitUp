@@ -105,48 +105,15 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             }
         });
 
-        // view habit:
-        habitList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        // view habit
+        habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Habit selectedHabit = habitDataList.get(position);
                 Intent intent = new Intent(HabitActivity.this, ViewHabitActivity.class);
                 intent.putExtra("habit", selectedHabit);
                 intent.putExtra("position", position);
                 startActivityForResult(intent, 1);
-                return true;
-            }
-        });
-
-
-        // Delete habit (on click) listener
-        habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(HabitActivity.this);
-                alert.setTitle("Delete habit?");
-                final String selectedName = habitDataList.get(pos).getTitle();
-                alert.setMessage("Do you want to delete '" + selectedName + "'?");
-                alert.setNegativeButton("Cancel", null);
-                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Delete from our database
-                        habitsRef.document(selectedName) // CHANGED THIS *********
-                                .delete()
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.d(TAG, "Document failed to be deleted: " + e.toString());
-                                    }
-                                });
-
-                        // Notify adapter of change
-                        habitAdapter.notifyDataSetChanged();
-                    }
-                });
-                alert.show();
             }
         });
 
@@ -202,7 +169,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                 });
     }
 
-    // overriding onStart() for updating info whenever user goes back to MainActivity:
+    // overriding onStart() for updating info whenever user goes back to HabitActivity:
     // used this image ot help me understand how onStart() works: https://developer.android.com/images/activity_lifecycle.png
     @Override
     protected void onStart() {

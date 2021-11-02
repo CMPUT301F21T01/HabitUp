@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class HabitActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
-
+    // comment
     // Variable declarations
     FloatingActionButton searchBtn;
     FloatingActionButton profileBtn;

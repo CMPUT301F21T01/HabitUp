@@ -56,7 +56,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.habit_activity);
 
         // Variable initializations
         habitList = findViewById(R.id.habit_list);

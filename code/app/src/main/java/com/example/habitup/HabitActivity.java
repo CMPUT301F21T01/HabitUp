@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -40,6 +41,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
     FloatingActionButton homeBtn;
     FloatingActionButton addHabitBtn;
     FloatingActionButton realAddButton;
+    TextView userTitle;
     ListView habitList;
     public static ArrayAdapter<Habit> habitAdapter;
     public static ArrayList<Habit> habitDataList;
@@ -59,6 +61,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         profileBtn = findViewById(R.id.profile_activity_btn);
         homeBtn = findViewById(R.id.home_activity_btn);
         addHabitBtn = findViewById(R.id.add_fab);
+        userTitle = findViewById(R.id.user_name);
 
         habitDataList = new ArrayList<>();
         habitAdapter = new HabitList(this, habitDataList);
@@ -70,6 +73,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         Intent intent = getIntent();
         String username = (String) intent.getStringExtra(Intent.EXTRA_TEXT);
         habitsRef = db.collection(username + "/habits/habitList");
+        userTitle.setText(username + "'s Habits");
 
         // Switch to SearchActivity
         searchBtn.setOnClickListener(new View.OnClickListener() {

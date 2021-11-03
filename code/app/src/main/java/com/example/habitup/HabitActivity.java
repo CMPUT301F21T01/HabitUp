@@ -33,13 +33,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class HabitActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
-    // comment
+
     // Variable declarations
     FloatingActionButton searchBtn;
     FloatingActionButton profileBtn;
     FloatingActionButton homeBtn;
     FloatingActionButton addHabitBtn;
-    FloatingActionButton realAddButton;
     ListView habitList;
     public static ArrayAdapter<Habit> habitAdapter;
     public static ArrayList<Habit> habitDataList;
@@ -70,6 +69,10 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         Intent intent = getIntent();
         String username = (String) intent.getStringExtra(Intent.EXTRA_TEXT);
         habitsRef = db.collection(username + "/habits/habitList");
+
+        // UserSyncer implementation testing
+        UserSyncer syncer = UserSyncer.getInstance();
+        User mainUser = syncer.initialize(username, db);
 
         // Switch to SearchActivity
         searchBtn.setOnClickListener(new View.OnClickListener() {

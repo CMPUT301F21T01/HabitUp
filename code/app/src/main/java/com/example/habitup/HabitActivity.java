@@ -41,8 +41,10 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
     FloatingActionButton addHabitBtn;
     ListView habitList;
     public static ArrayAdapter<Habit> habitAdapter;
-    public static ArrayList<Habit> habitDataList;
-    public static CollectionReference habitsRef;
+
+    //public static ArrayList<Habit> habitDataList;
+    public static UserSyncer syncer;
+    public static User mainUser;
 
     FirebaseFirestore db;
     final String TAG = "DEBUG_LOG";
@@ -59,20 +61,22 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         homeBtn = findViewById(R.id.home_activity_btn);
         addHabitBtn = findViewById(R.id.add_fab);
 
-        habitDataList = new ArrayList<>();
-        habitAdapter = new HabitList(this, habitDataList);
-        habitList.setAdapter(habitAdapter);
-
         db = FirebaseFirestore.getInstance();
 
         // Get username passed from intent that started this activity
         Intent intent = getIntent();
         String username = (String) intent.getStringExtra(Intent.EXTRA_TEXT);
-        habitsRef = db.collection(username + "/habits/habitList");
 
         // UserSyncer implementation testing
-        UserSyncer syncer = UserSyncer.getInstance();
-        User mainUser = syncer.initialize(username, db);
+        syncer = UserSyncer.getInstance();
+        mainUser = syncer.initialize(username, db);
+
+        habitAdapter = new HabitList(this, mainUser.getHabits());
+        habitList.setAdapter(habitAdapter);
+
+        //habitDataList = new ArrayList<>();
+        //habitAdapter = new HabitList(this, habitDataList);
+        //habitList.setAdapter(habitAdapter);
 
         // Switch to SearchActivity
         searchBtn.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +116,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Habit selectedHabit = habitDataList.get(position);
+                Habit selectedHabit = mainUser.getHabits().get(position);
                 Intent intent = new Intent(HabitActivity.this, ViewHabitActivity.class);
                 intent.putExtra("habit", selectedHabit);
                 intent.putExtra("position", position);
@@ -120,29 +124,16 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             }
         });
 
-        // Collection event listener
-        habitsRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        // Habits Collection Listener
+        syncer.getHabitsRef().addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException error) {
-                habitDataList.clear();
-                for (QueryDocumentSnapshot doc : documentSnapshots) {
-
-
-                    String name = (String) doc.getData().get("name");
-                    String startDate = (String) doc.getData().get("start date");
-                    String endDate = (String) doc.getData().get("end date");
-                    String reason = (String) doc.getData().get("reason");
-                    String freq = (String) doc.getData().get("frequency");
-                    if(freq == null) continue;
-                    String prog = (String) doc.getData().get("progress");
-                    ArrayList<String> frequency = new ArrayList<String>(Arrays.asList(freq.split(",")));
-                    int progress = Integer.parseInt(prog);
-
-
-                    // Add each habit from database
-                    habitDataList.add(new Habit(name, startDate, endDate, frequency, reason, progress));
-                }
-                habitAdapter.notifyDataSetChanged();
+                syncer.syncHabits(new UserSyncer.FirebaseCallback() {
+                    @Override
+                    public void onCallback() {
+                        habitAdapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
     }
@@ -161,7 +152,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         data.put("reason", newHabit.getReason());
         data.put("progress", newHabit.getProgress().toString());
 
-        habitsRef.document(newHabit.getTitle())  // CHANGED THIS ******
+        syncer.getHabitsRef().document(newHabit.getTitle())  // CHANGED THIS ******
                 //"habit" + String.valueOf(habitDataList.size())
                 .set(data)
                 .addOnFailureListener(new OnFailureListener() {
@@ -178,8 +169,8 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
     protected void onStart() {
         super.onStart();
 
-        // update the medicine list and the adapter:
-        habitAdapter = new HabitList(this, habitDataList);
+        // update the medicine list and the adapter: ???
+        habitAdapter = new HabitList(this, mainUser.getHabits());
         habitList.setAdapter(habitAdapter);
     }
 
@@ -189,8 +180,8 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             if(resultCode == RESULT_OK) {
                 if (data.getExtras().containsKey("position") && !data.getExtras().containsKey("editedHabit")) {
                     int pos = data.getIntExtra("position", -1);
-                    String selectedName = habitDataList.get(pos).getTitle();
-                    habitsRef.document(selectedName)
+                    String selectedName = mainUser.getHabits().get(pos).getTitle();
+                    syncer.getHabitsRef().document(selectedName)
                             .delete()
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -205,9 +196,9 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                 if (data.getExtras().containsKey("editedHabit")) {
                     Habit editedHabit = (Habit) data.getSerializableExtra("editedHabit");
                     int pos = data.getIntExtra("position", -1);
-                    String selectedName = habitDataList.get(pos).getTitle();
+                    String selectedName = mainUser.getHabits().get(pos).getTitle();
 
-                    habitsRef.document(selectedName)
+                    syncer.getHabitsRef().document(selectedName)
                             .delete()
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -227,7 +218,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                     updateData.put("reason", editedHabit.getReason());
                     updateData.put("progress", editedHabit.getProgress().toString());
 
-                    habitsRef.document(editedHabit.getTitle())
+                    syncer.getHabitsRef().document(editedHabit.getTitle())
                             .set(updateData)
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override

@@ -1,5 +1,6 @@
 package com.example.habitup;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -13,14 +14,12 @@ public class User {
     private ArrayList<String> requests;
     private ArrayList<Habit> habits;
 
-    public User
-            (String username, String name, ArrayList<String> friends, ArrayList<String> requests) {
-
-        this.username = username;
-        this.name = name;
-        this.friends = friends;
-        this.requests = requests;
-        this.habits = null;             // To be implemented later
+    public User() {
+        this.username   = null;
+        this.name       = null;
+        this.friends    = new ArrayList<>();
+        this.requests   = new ArrayList<>();
+        this.habits     = new ArrayList<>();
     }
 
     /* Getters & Setters */
@@ -63,5 +62,21 @@ public class User {
 
     public void setHabits(ArrayList<Habit> habits) {
         this.habits = habits;
+    }
+
+    public void addHabit(Habit habit) {
+        this.habits.add(habit);
+    }
+
+    public void addFriend(String name) {
+        this.friends.add(name);
+    }
+
+    public void addRequest(String name) {
+        this.requests.add(name);
+    }
+
+    public void clearHabits() {
+        this.habits.clear();
     }
 }

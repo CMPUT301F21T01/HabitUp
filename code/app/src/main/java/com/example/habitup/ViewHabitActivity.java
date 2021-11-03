@@ -43,7 +43,7 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
         Habit habit = (Habit) myIntent.getSerializableExtra("habit");
         int positionOfHabit = myIntent.getIntExtra("position", -1);
 
-        dataList = HabitActivity.habitDataList;
+        dataList = HabitActivity.mainUser.getHabits();
         adapter = HabitActivity.habitAdapter;
         title = findViewById(R.id.view_habit_title);
         reason = findViewById(R.id.view_reason);

@@ -40,6 +40,18 @@ public class HabitEventInstance {
         myReflection = reflection;
     }
 
+    public String getLocation() {
+        return myLocation;
+    }
+
+    public String getReflection() {
+        return myReflection;
+    }
+
+    public Bitmap getPhoto() {
+        return myPhotograph;
+    }
+
     public void setLocation(String location) {
         myLocation = location;
     }
@@ -48,8 +60,20 @@ public class HabitEventInstance {
         myPhotograph = photo;
     }
 
+    public void setHabitEvent(HabitEvent habitEvent) {
+        this.habitEvent = habitEvent;
+    }
+
     public HabitEvent getHabitEvent() {
         habitEvent = new HabitEvent(myReflection, myLocation, myPhotograph);
+        return habitEvent;
+    }
+
+    public HabitEvent editHabitEvent() {
+        habitEvent.setLocation(myLocation);
+        habitEvent.setReflection(myReflection);
+        habitEvent.setImage(myPhotograph);
+
         return habitEvent;
     }
 }

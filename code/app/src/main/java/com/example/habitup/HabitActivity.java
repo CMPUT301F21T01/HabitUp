@@ -113,7 +113,12 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                 Intent intent = new Intent(HabitActivity.this, ViewHabitActivity.class);
                 intent.putExtra("habit", selectedHabit);
                 intent.putExtra("position", position);
-                startActivityForResult(intent, 1);
+                //need the username as well, for habitEvent later
+                intent.putExtra("username", username);
+
+                //i don't know what the below line is but its depreciated?
+                //startActivityForResult(intent, 1);
+                startActivity(intent);
             }
         });
 

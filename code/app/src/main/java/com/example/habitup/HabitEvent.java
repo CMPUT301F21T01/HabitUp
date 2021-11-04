@@ -5,6 +5,11 @@ import android.graphics.Bitmap;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * This is the class for HabitEvent, storing the variables each HabitEvent needs
+ * it as well has constructors and the getters and setters
+ * Known Issues: need to edit the main constructor to accept a Date field that can be null(read comment for constructor below)
+ */
 public class HabitEvent  {
 
     private String Date;
@@ -12,6 +17,12 @@ public class HabitEvent  {
     private String Reflection;
     private String Location;
 
+    /**
+     * Constructor for HabitEvent. If no date is provided, we generate a date from current time
+     * @param reflection
+     * @param location
+     * @param image
+     */
     public HabitEvent(String reflection, String location, Bitmap image) {
 
         // Get current date
@@ -23,6 +34,14 @@ public class HabitEvent  {
         Reflection = reflection;
         Location = location;
         Image = image;
+    }
+
+    //this is a temporary constructor for testing without an image
+    public  HabitEvent(String reflection, String location, String date){
+        Date = date;
+        Reflection = reflection;
+        Location = location;
+
     }
 
     public String getReflection() {

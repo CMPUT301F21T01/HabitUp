@@ -84,10 +84,7 @@ public class SearchActivity extends AppCompatActivity {
                                     boolean userFound = false;
                                     for(DocumentSnapshot doc : task.getResult()) {
                                         if(doc.getId().equals("auth")) {
-                                            if(!userFound) {
-                                                Log.d(g_TAG, "Found user!");
-                                                userFound = true;
-                                            }
+                                            if(!userFound) userFound = true;
 
                                             // Get name of user and add to list
                                             String name = (String)doc.getData().get("name");

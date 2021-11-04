@@ -45,6 +45,9 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
     public static ArrayList<Habit> habitDataList;
     public static CollectionReference habitsRef;
 
+    public static UserSyncer syncer;
+    public static User mainUser;
+
     FirebaseFirestore db;
     final String TAG = "DEBUG_LOG";
 
@@ -71,6 +74,10 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         String username = (String) intent.getStringExtra(Intent.EXTRA_TEXT);
         habitsRef = db.collection(username + "/habits/habitList");
 
+        // UserSyncer implementation testing
+        syncer = UserSyncer.getInstance();
+        mainUser = syncer.initialize(username, db);
+
         // Switch to SearchActivity
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,11 +92,16 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             @Override
             public void onClick(View view) {
                 Intent profileSwitchIntent = new Intent(view.getContext(), ProfileActivity.class);
-                // Get and pass friends
 
-                // Get and pass friend requests
+                // Get friends, requests and name
+                ArrayList<String> friends  = mainUser.getFriends();
+                ArrayList<String> requests = mainUser.getRequests();
+                String name                = mainUser.getName();
 
-                // Get and pass name
+                // Put into intent
+                profileSwitchIntent.putExtra("friends", friends);
+                profileSwitchIntent.putExtra("requests", requests);
+                profileSwitchIntent.putExtra("name", name);
 
                 // Switch activities
                 startActivity(profileSwitchIntent);

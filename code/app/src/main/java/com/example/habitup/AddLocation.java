@@ -75,8 +75,11 @@ public class AddLocation extends AppCompatActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        // If the location is not null, set preview image to current image
         habitEventInstance = HabitEventInstance.getInstance();
-        habitEventInstance.setLocation(selected_location);
+        if (habitEventInstance.getLocation() != "") {
+            selected_location = habitEventInstance.getLocation();
+        }
 
         Button confirmButton = (Button) this.findViewById(R.id.confirm_location_button);
         confirmButton.setOnClickListener(new View.OnClickListener() {

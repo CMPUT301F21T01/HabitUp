@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+
+import android.widget.ImageButton;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -74,7 +77,17 @@ class HabitEventList extends ArrayAdapter<HabitEvent> {
                 ((HabitEventActivity)context).onDeletePressed(position);
             }
         });
+
+        // Edit habit event button
+        // https://stackoverflow.com/questions/3045872/listview-and-buttons-inside-listview
+        ImageButton btn = view.findViewById(R.id.edit_habit_event_button);
+        btn.setFocusable(false);
+        btn.setClickable(false);
+
+
         return view;
 
     }
+
+
 }

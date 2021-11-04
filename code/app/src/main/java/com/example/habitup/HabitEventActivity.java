@@ -8,9 +8,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
+
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,6 +28,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -35,7 +41,10 @@ import java.util.HashMap;
  *          need to give each HabitEvent a 'title' that can assure they can be unique and so we can order then in Firestore by recently created
  *          as of now we use 'Reflection' as a title but the issue with that is Reflection must be unique for each HabitEvent and each HabitEvent Reflection now has to be unique
  */
-public class HabitEventActivity extends AppCompatActivity implements AddHabitEventFragment.OnFragmentInterationListener {
+
+
+public class HabitEventActivity extends AppCompatActivity implements AddHabitEventFragment.OnFragmentInterationListener, EditHabitEventFragment.OnFragmentInterationListener {
+
 
 
     ListView habitEventList;
@@ -109,7 +118,25 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
             new AddHabitEventFragment().show(getSupportFragmentManager(), "ADD_HABIT_EVENT");
         });
 
+        
+        // Handle edit button
+        habitEventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> list, View v, int pos, long id) {
+                HabitEventInstance habitEventInstance = HabitEventInstance.getInstance();
+                HabitEvent currentHabitEvent = habitEventDataList.get(pos);
 
+                habitEventInstance.setHabitEvent(currentHabitEvent);
+                habitEventInstance.setLocation(currentHabitEvent.getLocation());
+                habitEventInstance.setReflection(currentHabitEvent.getReflection());
+                habitEventInstance.setPhoto(currentHabitEvent.getImage());
+
+//                ImageButton editHabitEventButton = findViewById(R.id.edit_habit_event_button);
+//                editHabitEventButton.setOnClickListener((u) -> {
+                new EditHabitEventFragment().show(getSupportFragmentManager(), "EDIT_HABIT_EVENT");
+//                });
+
+            }
+        });
     }
 
 
@@ -171,6 +198,16 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
                         Log.d(TAG, "Document failed to be deleted: " + e.toString());
                     }
                 });
+
+
+
+    }
+
+
+
+    public void onEditOkPressed(HabitEvent habitEvent) {
+        habitEventAdapter.notifyDataSetChanged();
+
     }
 
 }

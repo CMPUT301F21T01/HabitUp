@@ -6,18 +6,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+
 import android.widget.ImageButton;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 
+/**
+ * HabitEventList communicates with HabitEvent, HabitEventContent, and HabitEventActivity in order to display a list of
+ * HabitEvents for a specific Habit.
+ * Known Issues: None so far!
+ */
 class HabitEventList extends ArrayAdapter<HabitEvent> {
     private ArrayList<HabitEvent> habitEvents;
     private Context context;
+
 
     public HabitEventList(Context context, ArrayList<HabitEvent> habitEvents){
         super(context,0, habitEvents);
@@ -25,7 +36,14 @@ class HabitEventList extends ArrayAdapter<HabitEvent> {
         this.context = context;
     }
 
-
+    /**
+     * the getView loads information into the display view content from each HabitEvent
+     * and sets a listener for the deleteButton
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -48,11 +66,24 @@ class HabitEventList extends ArrayAdapter<HabitEvent> {
         habitReflection.setText(habitEvent.getReflection());
         habitPhoto.setImageBitmap(habitEvent.getImage());
 
+
+        //delete HabitEvent stuff here
+        //button action
+        Button deleteButton = (Button) view.findViewById(R.id.delete_button);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //this assumes the list is 'alive' on the HabitEventActivity
+                ((HabitEventActivity)context).onDeletePressed(position);
+            }
+        });
+
         // Edit habit event button
         // https://stackoverflow.com/questions/3045872/listview-and-buttons-inside-listview
         ImageButton btn = view.findViewById(R.id.edit_habit_event_button);
         btn.setFocusable(false);
         btn.setClickable(false);
+
 
         return view;
 

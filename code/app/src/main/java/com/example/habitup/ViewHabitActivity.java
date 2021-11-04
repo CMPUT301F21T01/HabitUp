@@ -96,7 +96,15 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
         showListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //HabitEventActivity needs username + habitName passed in!
+
+
                 Intent intent = new Intent(ViewHabitActivity.this, HabitEventActivity.class);
+                //note I use myIntent, not intent to grab username
+                String username = (String) myIntent.getStringExtra("username");
+
+                intent.putExtra("username", username);
+                intent.putExtra("habitName", habit.getTitle());
                 startActivity(intent);
             }
         });

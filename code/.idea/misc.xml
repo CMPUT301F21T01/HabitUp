@@ -3,15 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/activity_add_location.xml" value="0.13020833333333334" />
-        <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/activity_add_photograph.xml" value="0.13020833333333334" />
-        <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/activity_habit_event.xml" value="0.13020833333333334" />
-        <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/activity_main.xml" value="0.13020833333333334" />
-        <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/activity_maps.xml" value="0.13020833333333334" />
-        <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/activity_search.xml" value="0.13020833333333334" />
-        <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/activity_user_controller.xml" value="0.13020833333333334" />
-        <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/add_habit_event_fragment_layout.xml" value="0.8" />
-        <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/add_habit_fragment_layout.xml" value="0.13020833333333334" />
+
         <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/content.xml" value="0.13020833333333334" />
         <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/habiteventcontent.xml" value="0.13020833333333334" />
         <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/view_habit.xml" value="0.13020833333333334" />
@@ -35,6 +27,11 @@
         <entry key="app/src/main/res/layout/view_habit.xml" value="0.12715298885511653" />
       </map>
     </option>
+  </component>
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../../Javadoctemps" />
+    <option name="OTHER_OPTIONS" value="javadoc -encoding utf-8" />
+    <option name="OPTION_INCLUDE_LIBS" value="true" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

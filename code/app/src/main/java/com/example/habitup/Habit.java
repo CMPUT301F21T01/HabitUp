@@ -12,7 +12,7 @@ public class Habit implements Serializable {
     private String reason;
     private Integer progress;
     //alex and vivian add your habit event variable here
-
+    //alex: didn't have too...
 
     // Temporary until we fully implement Habit + storage of a Habit in our database
 

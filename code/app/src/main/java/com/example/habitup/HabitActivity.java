@@ -92,11 +92,16 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             @Override
             public void onClick(View view) {
                 Intent profileSwitchIntent = new Intent(view.getContext(), ProfileActivity.class);
-                // Get and pass friends
 
-                // Get and pass friend requests
+                // Get friends, requests and name
+                ArrayList<String> friends  = mainUser.getFriends();
+                ArrayList<String> requests = mainUser.getRequests();
+                String name                = mainUser.getName();
 
-                // Get and pass name
+                // Put into intent
+                profileSwitchIntent.putExtra("friends", friends);
+                profileSwitchIntent.putExtra("requests", requests);
+                profileSwitchIntent.putExtra("name", name);
 
                 // Switch activities
                 startActivity(profileSwitchIntent);

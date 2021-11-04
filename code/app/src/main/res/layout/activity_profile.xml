@@ -50,5 +50,18 @@
         android:layout_marginRight="5dp"
         tools:ignore="MissingConstraints" />
 
+    <TextView
+        android:id="@+id/userInitial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:textColor="#FFFFFF"
+        android:textSize="48sp"
+        android:hint="X"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_capture_photo"
+        app:layout_constraintEnd_toEndOf="@+id/btn_capture_photo"
+        app:layout_constraintStart_toStartOf="@+id/btn_capture_photo"
+        app:layout_constraintTop_toTopOf="@+id/btn_capture_photo" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

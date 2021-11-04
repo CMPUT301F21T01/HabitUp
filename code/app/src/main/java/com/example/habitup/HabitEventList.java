@@ -78,12 +78,15 @@ class HabitEventList extends ArrayAdapter<HabitEvent> {
             }
         });
 
-        // Edit habit event button
-        // https://stackoverflow.com/questions/3045872/listview-and-buttons-inside-listview
-        ImageButton btn = view.findViewById(R.id.edit_habit_event_button);
-        btn.setFocusable(false);
-        btn.setClickable(false);
-
+        // edit HabitEvent stuff here
+        ImageButton editButton = (ImageButton) view.findViewById(R.id.edit_habit_event_button);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //this assumes the list is 'alive' on the HabitEventActivity
+                ((HabitEventActivity)context).onEditPressed(position);
+            }
+        });
 
         return view;
 

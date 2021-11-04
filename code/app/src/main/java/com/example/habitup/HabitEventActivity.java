@@ -45,7 +45,7 @@ import java.util.HashMap;
 
 public class HabitEventActivity extends AppCompatActivity implements AddHabitEventFragment.OnFragmentInterationListener, EditHabitEventFragment.OnFragmentInterationListener {
 
-
+    HabitEventInstance habitEventInstance = HabitEventInstance.getInstance("", "");
 
     ListView habitEventList;
     ArrayAdapter<HabitEvent> habitEventAdapter;
@@ -113,32 +113,18 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
             }
         });
 
-        final FloatingActionButton addCityButton = findViewById(R.id.add_habit_event_button);
-        addCityButton.setOnClickListener((v) -> {
+        // add HabitEvent
+        final FloatingActionButton addHabitEventButton = findViewById(R.id.add_habit_event_button);
+        addHabitEventButton.setOnClickListener((v) -> {
             new AddHabitEventFragment().show(getSupportFragmentManager(), "ADD_HABIT_EVENT");
         });
 
-        
-        // Handle edit button
-        habitEventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> list, View v, int pos, long id) {
-                HabitEventInstance habitEventInstance = HabitEventInstance.getInstance();
-                HabitEvent currentHabitEvent = habitEventDataList.get(pos);
-
-                habitEventInstance.setHabitEvent(currentHabitEvent);
-                habitEventInstance.setLocation(currentHabitEvent.getLocation());
-                habitEventInstance.setReflection(currentHabitEvent.getReflection());
-                habitEventInstance.setPhoto(currentHabitEvent.getImage());
-
-//                ImageButton editHabitEventButton = findViewById(R.id.edit_habit_event_button);
-//                editHabitEventButton.setOnClickListener((u) -> {
-                new EditHabitEventFragment().show(getSupportFragmentManager(), "EDIT_HABIT_EVENT");
-//                });
-
-            }
+        // back to previous activity
+        final ImageButton backHabitEventButton = findViewById(R.id.back_habit_event_button);
+        backHabitEventButton.setOnClickListener((v) -> {
+            finish();
         });
     }
-
 
     /**
      * the onStart function ensures that when a user returns back to this Activity from anywhere, the HabitEventList gets updated accordingly
@@ -198,9 +184,26 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
                         Log.d(TAG, "Document failed to be deleted: " + e.toString());
                     }
                 });
+    }
 
 
+    // edit HabitEvent code
+    public void onEditPressed(int position){
+        //get the habitEvent relating to the position of the habit
+        HabitEvent currentHabitEvent = habitEventDataList.get(position);
 
+        // Update habit event instance with current habit event
+        HabitEventInstance habitEventInstance = HabitEventInstance.getInstance();
+
+        habitEventInstance.setHabitEvent(currentHabitEvent);
+        habitEventInstance.setDate(currentHabitEvent.getDate());
+        habitEventInstance.setLocation(currentHabitEvent.getLocation());
+        habitEventInstance.setReflection(currentHabitEvent.getReflection());
+        habitEventInstance.setPhoto(currentHabitEvent.getImage());
+
+        Intent i = new Intent(HabitEventActivity.this, ViewHabitEventActivity.class);
+        i.putExtra("pos", position);
+        startActivity(i);
     }
 
 

@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.habitup">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,10 +14,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HabitUp">
         <activity
+            android:name=".RequestsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewHabitEventActivity"
+            android:exported="false" />
+        <activity
             android:name=".UserControllerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -25,15 +36,13 @@
             android:exported="false" />
         <activity
             android:name=".HabitActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".HabitEventActivity"
             android:exported="false" />
-		<activity
+        <activity
             android:name=".ViewHabitActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".MapsActivity"
             android:exported="false"
@@ -51,12 +60,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
     </application>
-
-    <!-- DON'T DELETE! Google map API and photo permission related stuff by Vivian -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>

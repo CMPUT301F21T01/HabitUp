@@ -33,7 +33,15 @@ public class AddPhotograph extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_photograph);
-        this.imageView = (ImageView)this.findViewById(R.id.image_preview);
+
+        this.imageView = (ImageView)this.findViewById(R.id.habit_event_photo);
+
+        // If the image is not null, set preview image to current image
+        habitEventInstance = HabitEventInstance.getInstance();
+        if (habitEventInstance.getPhoto() != null) {
+            selectedPhoto = habitEventInstance.getPhoto();
+            this.imageView.setImageBitmap(selectedPhoto);
+        }
 
         Button photoButton = (Button) this.findViewById(R.id.camera_button);
         photoButton.setOnClickListener(new View.OnClickListener()
@@ -63,14 +71,13 @@ public class AddPhotograph extends Activity
             }
         });
 
-        Button addButton = (Button) this.findViewById(R.id.confirm_photo_button);
+        Button addButton = (Button) this.findViewById(R.id.habit_event_back_button);
         addButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 // Refer to the habit event instance
-                habitEventInstance = HabitEventInstance.getInstance();
                 habitEventInstance.setPhoto(selectedPhoto);
 
                 finish();

@@ -12,7 +12,7 @@ public class Habit implements Serializable {
     private String reason;
     private Integer progress;
     //alex and vivian add your habit event variable here
-
+    //alex: didn't have too...
 
     Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Integer progress){
         this.title = title;

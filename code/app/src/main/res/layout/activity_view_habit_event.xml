@@ -6,28 +6,43 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
+    <TextView
+        android:id="@+id/habit_event_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:textSize="20sp" />
+
     <ImageView
         android:id="@+id/habit_event_photo"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="300dp"
         tools:srcCompat="@tools:sample/avatars"></ImageView>
 
-    <Button
-        android:id="@+id/camera_button"
+    <TextView
+        android:id="@+id/habit_event_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Take Photo"></Button>
+        android:text="Location"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/habit_event_reflection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reflection"
+        android:textSize="20sp" />
 
     <Button
-        android:id="@+id/album_button"
+        android:id="@+id/habit_event_edit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Choose From Album"></Button>
+        android:text="Edit"></Button>
 
     <Button
         android:id="@+id/habit_event_back_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Confirm Photo"></Button>
+        android:text="Back"></Button>
 
 </LinearLayout>

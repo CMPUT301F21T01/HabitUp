@@ -59,10 +59,10 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
                 habitEventInstance.setReflection(currentHabitEvent.getReflection());
                 habitEventInstance.setPhoto(currentHabitEvent.getImage());
 
-                final ImageButton editHabitEventButton = findViewById(R.id.edit_habit_event_button);
-                editHabitEventButton.setOnClickListener((u) -> {
-                    new EditHabitEventFragment().show(getSupportFragmentManager(), "EDIT_HABIT_EVENT");
-                });
+//                ImageButton editHabitEventButton = findViewById(R.id.edit_habit_event_button);
+//                editHabitEventButton.setOnClickListener((u) -> {
+                new EditHabitEventFragment().show(getSupportFragmentManager(), "EDIT_HABIT_EVENT");
+//                });
 
             }
         });

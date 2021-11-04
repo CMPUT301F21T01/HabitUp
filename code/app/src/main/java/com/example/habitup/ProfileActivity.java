@@ -32,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity{
         viewRequestsBtn = findViewById(R.id.view_requests_button);
         friendsList = findViewById(R.id.friend_list);
 
-        String []friends = {"static_jacob39", "static_blake_o32", "static_katie_j"};
+        String []friends = {"static_jacob39", "static_blake_o32", "static_katie_j"}; //will come from db
 
         friendsDataList = new ArrayList<>();
         friendsDataList.addAll(Arrays.asList(friends));

@@ -34,8 +34,8 @@
         android:layout_below="@+id/addHabitTitle"
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/habitTitle"
-        android:textSize="30sp"
-        android:maxLength="20">
+        android:maxLength="20"
+        android:textSize="30sp">
 
     </EditText>
 
@@ -56,11 +56,11 @@
         android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_menu_my_calendar"
         android:layout_below="@+id/habitTitle"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="45dp"
         android:layout_toEndOf="@+id/startTitle"
-        android:layout_marginStart="5dp"/>
+        app:srcCompat="@android:drawable/ic_menu_my_calendar" />
 
     <TextView
         android:id="@+id/start_text"
@@ -285,8 +285,8 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="100dp"
         android:layout_toEndOf="@+id/reasonTitle"
-        android:textSize="30sp"
-        android:maxLength="30">
+        android:maxLength="30"
+        android:textSize="30sp">
 
     </EditText>
 

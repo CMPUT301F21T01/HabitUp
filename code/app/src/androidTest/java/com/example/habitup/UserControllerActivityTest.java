@@ -34,7 +34,7 @@ public class UserControllerActivityTest {
      * along with 'sign in' button.
      */
     @Test
-    public void checkTitle() {
+    public void testDisplay() {
         solo.assertCurrentActivity("Wrong activity.", UserControllerActivity.class);
         assertTrue(solo.searchText("HabitUp"));
         assertTrue(solo.searchText("Enter a username"));

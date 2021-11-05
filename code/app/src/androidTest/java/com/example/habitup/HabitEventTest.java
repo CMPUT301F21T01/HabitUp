@@ -3,7 +3,10 @@ package com.example.habitup;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -11,13 +14,16 @@ import androidx.test.rule.ActivityTestRule;
 import com.robotium.solo.Solo;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 
 /**
  * Tests for HabitEvent and other 'Event' classes
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class HabitEventTest {
     private Solo solo;
 
@@ -43,21 +49,29 @@ public class HabitEventTest {
         solo.clickOnButton("Habit Event List");
     }
 
-    /**
-     * Runs all tests sequentially. Add @Test at start to run test.
-     */
-
-    public void testAllSequentially() {
-        testAddHabitEvent();
-    }
 
     @Test
-    public void testAddHabitEvent() {
+    public void aTestAddHabitEvent() {
         assertTrue(solo.waitForActivity(HabitEventActivity.class, 2000));
         solo.clickOnView(solo.getView(R.id.add_habit_event_button));
         solo.enterText((EditText) solo.getView(R.id.add_reflections), "ADDEVENTTEST");
         solo.clickOnButton("OK");
         assertTrue(solo.searchText("ADDEVENTTEST"));
+    }
+
+    //this test assumes the ADDEVENTTEST habitEvent is added from the previous test,
+    // and that there is no other habitEvent with the same name already
+    @Test
+    public void bTestDeleteHabitEvent() {
+
+            assertTrue(solo.searchText("ADDEVENTTEST"));
+            // Delete habitEvent, assert it is no longer in the ListView
+            ListView listView=(ListView)solo.getView(R.id.habitEvent_list);
+            View view=listView.getChildAt(listView.getChildCount()-1);
+            Button deleteButton = (Button)view.findViewById(R.id.delete_button);
+            solo.clickOnView(deleteButton);
+            assertFalse(solo.searchText("ADDEVENTTEST"));
+
     }
 }
 

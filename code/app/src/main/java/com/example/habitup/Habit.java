@@ -3,6 +3,11 @@ package com.example.habitup;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * This is the class for the creating a Habit object, storing the variables each Habit needs
+ * as well as containing constructors for the getters and setters.
+ * Known Issues: None so far...
+ */
 public class Habit implements Serializable {
 
     private String title;
@@ -14,7 +19,16 @@ public class Habit implements Serializable {
     //alex and vivian add your habit event variable here
     //alex: didn't have too...
 
-    Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Integer progress){
+    /**
+     * public constructor for Habit.
+     * @param title name of habit
+     * @param startDate starting date of habit
+     * @param endDate ending date of habit
+     * @param frequency how many times a week the habit occurs
+     * @param reason the user's reason for completing the habit
+     * @param progress the user's progress over the the entire time they are completeing the habit
+     */
+    public Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Integer progress){
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;

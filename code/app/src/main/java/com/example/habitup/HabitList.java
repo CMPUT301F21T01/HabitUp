@@ -12,13 +12,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.time.LocalDate;
-import java.util.Calendar;
-
 import org.w3c.dom.Text;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 
+/**
+ * HabitEventList acts as HabitActivity's adapter as it is used to display each habit's content
+ * in the habit's list in HabitActivity.
+ * Known Issues: None so far...
+ */
 public class HabitList extends ArrayAdapter<Habit> {
 
     private ArrayList<Habit> habits;
@@ -30,11 +34,17 @@ public class HabitList extends ArrayAdapter<Habit> {
         this.context = context;
     }
 
-
+    /**
+     * The getView loads information into the display view content from each Habit
+     * and tests to see if any habit is due today.
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//        return super.getView(position, convertView, parent);
         View view = convertView;
 
         if(view == null){
@@ -53,7 +63,7 @@ public class HabitList extends ArrayAdapter<Habit> {
         progressText.setText(habit.getProgress() + "%");
 
 
-        // changing text based on if habit is due today
+        // changing bg color based on if habit is due today:
         Calendar calendar = Calendar.getInstance();
         String day = LocalDate.now().getDayOfWeek().name();
         if (habit.getFrequency().contains("M") && day.equals("MONDAY"))
@@ -72,9 +82,6 @@ public class HabitList extends ArrayAdapter<Habit> {
             view.setBackgroundColor(Color.BLACK);
         else
             view.setBackgroundColor(Color.parseColor("#2B4470"));
-
-
-
 
         return view;
 

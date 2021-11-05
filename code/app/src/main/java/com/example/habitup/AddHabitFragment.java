@@ -29,8 +29,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * This class is a a dialog fragment that handles the UI and information for when
+ * a user wants to add a new habit.
+ * It displays add_habit_fragment_layout.xml.
+ * Issues: None so far...
+ */
 public class AddHabitFragment extends DialogFragment {
-
+    // initialize variables:
     private EditText title;
     private EditText reason;
     private TextView startText;
@@ -60,6 +66,7 @@ public class AddHabitFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
+        // Assigning and initializing variables:
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_habit_fragment_layout, null);
         title = view.findViewById(R.id.habitEdit);
         reason = view.findViewById(R.id.reasonEdit);
@@ -67,7 +74,7 @@ public class AddHabitFragment extends DialogFragment {
         ImageButton endButton = view.findViewById(R.id.endButton);
         startText = view.findViewById(R.id.start_text);
         endText = view.findViewById(R.id.end_text);
-
+        // Assigning checkbox variables:
         uCheck = view.findViewById(R.id.sunday_check);
         mCheck = view.findViewById(R.id.monday_check);
         tCheck = view.findViewById(R.id.tuesday_check);
@@ -77,6 +84,8 @@ public class AddHabitFragment extends DialogFragment {
         sCheck = view.findViewById(R.id.saturday_check);
         daysSelected = new ArrayList<>();
 
+        // Checking all weekday checkboxes to see if user pressed them
+        // and adds them to a daysSelected list if pressed:
         uCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +95,6 @@ public class AddHabitFragment extends DialogFragment {
                     daysSelected.remove("U");
             }
         });
-
         mCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +104,6 @@ public class AddHabitFragment extends DialogFragment {
                     daysSelected.remove("M");
             }
         });
-
         tCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +113,6 @@ public class AddHabitFragment extends DialogFragment {
                     daysSelected.remove("T");
             }
         });
-
         wCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +122,6 @@ public class AddHabitFragment extends DialogFragment {
                     daysSelected.remove("W");
             }
         });
-
         rCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,7 +131,6 @@ public class AddHabitFragment extends DialogFragment {
                     daysSelected.remove("R");
             }
         });
-
         fCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,7 +140,6 @@ public class AddHabitFragment extends DialogFragment {
                     daysSelected.remove("F");
             }
         });
-
         sCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,7 +150,7 @@ public class AddHabitFragment extends DialogFragment {
             }
         });
 
-
+        // Get user's selected date if StartDate button is clicked:
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -155,6 +158,7 @@ public class AddHabitFragment extends DialogFragment {
             }
         });
 
+        // Get user's selected date if EndDate button is clicked:
         endButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,6 +184,10 @@ public class AddHabitFragment extends DialogFragment {
                 }).create();
     }
 
+    /**
+     * This method displays a DatepickerDialog and gets the date selected by user.
+     * @param setDate the selected date from user
+     */
     public void getCurrentDate(TextView setDate) {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
@@ -198,6 +206,11 @@ public class AddHabitFragment extends DialogFragment {
         datePickerDialog.show();
     }
 
+    /**
+     * This method calculates and sets the progress for a newly added habit.
+     * @param startString the starting date for a habit
+     * @param endString the ending date for a habit
+     */
     public void setProgress(String startString, String endString){
         Date sDate = new Date();
         Date eDate = new Date();
@@ -215,9 +228,9 @@ public class AddHabitFragment extends DialogFragment {
         long difference = eDate.getTime() - sDate.getTime();
         long currentDifference = current - sDate.getTime();
 
-        float progress = (float) currentDifference/difference * 100;
+        float progress = (float) ((currentDifference/difference) * 100);
         if(progress > 100){
-            progress = 1;
+            progress = 100;
         }
         if(progress < 0){
             progress = 0;

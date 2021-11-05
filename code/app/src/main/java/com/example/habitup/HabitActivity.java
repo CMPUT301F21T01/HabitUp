@@ -33,14 +33,17 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * This class manages the HabitActivity.xml, or the screen where you see the list of habits.
+ * This class establishes connection with the fireStore database, and communicates with it to update, store, add, edit, and delete habits.
+ * Issues: None so far...
+ */
 public class HabitActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
-    // comment
     // Variable declarations
     FloatingActionButton searchBtn;
     FloatingActionButton profileBtn;
     FloatingActionButton homeBtn;
     FloatingActionButton addHabitBtn;
-    FloatingActionButton realAddButton;
     TextView userTitle;
     ListView habitList;
     public static ArrayAdapter<Habit> habitAdapter;
@@ -65,7 +68,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         homeBtn = findViewById(R.id.home_activity_btn);
         addHabitBtn = findViewById(R.id.add_fab);
         userTitle = findViewById(R.id.user_name);
-
+        // Setting adapter:
         habitDataList = new ArrayList<>();
         habitAdapter = new HabitList(this, habitDataList);
         habitList.setAdapter(habitAdapter);
@@ -113,7 +116,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
 
         });
 
-        // Add habit listener
+        // Add habit button listener:
         addHabitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,23 +124,25 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             }
         });
 
-        // view habit:
+        // Listener for clicking on a habit in the listview:
         habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                // If habit is clicked then go to ViewHabitActivity;
+                // Getting current selected habit's information and sending it to ViewHabitActivity:
                 Habit selectedHabit = habitDataList.get(position);
                 Intent intent = new Intent(HabitActivity.this, ViewHabitActivity.class);
                 intent.putExtra("habit", selectedHabit);
                 intent.putExtra("position", position);
-                //need the username as well, for habitEvent later
+
+                //need the username as well, for the habitEvent later:
                 intent.putExtra("username", username);
 
-                //i don't know what the below line is but its depreciated?
                 startActivityForResult(intent, 1);
             }
         });
 
-        // Collection event listener
+        // Collection event listener:
         habitsRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -164,6 +169,11 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         });
     }
 
+    /**
+     * This method is accessed when user returns from AddHabitFragment, it adds the given new habit
+     * and stores it into firebase.
+     * @param newHabit the given newly added habit
+     */
     @Override
     public void onSavePressedAdd(Habit newHabit) {
         // add habit to firebase:
@@ -189,7 +199,10 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                 });
     }
 
-    // overriding onStart() for updating info whenever user goes back to HabitActivity:
+    /**
+     * This method overrides onStart() to update the UI info whenever user goes back to HabitActivity
+     * from a different Activity.
+     */
     // used this image ot help me understand how onStart() works: https://developer.android.com/images/activity_lifecycle.png
     @Override
     protected void onStart() {
@@ -200,6 +213,13 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         habitList.setAdapter(habitAdapter);
     }
 
+    /**
+     * This method controls the information that ViewHabitActivity returns, which is either information
+     * to edit or delete a habit. The method also edits or deletes a Habit while communicating with firebase.
+     * @param requestCode 1 if user deletes a habit, 2 if user edits a habit
+     * @param resultCode RESULT_OK if transition from previous activity was successful
+     * @param data the passed information which is the position of given habit and the edited habit's information
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {

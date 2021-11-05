@@ -20,7 +20,13 @@ import com.google.firebase.firestore.CollectionReference;
 
 import java.util.ArrayList;
 
+/**
+ * This class manages view_habit.xml, or the screen where you see a selected habit from the listview in HabitActivity.
+ * It displays all of the selected habit's information and manages the edit habit button and the delete habit button.
+ * Issues: None so far...
+ */
 public class ViewHabitActivity extends AppCompatActivity implements EditHabitFragment.OnFragmentInteractionListener {
+    // Initialize variables:
     private TextView title;
     private TextView reason;
     private TextView startText;
@@ -31,7 +37,6 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
     private ProgressBar progressBar;
     ArrayList<Habit> dataList;
     ArrayAdapter<Habit> adapter;
-    CollectionReference habitsRef;
     final String TAG = "DEBUG_LOG";
 
     @Override
@@ -39,10 +44,12 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
         super.onCreate(saveInstanceState);
         setContentView(R.layout.view_habit);
 
+        // Get information passed from HabitActivity:
         Intent myIntent = getIntent();
         Habit habit = (Habit) myIntent.getSerializableExtra("habit");
         int positionOfHabit = myIntent.getIntExtra("position", -1);
 
+        // Assigning and initializing variables:
         dataList = HabitActivity.habitDataList;
         adapter = HabitActivity.habitAdapter;
         title = findViewById(R.id.view_habit_title);
@@ -50,7 +57,7 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
         startText = findViewById(R.id.start_date);
         endText = findViewById(R.id.end_date);
         progressBar = findViewById(R.id.view_progress_bar);
-
+        // Assigning checkbox variables:
         uCheck = findViewById(R.id.view_sunday_check);
         mCheck = findViewById(R.id.view_monday_check);
         tCheck = findViewById(R.id.view_tuesday_check);
@@ -58,7 +65,7 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
         rCheck = findViewById(R.id.view_thursday_check);
         fCheck = findViewById(R.id.view_friday_check);
         sCheck = findViewById(R.id.view_saturday_check);
-
+        // Setting habit's information variables:
         title.setText(habit.getTitle());
         reason.setText(habit.getReason());
         startText.setText(habit.getStartDate());
@@ -68,22 +75,24 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
 
         checkBoxInit(daysSelected);
 
-        // still trying to figure out how to do this properly as it doesn't work:
+        // Listener for edit button:
         editButton = findViewById(R.id.edit_button);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // goto edithabitfragment
+                // goto EditHabitFragment
                 EditHabitFragment editFragment = EditHabitFragment.newInstance(habit, positionOfHabit);
                 editFragment.show(getSupportFragmentManager(), "EDIT_HABIT");
             }
         });
 
+        // Listener for delete button:
         deleteButton = findViewById(R.id.delete_button);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // send info to habitactivity for firestore shit
+                // If delete button was pressed we go back to HabitActivity to delete the habit;
+                // Sending info back to HabitActivity for firebase communication:
                 Intent myIntent = new Intent();
                 myIntent.putExtra("position", positionOfHabit);
                 setResult(RESULT_OK, myIntent);
@@ -91,13 +100,13 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
             }
         });
 
-        // Habit event list button - Vivian
+
+        // Habit event list button - Vivian:
         showListButton = findViewById(R.id.habit_event_list_button);
         showListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //HabitEventActivity needs username + habitName passed in!
-
 
                 Intent intent = new Intent(ViewHabitActivity.this, HabitEventActivity.class);
                 //note I use myIntent, not intent to grab username
@@ -110,6 +119,11 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
         });
     }
 
+    /**
+     * This method checks every weekday checkbox to see if they are clicked and
+     * sets eat checkbox to true (adds checkmark on each box) if they have been clicked
+     * @param check the list of selected days
+     */
     public void checkBoxInit(@NonNull ArrayList<String> check){
         for (int i = 0; i < check.size(); i++) {
             if (check.get(i).equals("U")) {
@@ -136,6 +150,12 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
         }
     }
 
+    /**
+     * This method is accessed when user returns from EditHabitFragment. It just continues passing on the information
+     * the user passed on in EditFragmentActivity, and exits ViewHabitActivity to HabitActivity.
+     * @param editHabit the edited habit from EditHabitFragment
+     * @param posOfHabit the position of the habit (that was edited) from the original list of habits
+     */
     @Override
     public void onSavePressedEdit(Habit editHabit, int posOfHabit) {
         // send info to HabitActivity for firestore shit

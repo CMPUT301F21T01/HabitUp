@@ -133,8 +133,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                 intent.putExtra("username", username);
 
                 //i don't know what the below line is but its depreciated?
-                //startActivityForResult(intent, 1);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 

@@ -49,8 +49,8 @@ public class HabitList extends ArrayAdapter<Habit> {
         TextView progressText = view.findViewById(R.id.progress_text);
 
         habitTitle.setText(habit.getTitle());
-        progressBar.setProgress(habit.getProgress());
-        progressText.setText(habit.getProgress().toString() + "%");
+        progressBar.setProgress((int) habit.getProgress());
+        progressText.setText(habit.getProgress() + "%");
 
 
         // changing text based on if habit is due today

@@ -18,6 +18,12 @@ import java.io.IOException;
 
 import androidx.annotation.NonNull;
 
+/**
+ * AddPhotograph class by Vivian
+ * This is an activity that handles adding photograph from camera or gallery, and display ths image on screen
+ * Reference: https://newbedev.com/java-android-take-photo-and-display-in-imageview-code-example, https://www.py4u.net/discuss/624180
+ * Issues: None so far
+ */
 public class AddPhotograph extends Activity
 {
     private static final int CAMERA_REQUEST = 1888;
@@ -28,6 +34,10 @@ public class AddPhotograph extends Activity
     private Bitmap selectedPhoto;
     HabitEventInstance habitEventInstance;
 
+    /**
+     * This initializes the creation of the AddPhotograph activity
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -43,6 +53,7 @@ public class AddPhotograph extends Activity
             this.imageView.setImageBitmap(selectedPhoto);
         }
 
+        // OnClickListener for camera button
         Button photoButton = (Button) this.findViewById(R.id.camera_button);
         photoButton.setOnClickListener(new View.OnClickListener()
         {
@@ -61,6 +72,7 @@ public class AddPhotograph extends Activity
             }
         });
 
+        // OnClickListener for gallery button
         Button galleryButton = (Button) this.findViewById(R.id.album_button);
         galleryButton.setOnClickListener(new View.OnClickListener()
         {
@@ -85,6 +97,13 @@ public class AddPhotograph extends Activity
         });
     }
 
+    /**
+     * This requests camera permission from the user.
+     * If permission is granted, open the camera.
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
@@ -104,6 +123,13 @@ public class AddPhotograph extends Activity
         }
     }
 
+    /**
+     * This handles the activity result from the camera or gallery activity
+     * If an OK result is returned, get the selected image and display it on screen
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {

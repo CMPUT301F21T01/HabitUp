@@ -1,81 +1,81 @@
 package com.example.habitup;
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class User
-{
-    private String username; //will need to be validated upon listening
-    private String name; //implement getters and setters
-    private ArrayList<String> followers; //an attribute of users is a list of their current followers
-    private ArrayList<String> followerRequests;
-    //not on the CRC cards but since our design involves listing the number of habits a user actively has (like when someone goes to request them)
-    private int numberOfHabits;
+/**
+ * This class represents the data of a user. It will be populated with data pulled from
+ * the Firestore database once a user is authenticated (i.e. signs in successfully).
+ */
+public class User {
+    private String username;
+    private String name;
+    private ArrayList<String> friends;
+    private ArrayList<String> requests;
+    private ArrayList<Habit> habits;
 
-
-    public User(String username, ArrayList<String> followers, ArrayList<String> followerRequests, int numberOfHabits)
-    {
-        this.username = username;
-        this.followers = followers;
-        this.followerRequests = followerRequests;
-        this.numberOfHabits = numberOfHabits;
+    public User() {
+        this.username   = null;
+        this.name       = null;
+        this.friends    = new ArrayList<>();
+        this.requests   = new ArrayList<>();
+        this.habits     = new ArrayList<>();
     }
-    //getters and setters
-    //getters
-    public String getUsername()
-    {
+
+    /* Getters & Setters */
+
+    public String getUsername() {
         return username;
     }
 
-    public String getName() { return name; }
-
-    public ArrayList<String> getFollowers()
-    {
-        return followers;
-    }
-
-
-    public ArrayList<String> getFollowerRequests()
-    {
-        return followerRequests;
-    }
-
-    public int getNumberOfHabits()
-    {
-        return numberOfHabits;
-    }
-
-    //setters
-    public void setUsername(String username)
-    {
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public void setName(String name)
-    {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setFollowers(ArrayList<String> followers)
-    {
-        this.followers = followers;
+    public ArrayList<String> getFriends() {
+        return friends;
     }
 
-    public void setFollowerRequests(ArrayList<String> followerRequests)
-    {
-        this.followerRequests = followerRequests;
+    public void setFriends(ArrayList<String> friends) {
+        this.friends = friends;
     }
 
-    public void setNumberOfHabits(int numberOfHabits)
-    {
-        this.numberOfHabits = numberOfHabits;
+    public ArrayList<String> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(ArrayList<String> requests) {
+        this.requests = requests;
+    }
+
+    public ArrayList<Habit> getHabits() {
+        return habits;
+    }
+
+    public void setHabits(ArrayList<Habit> habits) {
+        this.habits = habits;
+    }
+
+    public void addHabit(Habit habit) {
+        this.habits.add(habit);
+    }
+
+    public void addFriend(String name) {
+        this.friends.add(name);
+    }
+
+    public void addRequest(String name) {
+        this.requests.add(name);
+    }
+
+    public void clearHabits() {
+        this.habits.clear();
     }
 }

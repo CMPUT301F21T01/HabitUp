@@ -25,16 +25,31 @@ public class RequestsActivityTest {
     {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
 
-        // Sign in
         solo.assertCurrentActivity("Wrong activity.", RequestsActivity.class);
-        solo.waitForText("Requests");
         assertTrue(solo.waitForActivity(RequestsActivity.class, 2000));
     }
-
     @Test
-    public void testActivitySwitch() {
-        solo.clickOnButton("BACK");
-        solo.assertCurrentActivity("Wrong activity.", HabitActivity.class);
-        solo.goBack();
+    /**
+     * ensures what we want is showing up in terms of the display for this activity
+     */
+    public void testDisplay()
+    {
+
+        assertTrue(solo.searchText("Requests"));
+        assertTrue(solo.searchButton("Go back"));
+        assertTrue(solo.waitForView(R.id.requests_list));
     }
+
+    /**
+    @Test
+     * tests users' abilities to go back to the Profile Activity
+     * still being worked on to effectively use solo to do the switches between these activities
+
+    public void testActivitySwitch() {
+        solo.clickOnButton("Go back");
+        solo.goBackToActivity("ProfileActivity");
+        solo.assertCurrentActivity("Wrong activity.", ProfileActivity.class);
+        solo.goBackToActivity("RequestsActivity");
+    }
+     */
 }

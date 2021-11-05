@@ -24,17 +24,34 @@ public class ProfileActivityTest {
     public void setup()
     {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-
-        // Sign in
         solo.assertCurrentActivity("Wrong activity.", ProfileActivity.class);
-        solo.waitForText("Friends");
         assertTrue(solo.waitForActivity(ProfileActivity.class, 2000));
     }
 
     @Test
-    public void testActivitySwitch() {
-        solo.clickOnButton("VIEW REQUESTS");
+    /**
+     * ensures what we want is showing up in terms of the display for this activity
+     */
+    public void testDisplay()
+    {
+
+        assertTrue(solo.searchText("Friends"));
+        assertTrue(solo.searchButton("View Requests"));
+        assertTrue(solo.searchButton("Go back"));
+        assertTrue(solo.waitForView(R.id.friend_list));
+    }
+    @Test
+    /**
+     * tests users' abilities to switch to the RequestsActivity
+     */
+    public void testActivitySwitchToRequests() {
+        solo.clickOnButton("View Requests");
         solo.assertCurrentActivity("Wrong activity.", RequestsActivity.class);
         solo.goBack();
+
+
     }
+
+
+
 }

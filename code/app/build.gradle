@@ -54,4 +54,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore'
     implementation "io.grpc:grpc-okhttp:1.32.2"
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    // Robotium (Testing)
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.3.1'
 }

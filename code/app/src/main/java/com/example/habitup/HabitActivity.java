@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,11 +34,14 @@ import java.util.HashMap;
 import java.util.List;
 
 public class HabitActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
+    // comment
     // Variable declarations
     FloatingActionButton searchBtn;
     FloatingActionButton profileBtn;
     FloatingActionButton homeBtn;
     FloatingActionButton addHabitBtn;
+    FloatingActionButton realAddButton;
+    TextView userTitle;
     ListView habitList;
     public static ArrayAdapter<Habit> habitAdapter;
     public static ArrayList<Habit> habitDataList;
@@ -52,7 +56,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.habit_activity);
 
         // Variable initializations
         habitList = findViewById(R.id.habit_list);
@@ -60,6 +64,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         profileBtn = findViewById(R.id.profile_activity_btn);
         homeBtn = findViewById(R.id.home_activity_btn);
         addHabitBtn = findViewById(R.id.add_fab);
+        userTitle = findViewById(R.id.user_name);
 
         habitDataList = new ArrayList<>();
         habitAdapter = new HabitList(this, habitDataList);
@@ -71,6 +76,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         Intent intent = getIntent();
         String username = (String) intent.getStringExtra(Intent.EXTRA_TEXT);
         habitsRef = db.collection(username + "/habits/habitList");
+        userTitle.setText(username + "'s Habits");
 
         // UserSyncer implementation testing
         syncer = UserSyncer.getInstance();
@@ -115,7 +121,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             }
         });
 
-        // view habit
+        // view habit:
         habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -126,6 +132,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                 //need the username as well, for habitEvent later
                 intent.putExtra("username", username);
 
+                //i don't know what the below line is but its depreciated?
                 startActivityForResult(intent, 1);
             }
         });

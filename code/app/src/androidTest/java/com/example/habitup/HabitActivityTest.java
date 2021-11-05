@@ -14,6 +14,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+/**
+ * Intent test for HabitActivity
+ * @see HabitActivity
+ */
+
 public class HabitActivityTest {
     private Solo solo;
 
@@ -51,6 +56,7 @@ public class HabitActivityTest {
 
     /**
      * Test to see if User's habits are displayed in ListView.
+     *
      */
     @Test
     public void testHabitList() {
@@ -77,6 +83,7 @@ public class HabitActivityTest {
 
     /**
      * Test functionality to add / delete habit(s)
+     * @see AddHabitFragment
      */
     @Test
     public void testAddHabit() {

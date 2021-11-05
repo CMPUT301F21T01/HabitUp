@@ -54,9 +54,9 @@ public class HabitEventTest {
     public void aTestAddHabitEvent() {
         assertTrue(solo.waitForActivity(HabitEventActivity.class, 2000));
         solo.clickOnView(solo.getView(R.id.add_habit_event_button));
-        solo.enterText((EditText) solo.getView(R.id.add_reflections), "ADDEVENTTEST");
+        solo.enterText((EditText) solo.getView(R.id.add_reflections), "I did pretty well!?!");
         solo.clickOnButton("OK");
-        assertTrue(solo.searchText("ADDEVENTTEST"));
+        assertTrue(solo.searchText("I did pretty well!?!"));
     }
 
     //this test assumes the ADDEVENTTEST habitEvent is added from the previous test,
@@ -64,13 +64,13 @@ public class HabitEventTest {
     @Test
     public void bTestDeleteHabitEvent() {
 
-            assertTrue(solo.searchText("ADDEVENTTEST"));
+            assertTrue(solo.searchText("I did pretty well!?!"));
             // Delete habitEvent, assert it is no longer in the ListView
             ListView listView=(ListView)solo.getView(R.id.habitEvent_list);
             View view=listView.getChildAt(listView.getChildCount()-1);
             Button deleteButton = (Button)view.findViewById(R.id.delete_button);
             solo.clickOnView(deleteButton);
-            assertFalse(solo.searchText("ADDEVENTTEST"));
+            assertFalse(solo.searchText("I did pretty well!?!"));
 
     }
 }

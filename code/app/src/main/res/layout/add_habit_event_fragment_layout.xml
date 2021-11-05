@@ -11,7 +11,7 @@
         android:layout_weight="1"
         android:insetLeft="10dp"
         android:insetRight="10dp"
-        android:text="Add Location" />
+        android:text="Set Location" />
 
     <Button
         android:id="@+id/add_photo_button"
@@ -20,13 +20,14 @@
         android:layout_weight="1"
         android:insetLeft="10dp"
         android:insetRight="10dp"
-        android:text="Add Photograph" />
+        android:text="Set Photograph" />
 
     <EditText
         android:id="@+id/add_reflections"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:maxLength="20"
         android:hint="Comments" />
 
 </LinearLayout>

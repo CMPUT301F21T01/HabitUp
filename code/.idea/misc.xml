@@ -4,7 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/content.xml" value="0.13020833333333334" />
+        <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/habiteventcontent.xml" value="0.13020833333333334" />
         <entry key="..\:/University/2021-2022/CMPUT301/Project/HabitUp/code/app/src/main/res/layout/view_habit.xml" value="0.13020833333333334" />
+        <entry key="..\:/Users/Matt/AndroidStudioProjects/mainBranch/code/app/src/main/res/layout/activity_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Matt/AndroidStudioProjects/mainBranch/code/app/src/main/res/layout/activity_view_requests.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Matt/AndroidStudioProjects/mainBranch/code/app/src/main/res/layout/profile_content.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Matt/AndroidStudioProjects/mainBranch/code/app/src/main/res/layout/requests_content.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Matt/AndroidStudioProjects/mainHabit/code/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/Matt/AndroidStudioProjects/mainHabit/code/app/src/main/res/layout/activity_maps.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Matt/AndroidStudioProjects/mainHabit/code/app/src/main/res/layout/activity_profile.xml" value="0.35260416666666666" />
@@ -25,10 +30,17 @@
         <entry key="app/src/main/res/layout/add_habit_event_fragment_layout.xml" value="0.10214527002677834" />
         <entry key="app/src/main/res/layout/add_habit_fragment_layout.xml" value="0.12715298885511653" />
         <entry key="app/src/main/res/layout/content.xml" value="0.12715298885511653" />
+        <entry key="app/src/main/res/layout/habit_activity.xml" value="0.13120567375886524" />
         <entry key="app/src/main/res/layout/habiteventcontent.xml" value="0.12715298885511653" />
         <entry key="app/src/main/res/layout/view_habit.xml" value="0.12715298885511653" />
       </map>
     </option>
+  </component>
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../../Javadoctemps" />
+    <option name="OPTION_SCOPE" value="private" />
+    <option name="OTHER_OPTIONS" value="javadoc -encoding utf-8" />
+    <option name="OPTION_INCLUDE_LIBS" value="true" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

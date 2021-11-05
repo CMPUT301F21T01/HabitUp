@@ -12,17 +12,16 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
 /**
  * This activity allows the user to view their friend requests
  */
-
 public class RequestsActivity extends AppCompatActivity {
 
     ListView requestList;
     ArrayAdapter<String> requestsAdapter;
     ArrayList<String> requestsDataList;
     Button backBtn;
+
     /**
      * This brings up the proper displays from the XML to be shown on the screen
      * @param savedInstanceState from the switching of the activities (from the profile activity to here upon the profile button being clicked)
@@ -38,33 +37,25 @@ public class RequestsActivity extends AppCompatActivity {
         backBtn = findViewById(R.id.go_back_btn);
         requestList = findViewById(R.id.requests_list);
 
-        String[] requests = {"static_harrys", "static_niall_h72", "static_bey_kc"};
-
-        requestsDataList = new ArrayList<>();
-        requestsDataList.addAll(Arrays.asList(requests));
+        // Unpack intent
+        ArrayList<String> requestsDataList = (ArrayList<String>) getIntent().getSerializableExtra("requests");
 
         requestsAdapter = new ArrayAdapter<>(this, R.layout.requests_content, requestsDataList);
 
         requestList.setAdapter(requestsAdapter);
 
-
-        //return to main activity
-    /**
-     * uses the back button to return to the main acitivty showing the user's list of habits
-     * @param view
-     */
-    backBtn.setOnClickListener(new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View v)
+        /**
+         * uses the back button to go to the main activity, habit list screen
+         * @param view
+         */
+        backBtn.setOnClickListener(new View.OnClickListener()
         {
-            finish();
-        }
-    });
-
-
+            @Override
+            public void onClick(View v)
+            {
+                finish();
+            }
+        });
     }
-
-
-
 }
+

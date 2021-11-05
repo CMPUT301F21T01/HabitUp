@@ -26,7 +26,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * This class is a a dialog fragment that handles the UI and information for when
+ * a user wants to edit a habit.
+ * It displays add_habit_fragment_layout.xml.
+ * Issues: None so far...
+ */
 public class EditHabitFragment extends DialogFragment {
+    // Initialize variables:
     private EditText title;
     private EditText reason;
     private TextView startText;
@@ -51,6 +58,7 @@ public class EditHabitFragment extends DialogFragment {
         }
     }
 
+    // Get information passed from ViewHabitActivity:
     public static EditHabitFragment newInstance(Habit habit, int position) {
         EditHabitFragment fragment = new EditHabitFragment();
         Bundle args = new Bundle();
@@ -67,6 +75,7 @@ public class EditHabitFragment extends DialogFragment {
         Habit habit = (Habit) getArguments().getSerializable("habits");
         int pos = getArguments().getInt("position");
 
+        // Assigning and initializing variables:
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_habit_fragment_layout, null);
         title = view.findViewById(R.id.habitEdit);
         reason = view.findViewById(R.id.reasonEdit);
@@ -74,7 +83,7 @@ public class EditHabitFragment extends DialogFragment {
         ImageButton endButton = view.findViewById(R.id.endButton);
         startText = view.findViewById(R.id.start_text);
         endText = view.findViewById(R.id.end_text);
-
+        // Assigning checkbox variables:
         uCheck = view.findViewById(R.id.sunday_check);
         mCheck = view.findViewById(R.id.monday_check);
         tCheck = view.findViewById(R.id.tuesday_check);
@@ -82,7 +91,7 @@ public class EditHabitFragment extends DialogFragment {
         rCheck = view.findViewById(R.id.thursday_check);
         fCheck = view.findViewById(R.id.friday_check);
         sCheck = view.findViewById(R.id.saturday_check);
-
+        // Setting habit's current information variables:
         title.setText(habit.getTitle());
         reason.setText(habit.getReason());
         startText.setText(habit.getStartDate());
@@ -91,6 +100,8 @@ public class EditHabitFragment extends DialogFragment {
 
         checkBoxInit(daysSelected);
 
+        // Checking all weekday checkboxes to see if user pressed them
+        // and adds them to a daysSelected list if pressed:
         uCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +111,6 @@ public class EditHabitFragment extends DialogFragment {
                     daysSelected.remove("U");
             }
         });
-
         mCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +120,6 @@ public class EditHabitFragment extends DialogFragment {
                     daysSelected.remove("M");
             }
         });
-
         tCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +129,6 @@ public class EditHabitFragment extends DialogFragment {
                     daysSelected.remove("T");
             }
         });
-
         wCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,7 +138,6 @@ public class EditHabitFragment extends DialogFragment {
                     daysSelected.remove("W");
             }
         });
-
         rCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +147,6 @@ public class EditHabitFragment extends DialogFragment {
                     daysSelected.remove("R");
             }
         });
-
         fCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,7 +156,6 @@ public class EditHabitFragment extends DialogFragment {
                     daysSelected.remove("F");
             }
         });
-
         sCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,7 +166,7 @@ public class EditHabitFragment extends DialogFragment {
             }
         });
 
-
+        // Get user's selected date if StartDate button is clicked:
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,6 +174,7 @@ public class EditHabitFragment extends DialogFragment {
             }
         });
 
+        // Get user's selected date if EndDate button is clicked:
         endButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -194,6 +200,10 @@ public class EditHabitFragment extends DialogFragment {
                 }).create();
     }
 
+    /**
+     * This method displays a DatepickerDialog and gets the date selected by user.
+     * @param setDate the selected date from user
+     */
     public void getCurrentDate(TextView setDate) {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
@@ -212,6 +222,11 @@ public class EditHabitFragment extends DialogFragment {
         datePickerDialog.show();
     }
 
+    /**
+     * This method checks every weekday checkbox to see if they have been clicked and
+     * sets eat checkbox to true (adds checkmark on each box) if they have been clicked.
+     * @param check the list of selected days
+     */
     public void checkBoxInit(ArrayList<String> check){
         if(check.isEmpty()){}
         else {
@@ -241,6 +256,11 @@ public class EditHabitFragment extends DialogFragment {
         }
     }
 
+    /**
+     * This method calculates and sets the progress for a habit.
+     * @param startString the starting date for a habit
+     * @param endString the ending date for a habit
+     */
     public void setProgress(String startString, String endString){
         Date sDate = new Date();
         Date eDate = new Date();
@@ -258,7 +278,13 @@ public class EditHabitFragment extends DialogFragment {
         long difference = eDate.getTime() - sDate.getTime();
         long currentDifference = current - sDate.getTime();
 
-        float progress = (float) currentDifference/difference * 100;
+        float progress = (float) ((currentDifference/difference) * 100);
+        if(progress > 100){
+            progress = 100;
+        }
+        if(progress < 0){
+            progress = 0;
+        }
         newProgress = ((int) progress);
     }
 }

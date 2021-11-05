@@ -1,18 +1,3 @@
-
-// Copyright 2020 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package com.example.habitup;
 
 import android.app.Activity;
@@ -47,13 +32,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.text.DecimalFormat;
 
 /**
- * An activity that displays a Google map with a marker (pin) to indicate a particular location.
+ * AddLocation class by Vivian
+ * This is an activity that displays a Google map with a marker (pin) to indicate a particular location.
+ * Reference: https://developers.google.com/maps/documentation/android-sdk/map-with-marker
+ * Issues: None so far
  */
 // [START maps_marker_on_map_ready]
 public class AddLocation extends AppCompatActivity implements OnMapReadyCallback {
-
-    // https://developer.android.com/training/location/retrieve-current
-    private FusedLocationProviderClient fusedLocationClient;
 
     private LatLng location = new LatLng(53.5232, -113.5263);
     private String selected_location = "53.5232, -113.5263";
@@ -61,6 +46,10 @@ public class AddLocation extends AppCompatActivity implements OnMapReadyCallback
     GoogleMap myMap;
     HabitEventInstance habitEventInstance;
 
+    /**
+     * This initializes the creation of the AddLocation activity
+     * @param savedInstanceState
+     */
     // [START_EXCLUDE]
     // [START maps_marker_get_map_async]
     @Override
@@ -75,8 +64,11 @@ public class AddLocation extends AppCompatActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        // If the location is not null, set preview image to current image
         habitEventInstance = HabitEventInstance.getInstance();
-        habitEventInstance.setLocation(selected_location);
+        if (habitEventInstance.getLocation() != "") {
+            selected_location = habitEventInstance.getLocation();
+        }
 
         Button confirmButton = (Button) this.findViewById(R.id.confirm_location_button);
         confirmButton.setOnClickListener(new View.OnClickListener() {
@@ -96,13 +88,9 @@ public class AddLocation extends AppCompatActivity implements OnMapReadyCallback
 
     // [START_EXCLUDE silent]
     /**
-     * Manipulates the map when it's available.
-     * The API invokes this callback when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user receives a prompt to install
-     * Play services inside the SupportMapFragment. The API invokes this method after the user has
-     * installed Google Play services and returned to the app.
+     * This manipulates the map when it's available.
+     * This is where we can add markers or lines, add listeners or move the camera.
+     * @param googleMap
      */
     // [END_EXCLUDE]
     // [START maps_marker_on_map_ready_add_marker]
@@ -168,8 +156,11 @@ public class AddLocation extends AppCompatActivity implements OnMapReadyCallback
     }
     // [END maps_marker_on_map_ready_add_marker]
 
-    // Zoom in and zoom out buttons
-    // https://www.youtube.com/watch?v=B4OCSRBFjkM
+    /**
+     * This handles the Zoom In and Zoom Out buttons
+     * Reference: https://www.youtube.com/watch?v=B4OCSRBFjkM
+     * @param view
+     */
     public void onZoom(View view) {
         if (view.getId() == R.id.zoom_in) {
             myMap.animateCamera(CameraUpdateFactory.zoomIn());

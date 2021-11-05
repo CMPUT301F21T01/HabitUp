@@ -19,12 +19,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 /**
- * AddHabitEventFragment class by Vivian
- * This is a fragment that allows the user to add a habit event
- * Issues: None so far
+ * EditHabitEventFragment class by Vivian
+ * This is a fragment that allows the user to edit a habit event
+ * Issues: Need connection to the database
  */
 
-public class AddHabitEventFragment extends DialogFragment {
+public class EditHabitEventFragment extends DialogFragment {
 
     private EditText addReflections;
     private Button addPhoto;
@@ -40,7 +40,7 @@ public class AddHabitEventFragment extends DialogFragment {
      * This is the fragment interaction listener and handles when ok is pressed
      */
     public interface OnFragmentInteractionListener {
-        void onOkPressed(HabitEvent habitEvent);
+        void onEditOkPressed(HabitEvent habitEvent);
     }
 
     /**
@@ -59,8 +59,9 @@ public class AddHabitEventFragment extends DialogFragment {
 
     }
 
+
     /**
-     * This initializes the creation of the AddHabitEvent fragment
+     * This initializes the creation of the EditHabitEvent fragment
      * @param savedInstanceState
      */
     @NonNull
@@ -70,19 +71,22 @@ public class AddHabitEventFragment extends DialogFragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_habit_event_fragment_layout, null);
 
         // Create the habit event instance
+        HabitEventInstance.getInstance();
         habitEventInstance = HabitEventInstance.getInstance();
-        habitEventInstance.setLocation(location);
-        habitEventInstance.setReflection(reflection);
-        habitEventInstance.setPhoto(photo);
+
+        location = habitEventInstance.getLocation();
+        reflection = habitEventInstance.getReflection();
+        photo = habitEventInstance.getPhoto();
 
         addReflections = view.findViewById(R.id.add_reflections);
+        addReflections.setText(reflection);
 
         // OnClickListener for addLocation button
         addLocation = (Button) view.findViewById(R.id.add_location_button);
         addLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent locationIntent = new Intent(AddHabitEventFragment.this.getActivity(), AddLocation.class);
+                Intent locationIntent = new Intent(EditHabitEventFragment.this.getActivity(), AddLocation.class);
                 startActivity(locationIntent);
             }
         });
@@ -92,16 +96,16 @@ public class AddHabitEventFragment extends DialogFragment {
         addPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent photoIntent = new Intent(AddHabitEventFragment.this.getActivity(), AddPhotograph.class);
+                Intent photoIntent = new Intent(EditHabitEventFragment.this.getActivity(), AddPhotograph.class);
                 startActivity(photoIntent);
                 // photo = (Bitmap) photoIntent.getExtras().get("habit_event_photo");;
             }
         });
 
-        // Construct the AddHabitEvent fragment
+        // Construct the EditHabitEvent fragment
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder.setView(view)
-                .setTitle("Add Habit Event")
+                .setTitle("Edit Habit Event")
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -112,7 +116,7 @@ public class AddHabitEventFragment extends DialogFragment {
                         photo = habitEventInstance.getPhoto();
 
                         habitEventInstance.setReflection(reflection);
-                        listner.onOkPressed(habitEventInstance.getHabitEvent());
+                        listner.onEditOkPressed(habitEventInstance.editHabitEvent());
                     }
                 }).create();
     }

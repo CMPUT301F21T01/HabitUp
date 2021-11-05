@@ -23,7 +23,6 @@ public class UserTest {
      * tests the getter methods for the User class
      * is not integrated with the database rather is just testing the User class itself
      * since we need to use the setters to set up the user's attributes, the setters are also being implicitly tested
-     * the clear habits method is tested in another file so as not to mess with the tests if the tests run in a different order
      * @return a user object, mocked object for testing
      */
     private User mockGetterTestingUser() {
@@ -39,28 +38,18 @@ public class UserTest {
 
 
         ArrayList<Habit> habits = new ArrayList<Habit>();
-
-        Habit habit1 = new Habit("sleep early");
-        habit1.setStartDate("nov 4, 2021");
-        habit1.setEndDate("dec 21, 2021");
-        ArrayList<String> frequency1 = new ArrayList<String>();
+        ArrayList<String> frequency1;
+        frequency1 = new ArrayList<String>();
         frequency1.add("M");
         frequency1.add("W");
         frequency1.add("F");
-        habit1.setFrequency(frequency1);
-        habit1.setReason("sleep makes me feel happy!");
-        habit1.setProgress(50);
+        Habit habit1 = new Habit("sleep early", "nov 4, 2021", "dec 21, 2021", frequency1, "sleep makes me feel happy!", 50);
 
 
-        Habit habit2 = new Habit("go biking");
-        habit2.setStartDate("nov 4, 2021");
-        habit2.setEndDate("dec 22, 2021");
         ArrayList<String> frequency2 = new ArrayList<String>();
         frequency2.add("T");
         frequency2.add("TR");
-        habit2.setFrequency(frequency2);
-        habit2.setReason("biking makes me feel happy!");
-        habit2.setProgress(50);
+        Habit habit2 = new Habit("go biking","nov 4, 2021","dec 22, 2021", frequency2, "biking makes me feel happy!", 50 );
 
         habits.add(habit1);
         habits.add(habit2);
@@ -118,8 +107,21 @@ public class UserTest {
         User user = mockGetterTestingUser();
         ArrayList<Habit> habitsGet = user.getHabits();
         ArrayList<Habit> expectedOutput = new ArrayList<Habit>();
-        Habit habit1 = new Habit("sleep early");
-        Habit habit2 = new Habit("go biking");
+        ArrayList<String> frequency1;
+        frequency1 = new ArrayList<String>();
+        frequency1.add("M");
+        frequency1.add("W");
+        frequency1.add("F");
+
+
+        ArrayList<String> frequency2 = new ArrayList<String>();
+        frequency2.add("T");
+        frequency2.add("TR");
+
+
+
+        Habit habit1 = new Habit("sleep early", "nov 4, 2021", "dec 21, 2021", frequency1, "sleep makes me feel happy!", 50);
+        Habit habit2 = new Habit("go biking","nov 4, 2021","dec 22, 2021", frequency2, "biking makes me feel happy!", 50 );
         expectedOutput.add(habit1);
         expectedOutput.add(habit2);
         assertEquals(expectedOutput.get(0).getTitle(), habitsGet.get(0).getTitle());
@@ -129,7 +131,13 @@ public class UserTest {
     @Test
     public void testAddHabit() {
         User user = mockGetterTestingUser();
-        Habit newHabit = new Habit("run 5 km");
+
+
+        ArrayList<String> frequency3 = new ArrayList<String>();
+        frequency3.add("T");
+        frequency3.add("TR");
+        frequency3.add("F");
+        Habit newHabit = new Habit("run 5 km", "nov 5, 2021", "dec 8, 2021", frequency3, "i like running!", 50);
         user.addHabit(newHabit);
         ArrayList<Habit> habits = user.getHabits();
         assertTrue(habits.contains(newHabit));
@@ -166,7 +174,6 @@ public class UserTest {
 
 
 }
-
 
 
 

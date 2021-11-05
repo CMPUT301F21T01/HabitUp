@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 /**
  * This activity allows the user to view their profile which includes a friends list and the ability to see their friend requests
@@ -23,7 +26,7 @@ public class ProfileActivity extends AppCompatActivity{
     ArrayList<String> friendsDataList;
     Button backBtn;
     Button viewRequestsBtn;
-
+    TextView initial;
 
     /**
      * This brings up the proper displays from the XML to be shown on the screen
@@ -36,18 +39,20 @@ public class ProfileActivity extends AppCompatActivity{
         setContentView(R.layout.activity_profile);
 
 
-
         backBtn = findViewById(R.id.switch_activity_btn);
         viewRequestsBtn = findViewById(R.id.view_requests_button);
         friendsList = findViewById(R.id.friend_list);
+        initial = findViewById(R.id.userInitial);
 
-        String []friends = {"static_jacob39", "static_blake_o32", "static_katie_j"}; //will come from db
+        // Unpack intent
+        ArrayList<String> friendsDataList = (ArrayList<String>) getIntent().getSerializableExtra("friends");
+        ArrayList<String> requestsDataList = (ArrayList<String>) getIntent().getSerializableExtra("requests");
+        String name = getIntent().getStringExtra("name");
 
-        friendsDataList = new ArrayList<>();
-        friendsDataList.addAll(Arrays.asList(friends));
+        // Set user initial
+        //initial.setText(name.charAt(0).toString());
 
         friendsAdapter = new ArrayAdapter<>(this, R.layout.profile_content, friendsDataList);
-
         friendsList.setAdapter(friendsAdapter);
 
         /**
@@ -59,15 +64,14 @@ public class ProfileActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Intent requestsSwitchIntent = new Intent(v.getContext(), RequestsActivity.class);
+                requestsSwitchIntent.putExtra("requests", requestsDataList);
                 startActivity(requestsSwitchIntent);
             }
         });
 
 
-        // Return to main activity
-
         /**
-         * uses the back button to return to the main acitivty showing the user's list of habits
+         * uses the back button to go to the main activity, habit list screen
          * @param view
          */
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -81,3 +85,4 @@ public class ProfileActivity extends AppCompatActivity{
 
     }
 }
+

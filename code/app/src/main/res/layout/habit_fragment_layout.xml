@@ -1,171 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/delete_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="delete">
-
-    </Button>
-
-    <Button
-        android:id="@+id/edit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toStartOf="@+id/delete_button"
-        android:text="edit">
-
-    </Button>
-
     <TextView
-        android:id="@+id/view_habit_title"
-        android:layout_width="match_parent"
+        android:id="@+id/addHabitTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:gravity="center"
-        android:text="Habit Title"
-        android:textSize="45sp">
+        android:text="Add a Habit"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:textSize="40sp">
 
     </TextView>
 
     <TextView
-        android:id="@+id/view_start_date"
+        android:id="@+id/habitTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_habit_title"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/addHabitTitle"
+        android:layout_alignParentLeft="true"
+        android:text="Habit: "
+        android:textSize="30sp">
+
+    </TextView>
+
+    <EditText
+        android:id="@+id/habitEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addHabitTitle"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/habitTitle"
+        android:textSize="30sp">
+
+    </EditText>
+
+    <TextView
+        android:id="@+id/startTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/habitTitle"
+        android:layout_marginTop="45dp"
+        android:layout_alignParentLeft="true"
         android:text="Start Date: "
         android:textSize="30sp">
 
     </TextView>
 
-    <TextView
-        android:id="@+id/start_date"
+
+    <ImageButton
+        android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_habit_title"
-        android:layout_marginTop="20dp"
-        android:layout_toEndOf="@+id/view_start_date"
-        android:text="date"
+        app:srcCompat="@android:drawable/ic_menu_my_calendar"
+        android:layout_below="@+id/habitTitle"
+        android:layout_marginTop="45dp"
+        android:layout_toEndOf="@+id/startTitle"
+        android:layout_marginStart="5dp"/>
+
+    <TextView
+        android:id="@+id/start_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/habitTitle"
+        android:layout_marginTop="45dp"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/startButton"
         android:textSize="30sp">
 
     </TextView>
 
     <TextView
-        android:id="@+id/view_due_date"
-        android:layout_width="wrap_content"
+        android:id="@+id/end_text"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_start_date"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:text="Due Date:   "
+        android:layout_below="@+id/startTitle"
+        android:layout_marginTop="45dp"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/endButton"
         android:textSize="30sp">
 
     </TextView>
+
 
     <TextView
-        android:id="@+id/end_date"
+        android:id="@+id/endTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_start_date"
-        android:layout_marginTop="20dp"
-        android:layout_toEndOf="@+id/view_due_date"
-        android:text="date"
+        android:layout_below="@+id/startTitle"
+        android:layout_marginTop="45dp"
+        android:layout_alignParentLeft="true"
+        android:text="End Date: "
         android:textSize="30sp">
 
     </TextView>
+
+
+    <ImageButton
+        android:id="@+id/endButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startTitle"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="45dp"
+        android:layout_toEndOf="@+id/endTitle"
+        app:srcCompat="@android:drawable/ic_menu_my_calendar" />
 
     <TextView
         android:id="@+id/frequency_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/end_date"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="30dp"
+        android:layout_below="@+id/endTitle"
+        android:layout_marginTop="45dp"
+        android:layout_alignParentLeft="true"
         android:text="Frequency:"
         android:textSize="30sp">
 
     </TextView>
 
     <CheckBox
-        android:id="@+id/view_sunday_check"
+        android:id="@+id/sunday_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/frequency_title"
-        android:enabled="false"
+        android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="15dp">
 
     </CheckBox>
 
     <CheckBox
-        android:id="@+id/view_monday_check"
+        android:id="@+id/monday_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frequency_title"
+        android:layout_toRightOf="@+id/sunday_check"
+        android:layout_marginTop="15dp">
+
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/tuesday_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frequency_title"
+        android:layout_toRightOf="@id/monday_check"
+        android:layout_marginTop="15dp">
+
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/wednesday_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frequency_title"
+        android:layout_toRightOf="@+id/tuesday_check"
+        android:layout_marginTop="15dp">
+
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/thursday_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frequency_title"
+        android:layout_toRightOf="@+id/wednesday_check"
+        android:layout_marginTop="15dp">
+
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/friday_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frequency_title"
+        android:layout_toRightOf="@+id/thursday_check"
+        android:layout_marginTop="15dp">
+
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/saturday_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/frequency_title"
         android:layout_marginTop="15dp"
-        android:enabled="false"
-        android:layout_toRightOf="@+id/view_sunday_check">
-
-    </CheckBox>
-
-    <CheckBox
-        android:id="@+id/view_tuesday_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/frequency_title"
-        android:enabled="false"
-        android:layout_toRightOf="@id/view_monday_check"
-        android:layout_marginTop="15dp">
-
-    </CheckBox>
-
-    <CheckBox
-        android:id="@+id/view_wednesday_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/frequency_title"
-        android:enabled="false"
-        android:layout_toRightOf="@+id/view_tuesday_check"
-        android:layout_marginTop="15dp">
-
-    </CheckBox>
-
-    <CheckBox
-        android:id="@+id/view_thursday_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/frequency_title"
-        android:enabled="false"
-        android:layout_toRightOf="@+id/view_wednesday_check"
-        android:layout_marginTop="15dp">
-
-    </CheckBox>
-
-    <CheckBox
-        android:id="@+id/view_friday_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/frequency_title"
-        android:enabled="false"
-        android:layout_toRightOf="@+id/view_thursday_check"
-        android:layout_marginTop="15dp">
-
-    </CheckBox>
-
-    <CheckBox
-        android:id="@+id/view_saturday_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/frequency_title"
-        android:enabled="false"
-        android:layout_toRightOf="@+id/view_friday_check"
-        android:layout_marginTop="15dp">
+        android:layout_toRightOf="@+id/friday_check">
 
     </CheckBox>
 
@@ -174,9 +197,9 @@
         android:id="@+id/u_symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_sunday_check"
+        android:layout_below="@+id/sunday_check"
         android:layout_marginStart="17dp"
-        android:text="U">
+        android:text="Su">
 
     </TextView>
 
@@ -184,7 +207,7 @@
         android:id="@+id/m_symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_sunday_check"
+        android:layout_below="@+id/sunday_check"
         android:layout_marginStart="68dp"
         android:text="M">
 
@@ -194,7 +217,7 @@
         android:id="@+id/t_symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_sunday_check"
+        android:layout_below="@+id/sunday_check"
         android:layout_marginStart="118dp"
         android:text="T">
 
@@ -204,7 +227,7 @@
         android:id="@+id/w_symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_sunday_check"
+        android:layout_below="@+id/sunday_check"
         android:layout_marginStart="163dp"
         android:text="W">
 
@@ -214,7 +237,7 @@
         android:id="@+id/r_symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_sunday_check"
+        android:layout_below="@+id/sunday_check"
         android:layout_marginStart="212dp"
         android:text="R">
 
@@ -224,7 +247,7 @@
         android:id="@+id/f_symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_sunday_check"
+        android:layout_below="@+id/sunday_check"
         android:layout_marginStart="262dp"
         android:text="F">
 
@@ -234,73 +257,34 @@
         android:id="@+id/s_symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_sunday_check"
+        android:layout_below="@+id/sunday_check"
         android:layout_marginStart="310dp"
         android:text="S">
 
     </TextView>
 
     <TextView
-        android:id="@+id/reason_title"
+        android:id="@+id/reasonTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/frequency_title"
-        android:layout_marginLeft="30dp"
+        android:layout_alignParentLeft="true"
         android:layout_marginTop="100dp"
-        android:text="Reason: "
+        android:text= "Reason: "
         android:textSize="30sp">
 
     </TextView>
 
-    <TextView
-        android:id="@+id/view_reason"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/reasonEdit"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/frequency_title"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="100dp"
-        android:layout_toEndOf="@+id/reason_title"
-        android:text="reason"
+        android:layout_toEndOf="@+id/reasonTitle"
         android:textSize="30sp">
 
-    </TextView>
-
-    <TextView
-        android:id="@+id/progress_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view_reason"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:text="Progress"
-        android:textSize="30sp">
-
-    </TextView>
-
-    <ProgressBar
-        android:id="@+id/view_progress_bar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/progress_title"
-        android:layout_marginTop="10dp"
-        android:scaleY="5">
-
-    </ProgressBar>
-
-    <Button
-        android:id="@+id/habit_event_list_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view_progress_bar"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="25dp"
-        android:text="Habit Event List"
-        android:textSize="20sp">
-
-    </Button>
-
-
-
-
+    </EditText>
 
 </RelativeLayout>

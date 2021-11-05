@@ -20,7 +20,7 @@ public class HabitTest {
 
 
     @Test
-    private void testGet(){
+    public void testGet(){
         String title = "work out";
         String startDate = "01-11-2021";
         String endDate = "31-11-2021";
@@ -46,7 +46,7 @@ public class HabitTest {
 
 
     @Test
-    private void testSet(){
+    public void testSet(){
         String title = "work out";
         String startDate = "01-11-2021";
         String endDate = "31-11-2021";

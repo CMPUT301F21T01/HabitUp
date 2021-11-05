@@ -17,6 +17,9 @@ public class UserSyncerTest {
     private UserSyncer mockUserSyncer() { return UserSyncer.getInstance(); }
     private FirebaseFirestore mockDB() { return FirebaseFirestore.getInstance(); }
 
+    /**
+     * Tests getting singleton instance of UserSyncer.
+     */
     @Test
     public void testGetInstance() {
         UserSyncer instance = mockUserSyncer();
@@ -36,7 +39,7 @@ public class UserSyncerTest {
 
         // Known data from DB, used for testing purposes
         String username = "dummy1";
-        String name = "Paige Turner";               
+        String name = "Paige Turner";
 
         User user = instance.initialize(username, db);
         assertNotNull(user);

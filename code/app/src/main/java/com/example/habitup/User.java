@@ -1,6 +1,5 @@
 package com.example.habitup;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -14,6 +13,10 @@ public class User {
     private ArrayList<String> requests;
     private ArrayList<Habit> habits;
 
+    /**
+     * Constructor for User. Attributes are initialized to 'null' or empty and are later populated
+     * as data is pulled from Firestore.
+     */
     public User() {
         this.username   = null;
         this.name       = null;
@@ -44,38 +47,42 @@ public class User {
         return friends;
     }
 
-    public void setFriends(ArrayList<String> friends) {
-        this.friends = friends;
-    }
-
     public ArrayList<String> getRequests() {
         return requests;
-    }
-
-    public void setRequests(ArrayList<String> requests) {
-        this.requests = requests;
     }
 
     public ArrayList<Habit> getHabits() {
         return habits;
     }
 
-    public void setHabits(ArrayList<Habit> habits) {
-        this.habits = habits;
-    }
-
+    /**
+     * Adds a habit to user's private habit list.
+     * @param habit Habit object to add
+     * @see Habit
+     */
     public void addHabit(Habit habit) {
         this.habits.add(habit);
     }
 
+    /**
+     * Adds a friend to given instance of User.
+     * @param name Name of user to add to friends
+     */
     public void addFriend(String name) {
         this.friends.add(name);
     }
 
+    /**
+     * Adds a request to given instance of User.
+     * @param name Name of user to add to requests
+     */
     public void addRequest(String name) {
         this.requests.add(name);
     }
 
+    /**
+     * Clears all habits of a user.
+     */
     public void clearHabits() {
         this.habits.clear();
     }

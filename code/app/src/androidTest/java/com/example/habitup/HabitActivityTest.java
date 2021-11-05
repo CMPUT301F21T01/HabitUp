@@ -24,7 +24,7 @@ public class HabitActivityTest {
             new ActivityTestRule<>(UserControllerActivity.class, true, true);
 
     /**
-     * Runs before all tests. Initializes solo instance and signs in.
+     * Runs before all tests. Initializes solo instance, asserts correct current activity, and signs in.
      */
     @Before
     public void setup() {
@@ -33,17 +33,19 @@ public class HabitActivityTest {
         // Sign in
         solo.assertCurrentActivity("Wrong activity.", UserControllerActivity.class);
         solo.waitForText("HabitUp");
-        solo.enterText((EditText) solo.getView(R.id.username), "john23");
+        solo.enterText((EditText) solo.getView(R.id.username), "dummy2");
         solo.clickOnButton("enter");
         assertTrue(solo.waitForActivity(HabitActivity.class, 2000));
     }
 
     /**
-     * Runs all tests sequentially. Add @Test at start to run test.
+     * Runs all tests sequentially. Add @Test at start to run test through Android Studio.
      * Assure that 'sleep' is not already a habit, as it will be added and deleted here.
-     * NOTE * : testHabitList() was designed with only 2 habits in the list: "drink" and "eat".
-     *          It will fail if this is not the case.
+     * NOTE * : testHabitList() was hard-coded with the 3 follow habits:
+     *              1. "Attend meeting"   2. "Eat food"   3. "Go outside"
+     *          This test WILL fail if this is not the case.
      */
+    @Test
     public void testAllSequentially() {
         testHabitList();
         testActivitySwitch();
@@ -53,10 +55,14 @@ public class HabitActivityTest {
 
     /**
      * Test to see if User's habits are displayed in ListView.
+     * NOTE * : testHabitList() was hard-coded with the 3 follow habits:
+     *              1. "Attend meeting"   2. "Eat food"   3. "Go outside"
+     *          This test WILL fail if this is not the case.
      */
     @Test
     public void testHabitList() {
-        String[] habitNames = {"drink", "eat"};
+        // habitNames are constants from the database used solely for testing purposes
+        String[] habitNames = {"Attend meeting", "Eat food", "Go outside"};
         for(String name : habitNames) {
             assertTrue(solo.searchText(name));
         }
@@ -78,39 +84,44 @@ public class HabitActivityTest {
 
 
     /**
-     * Test functionality to add / delete habit(s)
+     * Tests add habit functionality.
+     * NOTE * : This test was hard-coded following specifications of testHabitList()
+     *          (see testHabitList() description for details).
      */
     @Test
     public void testAddHabit() {
         // Add habit, assert it was added to the list
         solo.clickOnImageButton(3);
         assertTrue(solo.searchText("Add a Habit"));
-        solo.enterText((EditText) solo.getView(R.id.habitEdit), "sleep");
+        solo.enterText((EditText) solo.getView(R.id.habitEdit), "Sleep");
         solo.clickOnCheckBox(3);
         solo.clickOnCheckBox(5);
-        solo.enterText((EditText) solo.getView(R.id.reasonEdit), "sleep good");
+        solo.enterText((EditText) solo.getView(R.id.reasonEdit), "Sleep good");
         solo.clickOnView(solo.getView(android.R.id.button1));
-        assertTrue(solo.searchText("sleep"));
+        assertTrue(solo.searchText("Sleep"));
 
         // Click on habit and assert details are true
-        solo.clickInList(3);
+        solo.clickInList(4);
         assertTrue(solo.isCheckBoxChecked(3) && solo.isCheckBoxChecked(5));
-        assertTrue(solo.searchText("sleep"));
-        assertTrue(solo.searchText("sleep good"));
+        assertTrue(solo.searchText("Sleep"));
+        assertTrue(solo.searchText("Sleep good"));
         solo.goBack();
     }
 
     /**
-     * Test delete habit functionality. Must be called after testAddHabit() as this
+     * Tests delete habit functionality. Must be called after testAddHabit() as this
      * method deletes the Habit created within said method.
+     * NOTE * : This test was hard-coded following specifications of testHabitList()
+     *          (see testHabitList() description for details).
      */
     @Test
     public void testDeleteHabit() {
-        if(solo.searchText("sleep")) {
+        if(solo.searchText("Sleep")) {
             // Delete habit, assert it is no longer in the ListView
-            solo.clickInList(3);
+            solo.clickInList(4);
+            assertTrue(solo.searchText("Sleep"));
             solo.clickOnView(solo.getView(R.id.delete_button));
-            assertFalse(solo.searchText("sleep"));
+            assertFalse(solo.searchText("Sleep"));
         }
 
     }

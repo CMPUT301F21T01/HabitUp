@@ -1,30 +1,25 @@
 package com.example.habitup;
 
-import android.util.Log;
-import android.widget.ArrayAdapter;
+
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.nio.file.attribute.UserPrincipalLookupService;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 
 /**
- * This class is responsible for keeping data consistent between local User (class) and
+ * This class is responsible for keeping data consistent between local User (instance) and
  * the remote Firestore database. As a result, it provides an interface for dealing with
  * anything database-related in regards to the User.
+ * This class is a singleton as there should only be one instance of a UserSyncer.
+ * @see User
  */
 public class UserSyncer {
 
@@ -51,29 +46,19 @@ public class UserSyncer {
         return instance;
     }
 
+    /**
+     * An interface with a callback method which is called after data is synced. This is
+     * necessary as pulling data from Firestore is asynchronous. Without a callback code will
+     * continue executing and any attributes set in a .get() may remain uninitialized.
+     */
     public interface FirebaseCallback {
         void onCallback();
     }
 
-    private void readFriendData(FirebaseCallback firebaseCallback) {
-        // Get and set friends
-        instance.friendsReference.get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()) {
-                            for(QueryDocumentSnapshot document : task.getResult())
-                                instance.user.addFriend((String) document.getData().get("username"));
-
-                            // Data migrated, call onCallback to notify
-                            firebaseCallback.onCallback();
-                        }
-                    }
-                });
-    }
-
     /**
      * Pulls habit data from Firestore db and pushes to User's habits. Keeps data persistent.
+     * @param firebaseCallback Implementation of onCallback() method within FirebaseCallback interface.
+     * @see FirebaseCallback
      */
     public void syncHabits(FirebaseCallback firebaseCallback) {
         instance.user.clearHabits();
@@ -115,7 +100,7 @@ public class UserSyncer {
      * @param username String representation of the username (used to login).
      * @param firebase A Firebase firestore instance (reference to database)
      * @return User on success or
-     *         null on failure (user already initialized)
+     *         null on failure (in the case that user is already initialized)
      */
     public User initialize(String username, FirebaseFirestore firebase){
         if(user != null) return null;            // Only initialize user once.
@@ -178,5 +163,23 @@ public class UserSyncer {
     public CollectionReference getHabitsRef() {
         return instance.habitsReference;
     }
+
+    /**
+     * Returns a handle to User.
+     * @return userReference A collection reference to user withtin the database.
+     */
+    public CollectionReference getUserRef() { return instance.userReference; }
+
+    /**
+     * Returns a handle to User's friends.
+     * @return friendsReference A collection reference to user's friends within the database.
+     */
+    public CollectionReference getFriendsRef() { return instance.friendsReference; }
+
+    /**
+     * Returns a handle to User's friend requests.
+     * @return requestsReference A collection reference to user's friend requests within the database.
+     */
+    public CollectionReference getRequestsRef() { return instance.requestsReference; }
 
 }

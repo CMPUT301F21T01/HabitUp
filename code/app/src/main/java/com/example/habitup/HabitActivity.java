@@ -74,10 +74,6 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         habitAdapter = new HabitList(this, mainUser.getHabits());
         habitList.setAdapter(habitAdapter);
 
-        //habitDataList = new ArrayList<>();
-        //habitAdapter = new HabitList(this, habitDataList);
-        //habitList.setAdapter(habitAdapter);
-
         // Switch to SearchActivity
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override

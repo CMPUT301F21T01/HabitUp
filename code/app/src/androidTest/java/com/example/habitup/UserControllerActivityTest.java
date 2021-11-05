@@ -2,7 +2,6 @@ package com.example.habitup;
 
 import static org.junit.Assert.assertTrue;
 
-import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -14,6 +13,10 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+/**
+ * Robotium UI test for UserControllerActivity.
+ * @see UserControllerActivity
+ */
 public class UserControllerActivityTest {
     private Solo solo;
 
@@ -22,11 +25,12 @@ public class UserControllerActivityTest {
             new ActivityTestRule<>(UserControllerActivity.class, true, true);
 
     /**
-     * Runs before all tests. Initializes solo instance.
+     * Runs before all tests. Initializes solo instance and asserts correct current activity.
      */
     @Before
     public void setup() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
+        solo.assertCurrentActivity("Wrong activity.", UserControllerActivity.class);
     }
 
     /**
@@ -35,20 +39,18 @@ public class UserControllerActivityTest {
      */
     @Test
     public void testDisplay() {
-        solo.assertCurrentActivity("Wrong activity.", UserControllerActivity.class);
         assertTrue(solo.searchText("HabitUp"));
         assertTrue(solo.searchText("Enter a username"));
         assertTrue(solo.searchButton("enter"));
     }
 
     /**
-     * Tests ability to sign in as an extant user.
+     * Tests ability to sign in as an existing user.
+     * (Non-existing user sign-in test will be implemented later, therefore this type of test
+     * does not exist yet).
      */
     @Test
     public void testSignIn() {
-        solo.assertCurrentActivity("Wrong activity.", UserControllerActivity.class);
-
-        // Sign in
         solo.waitForText("HabitUp");
         solo.enterText((EditText)solo.getView(R.id.username), "john23");
         solo.clickOnButton("enter");

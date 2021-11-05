@@ -25,17 +25,18 @@ public class UserSyncerTest {
 
     /**
      * Assure data pulled from Firestore is correct and no variables are left uninitialized.
-     * @deprecated  This test does not function as it requires 'whitelisted URL patterns in
-     *              Google project'. The Dynamic Links domain must be configured within Firebase
+     * @deprecated  This test does not function as Firestore uses callbacks which are not
+     *              on the main thread. The Dynamic Links domain must be configured within Firebase
      *              to allow 'tools.android.com/tech-docs/unit-testing-support...'.
      */
     //@Test
     public void testInitialization() {
         FirebaseFirestore db = mockDB();
         UserSyncer instance = mockUserSyncer();
+
+        // Known data from DB, used for testing purposes
         String username = "dummy1";
-        String name = "Paige Turner";               // From database (known that this is dummy1's name
-        // used to assure name appropriately pulled from db
+        String name = "Paige Turner";               
 
         User user = instance.initialize(username, db);
         assertNotNull(user);

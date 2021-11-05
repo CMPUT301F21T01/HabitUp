@@ -1,6 +1,5 @@
 package com.example.habitup;
 
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -19,29 +18,41 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-/* EditHabitEventFragment by Vivian */
+/**
+ * EditHabitEventFragment class by Vivian
+ * This is a fragment that allows the user to edit a habit event
+ * Issues: Need connection to the database
+ */
+
 public class EditHabitEventFragment extends DialogFragment {
 
     private EditText addReflections;
     private Button addPhoto;
     private Button addLocation;
-    private OnFragmentInterationListener listner;
+    private OnFragmentInteractionListener listner;
 
     private HabitEventInstance habitEventInstance = HabitEventInstance.getInstance();
     private String location = "";
     private String reflection = "";
     private Bitmap photo = null;
 
-    public interface OnFragmentInterationListener {
+    /**
+     * This is the fragment interaction listener and handles when ok is pressed
+     */
+    public interface OnFragmentInteractionListener {
         void onEditOkPressed(HabitEvent habitEvent);
     }
 
+    /**
+     * This is called when a fragment is first attached to its context.
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
 
         super.onAttach(context);
-        if (context instanceof OnFragmentInterationListener) {
-            listner = (OnFragmentInterationListener) context;
+        if (context instanceof OnFragmentInteractionListener) {
+            listner = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString());
         }
@@ -49,6 +60,10 @@ public class EditHabitEventFragment extends DialogFragment {
     }
 
 
+    /**
+     * This initializes the creation of the EditHabitEvent fragment
+     * @param savedInstanceState
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog (@Nullable Bundle savedInstanceState) {
@@ -87,6 +102,7 @@ public class EditHabitEventFragment extends DialogFragment {
             }
         });
 
+        // Construct the EditHabitEvent fragment
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder.setView(view)
                 .setTitle("Edit Habit Event")

@@ -43,9 +43,9 @@ import java.util.HashMap;
  */
 
 
-public class HabitEventActivity extends AppCompatActivity implements AddHabitEventFragment.OnFragmentInterationListener, EditHabitEventFragment.OnFragmentInterationListener {
+public class HabitEventActivity extends AppCompatActivity implements AddHabitEventFragment.OnFragmentInteractionListener {
 
-    HabitEventInstance habitEventInstance = HabitEventInstance.getInstance("", "");
+    HabitEventInstance habitEventInstance = HabitEventInstance.getInstance("", "", null);
 
     ListView habitEventList;
     ArrayAdapter<HabitEvent> habitEventAdapter;
@@ -98,9 +98,6 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
             public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException error) {
                 habitEventDataList.clear();
                 for (QueryDocumentSnapshot doc : documentSnapshots) {
-
-
-
                     String Date = (String) doc.getData().get("date"); //TODO: change HabitEvent constructor to accept Date
                     //Bitmap Image = (Bitmap) doc.getData().get("photo"); //TODO: learn how to upload/download Bitmaps!
                     String Reflection = (String) doc.getData().get("reflections");
@@ -147,14 +144,14 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
         // add habitEvent to firebase:
 
         HashMap<String, String> data = new HashMap<>();
-        data.put("date", newHabitEvent.getDate());
         data.put("location", newHabitEvent.getLocation());
         data.put("photo", "TODO: MAKE THIS PART WORK lol lmao");
         data.put("reflections", newHabitEvent.getReflection());
+        data.put("date", newHabitEvent.getDate());
 
-        //TODO: we currently find and store habitEvents by reflection, we need to add a custom "title' to ensure no duplicates
+        //TODO: we currently find and store habitEvents by reflection, we need to add a custom "title' to ensure no duplicates (Edit by Vivian: made this delete of date)
         //TODO: this also means that new HabitEvents added are not in the order they are added right now, but alphabetical..
-        habitsRef.document(newHabitEvent.getReflection())
+        habitsRef.document(newHabitEvent.getDate())
 
                 .set(data)
                 .addOnFailureListener(new OnFailureListener() {
@@ -176,7 +173,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
 
         //this will look for the habitEvent with the same Reflection and delete it
         //the list should auto-update thanks to habitsRef.addSnapshotListener
-        habitsRef.document(habitEvent.getReflection())//TODO: make this delete of a "title", not their reflection
+        habitsRef.document(habitEvent.getDate())//TODO: make this delete of a "title", not their reflection (Edit by Vivian: made this delete of date)
                 .delete()
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -186,7 +183,11 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
                 });
     }
 
-
+    /**
+     * This opens the ViewHabitEventActivity and displays details of current habit event
+     * @param position
+     *   This is the position of the habit event inside the list
+     */
     // edit HabitEvent code
     public void onEditPressed(int position){
         //get the habitEvent relating to the position of the habit
@@ -201,16 +202,16 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
         habitEventInstance.setReflection(currentHabitEvent.getReflection());
         habitEventInstance.setPhoto(currentHabitEvent.getImage());
 
+        // Pass username to the ViewHabitEventActivity
+        Intent intent = getIntent();
+        String username = (String) intent.getStringExtra("username");
+        String habitName = (String) intent.getStringExtra("habitName");
+
+        // Start ViewHabitEventActivity
         Intent i = new Intent(HabitEventActivity.this, ViewHabitEventActivity.class);
-        i.putExtra("pos", position);
+        i.putExtra("username", username);
+        i.putExtra("habitName", habitName);
         startActivity(i);
-    }
-
-
-
-    public void onEditOkPressed(HabitEvent habitEvent) {
-        habitEventAdapter.notifyDataSetChanged();
-
     }
 
 }

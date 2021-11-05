@@ -1,6 +1,5 @@
 package com.example.habitup;
 
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -19,37 +18,51 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-/* AddHabitEventFragment by Vivian */
+/**
+ * AddHabitEventFragment class by Vivian
+ * This is a fragment that allows the user to add a habit event
+ * Issues: None so far
+ */
 
 public class AddHabitEventFragment extends DialogFragment {
 
     private EditText addReflections;
     private Button addPhoto;
     private Button addLocation;
-    private OnFragmentInterationListener listner;
+    private OnFragmentInteractionListener listner;
 
     private HabitEventInstance habitEventInstance = HabitEventInstance.getInstance();
     private String location = "";
     private String reflection = "";
     private Bitmap photo = null;
 
-    public interface OnFragmentInterationListener {
+    /**
+     * This is the fragment interaction listener and handles when ok is pressed
+     */
+    public interface OnFragmentInteractionListener {
         void onOkPressed(HabitEvent habitEvent);
     }
 
+    /**
+     * This is called when a fragment is first attached to its context.
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
 
         super.onAttach(context);
-        if (context instanceof OnFragmentInterationListener) {
-            listner = (OnFragmentInterationListener) context;
+        if (context instanceof OnFragmentInteractionListener) {
+            listner = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString());
         }
 
     }
 
-
+    /**
+     * This initializes the creation of the AddHabitEvent fragment
+     * @param savedInstanceState
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog (@Nullable Bundle savedInstanceState) {
@@ -57,7 +70,6 @@ public class AddHabitEventFragment extends DialogFragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_habit_event_fragment_layout, null);
 
         // Create the habit event instance
-        HabitEventInstance.getInstance(location, reflection);
         habitEventInstance = HabitEventInstance.getInstance();
         habitEventInstance.setLocation(location);
         habitEventInstance.setReflection(reflection);
@@ -86,6 +98,7 @@ public class AddHabitEventFragment extends DialogFragment {
             }
         });
 
+        // Construct the AddHabitEvent fragment
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder.setView(view)
                 .setTitle("Add Habit Event")

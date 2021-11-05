@@ -33,13 +33,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class HabitActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
-    // comment
     // Variable declarations
     FloatingActionButton searchBtn;
     FloatingActionButton profileBtn;
     FloatingActionButton homeBtn;
     FloatingActionButton addHabitBtn;
-    FloatingActionButton realAddButton;
     ListView habitList;
     public static ArrayAdapter<Habit> habitAdapter;
     public static ArrayList<Habit> habitDataList;
@@ -128,9 +126,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                 //need the username as well, for habitEvent later
                 intent.putExtra("username", username);
 
-                //i don't know what the below line is but its depreciated?
-                //startActivityForResult(intent, 1);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 

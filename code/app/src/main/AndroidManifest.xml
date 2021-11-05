@@ -35,6 +35,9 @@
             android:name=".SearchActivity"
             android:exported="false" />
         <activity
+            android:name=".RequestsActivity"
+            android:exported="false" />
+        <activity
             android:name=".HabitActivity"
             android:exported="false" />
         <activity

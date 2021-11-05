@@ -51,19 +51,19 @@ public class RequestsActivityTest {
         solo.assertCurrentActivity("Wrong activity.", RequestsActivity.class);
         assertTrue(solo.searchText("Requests"));
         assertTrue(solo.searchButton("Go back"));
-        assertTrue(solo.searchText("Requests"));
     }
 
+
+    /*
     /**
-    @Test
-     * tests users' abilities to go back to the Profile Activity
-     * still being worked on to effectively use solo to do the switches between these activities
-
-    public void testActivitySwitch() {
-        solo.clickOnButton("Go back");
-        solo.goBackToActivity("ProfileActivity");
-        solo.assertCurrentActivity("Wrong activity.", ProfileActivity.class);
-        solo.goBackToActivity("RequestsActivity");
-    }
+     @Test
+      * tests users' abilities to go back to the Profile Activity
+      * still being worked on to effectively use solo to do the switches between these activities
+     public void testActivitySwitch() {
+     solo.clickOnButton("Go back");
+     solo.goBackToActivity("ProfileActivity");
+     solo.assertCurrentActivity("Wrong activity.", ProfileActivity.class);
+     solo.goBackToActivity("RequestsActivity");
+     }
      */
 }

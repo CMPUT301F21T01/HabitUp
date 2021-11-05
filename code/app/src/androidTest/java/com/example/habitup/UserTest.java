@@ -57,11 +57,22 @@ public class UserTest {
         User mockGetterTestingUser = new User();
         mockGetterTestingUser.setName("getName");
         mockGetterTestingUser.setUsername("getUsername");
-        mockGetterTestingUser.setFriends(friends);
-        mockGetterTestingUser.setRequests(friendRequests);
-        mockGetterTestingUser.setHabits(habits);
-        return mockGetterTestingUser;
 
+        // Add friends
+        mockGetterTestingUser.addFriend("test_harryS");
+        mockGetterTestingUser.addFriend("test_niallH");
+        mockGetterTestingUser.addFriend("test_louisT");
+
+        // Add requests
+        mockGetterTestingUser.addRequest("test_zaynM");
+        mockGetterTestingUser.addRequest("test_liamP");
+        mockGetterTestingUser.addRequest("test_elleW");
+
+        // Add habits
+        mockGetterTestingUser.addHabit(habit1);
+        mockGetterTestingUser.addHabit(habit2);
+
+        return mockGetterTestingUser;
     }
 
     @Test
@@ -174,7 +185,6 @@ public class UserTest {
 
 
 }
-
 
 
 

@@ -13,6 +13,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+
+/**
+ * Robotium UI test for SearchActivity.
+ * @see SearchActivity
+ */
 public class SearchActivityTest {
     private Solo solo;
 
@@ -20,6 +25,9 @@ public class SearchActivityTest {
     public ActivityTestRule<SearchActivity> rule =
             new ActivityTestRule<>(SearchActivity.class, true, true);
 
+    /**
+     * Runs before all tests. Initializes solo instance and asserts correct current activity.
+     */
     @Before
     public void setup() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
@@ -59,7 +67,7 @@ public class SearchActivityTest {
         solo.clearEditText(0);
         solo.enterText(searchField, "john23");
         solo.clickOnButton("Search");
-        assertTrue(solo.searchText("Harry S."));
+        assertTrue(solo.searchText("John D."));
 
         // Non-existing user search 2
         solo.clearEditText(0);

@@ -1,12 +1,5 @@
 package com.example.habitup;
 
-/**
- * *for now, we will just be entering a username, storing, and logging in
- * eventually, if a repeat username is attempted a toast will pop up asking to pick a new username
- * as well, potentially authentication via email
- */
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +19,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 
+/**
+ * This activity provides an interface through which a user can sign in.
+ */
 public class UserControllerActivity extends AppCompatActivity
 {
     // Variable declarations
@@ -34,6 +30,12 @@ public class UserControllerActivity extends AppCompatActivity
     FirebaseFirestore db;
     final String TAG = "DEBUG_LOG";
 
+    /**
+     * Initializes view variables and saves the username which was entered. This username
+     * is then passed through an intent to HabitActivity which pulls the appropriate user data
+     * from Firestore.
+     * @see HabitActivity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 /**
  * This class represents the data of a user. It will be populated with data pulled from
  * the Firestore database once a user is authenticated (i.e. signs in successfully).
+ * @see UserSyncer
  */
 public class User {
     private String username;

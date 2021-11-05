@@ -157,6 +157,14 @@ public class UserSyncer {
     }
 
     /**
+     * Returns a handle to the instance of User class.
+     * @return user Instance of user
+     */
+    public User getUser() {
+        return instance.user;
+    }
+
+    /**
      * Returns a handle to User's habits.
      * @return habitsReference A collection reference to user's habits within the database.
      */

@@ -1,22 +1,15 @@
 package com.example.habitup;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
-import android.app.Fragment;
-import android.provider.ContactsContract;
-import android.text.Editable;
+import static org.junit.Assert.assertTrue;
 import android.view.View;
 import android.widget.EditText;
-
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-
 import com.robotium.solo.Solo;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
 public class ProfileActivityTest {
     private Solo solo;
     @Rule
@@ -47,22 +40,17 @@ public class ProfileActivityTest {
     public void testDisplay()
     {
         solo.assertCurrentActivity("Wrong activity.", ProfileActivity.class);
-        assertTrue(solo.searchText("Friends"));
         assertTrue(solo.searchButton("View Requests"));
         assertTrue(solo.searchButton("Go back"));
     }
-    /*
-    /**
-     * tests users' abilities to switch to the RequestsActivity
+
     @Test
     public void testActivitySwitchToRequests() {
         solo.clickOnButton("View Requests");
         solo.assertCurrentActivity("Wrong activity.", RequestsActivity.class);
         solo.goBack();
-
-
     }
-    */
+
 
 
 

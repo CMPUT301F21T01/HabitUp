@@ -4,11 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 
+import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Button;
 import android.view.View;
@@ -19,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -26,7 +32,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.Arrays;
@@ -51,6 +65,8 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
     ArrayAdapter<HabitEvent> habitEventAdapter;
     ArrayList<HabitEvent> habitEventDataList;
 
+    String username;
+    String habitName;
 
     //this is to communicate with firebase
     public static CollectionReference habitsRef;
@@ -63,21 +79,10 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_event);
 
+        // initialization
         habitEventList = findViewById(R.id.habitEvent_list);
-        //buttons
-
-//        String []Locations ={"Take a daily nap", "Eat salads", "Smile", "Read a book","Make your bed","Do your homework","Workout"};
-//        String []Reflections = {"AB", "BC", "ON", "ON","DS","SD","DS"};
-//
-
         habitEventDataList = new ArrayList<>();
-
-//        for(int i=0;i<Locations.length;i++){
-//            habitEventDataList.add((new HabitEvent(Reflections[i], Locations[i])));
-//        }
-
         habitEventAdapter = new HabitEventList(this, habitEventDataList);
-
         habitEventList.setAdapter(habitEventAdapter);
 
         //firebase setup
@@ -86,11 +91,13 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
         // We are loading the users habitEventList for a particular habit
         // so we need the username+ habitName : (username/habits/habitList/habitName/habitEventList)
         Intent intent = getIntent();
-        String username = (String) intent.getStringExtra("username");
-        String habitName = (String) intent.getStringExtra("habitName");
+        username = (String) intent.getStringExtra("username");
+        habitName = (String) intent.getStringExtra("habitName");
         habitsRef = db.collection(username + "/habits/habitList/" + habitName +"/habitEventList");
         //Log.d("DEBUG_LOG", username + "/habits/habitList/" + habitName +"/habitEventList");
         //we then read from firebase and fill up our HabitEventList from the SnapshotListener! (it also updates whenever there is a change in firebase too)
+
+        ContentResolver result = (ContentResolver) this.getContentResolver();
 
         // Collection event listener
         habitsRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -102,9 +109,15 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
                     //Bitmap Image = (Bitmap) doc.getData().get("photo"); //TODO: learn how to upload/download Bitmaps!
                     String Reflection = (String) doc.getData().get("reflections");
                     String Location = (String) doc.getData().get("location");
-                    //Log.d("DEBUG_LOG",Date + "DATE WE GET");
+
+                    String imageRef = username + "/habits/habitList/" + habitName +"/habitEventList/" + Date + "/photo.jpg";
+                    Bitmap Image = null;
+
                     // Add each habitEvent from database
-                    habitEventDataList.add(new HabitEvent(Reflection,Location,Date));
+                    HabitEvent newHabitEvent = new HabitEvent(Reflection,Location,Image);
+                    newHabitEvent.setDate(Date);
+                    newHabitEvent.setURL(imageRef);
+                    habitEventDataList.add(newHabitEvent);
                 }
                 habitEventAdapter.notifyDataSetChanged();
             }
@@ -145,7 +158,6 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
 
         HashMap<String, String> data = new HashMap<>();
         data.put("location", newHabitEvent.getLocation());
-        data.put("photo", "TODO: MAKE THIS PART WORK lol lmao");
         data.put("reflections", newHabitEvent.getReflection());
         data.put("date", newHabitEvent.getDate());
 
@@ -160,6 +172,31 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
                         Log.d(TAG, "Document not added: " + e.toString());
                     }
                 });
+
+        // Store Image to Firebase File Storage
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        Bitmap bitmap = newHabitEvent.getImage();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageData = baos.toByteArray();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://habitup-d4738.appspot.com");
+
+        String URL = username + "/habits/habitList/" + habitName +"/habitEventList/" + newHabitEvent.getDate() + "/photo.jpg";
+        newHabitEvent.setURL(URL);
+        StorageReference imagesRef = storageRef.child(URL);
+
+        // Upload the image
+        UploadTask uploadTask = imagesRef.putBytes(imageData);
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d(TAG, "Document not added: " + exception.toString());
+            }
+        });
+
+        habitEventAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -181,6 +218,26 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
                         Log.d(TAG, "Document failed to be deleted: " + e.toString());
                     }
                 });
+
+        // delete image from firestore
+        String URL = username + "/habits/habitList/" + habitName +"/habitEventList/" + habitEvent.getDate() + "/photo.jpg";
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://habitup-d4738.appspot.com");
+        StorageReference imagesRef = storageRef.child(habitEvent.getURL());
+
+        imagesRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // File deleted successfully
+                Log.d(TAG, "onSuccess: deleted file");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Uh-oh, an error occurred!
+                Log.d(TAG, "onFailure: did not delete file");
+            }
+        });
     }
 
     /**
@@ -201,6 +258,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
         habitEventInstance.setLocation(currentHabitEvent.getLocation());
         habitEventInstance.setReflection(currentHabitEvent.getReflection());
         habitEventInstance.setPhoto(currentHabitEvent.getImage());
+        habitEventInstance.setURL(username + "/habits/habitList/" + habitName +"/habitEventList/" + currentHabitEvent.getDate() + "/photo.jpg");
 
         // Pass username to the ViewHabitEventActivity
         Intent intent = getIntent();

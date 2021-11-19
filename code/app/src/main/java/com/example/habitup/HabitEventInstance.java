@@ -21,6 +21,8 @@ public class HabitEventInstance {
     private String myReflection;
     private Bitmap myPhotograph;
 
+    private String myURL;
+
     /**
      * This is the constructor of a HabitEventInstance object
      */
@@ -28,6 +30,7 @@ public class HabitEventInstance {
         myLocation = location;
         myReflection = reflection;
         myPhotograph = photograph;
+        myURL = "";
     }
 
     /**
@@ -93,6 +96,15 @@ public class HabitEventInstance {
     }
 
     /**
+     * This sets the url of the habit event image
+     * @param url
+     *   This is the candidate url of the habit event image
+     */
+    public void setURL(String url) {
+        myURL = url;
+    }
+
+    /**
      * This returns the location of the habit event instance
      * @return
      *   Return location
@@ -129,12 +141,22 @@ public class HabitEventInstance {
     }
 
     /**
+     * This returns the url of the habit event image
+     * @return
+     *   Return url
+     */
+    public String getURL() {
+        return myURL;
+    }
+
+    /**
      * This returns the habitEvent of the habit event instance
      * @return
      *   Return habitEvent
      */
     public HabitEvent getHabitEvent() {
         habitEvent = new HabitEvent(myReflection, myLocation, myPhotograph);
+        habitEvent.setURL(myURL);
         return habitEvent;
     }
 
@@ -147,6 +169,7 @@ public class HabitEventInstance {
         habitEvent.setLocation(myLocation);
         habitEvent.setReflection(myReflection);
         habitEvent.setImage(myPhotograph);
+        habitEvent.setURL(myURL);
 
         return habitEvent;
     }

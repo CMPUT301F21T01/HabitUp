@@ -208,9 +208,11 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
     protected void onStart() {
         super.onStart();
 
-        // update the medicine list and the adapter:
+        // update the habitList and notify adapter of change
         habitAdapter = new HabitList(this, habitDataList);
         habitList.setAdapter(habitAdapter);
+        syncer = UserSyncer.getInstance();
+        mainUser = syncer.getUser();
     }
 
     /**

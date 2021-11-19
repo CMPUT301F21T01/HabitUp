@@ -12,12 +12,21 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * This activity allows the user to view their friend requests
+ */
 public class RequestsActivity extends AppCompatActivity {
 
     ListView requestList;
     ArrayAdapter<String> requestsAdapter;
     ArrayList<String> requestsDataList;
     Button backBtn;
+
+    /**
+     * This brings up the proper displays from the XML to be shown on the screen
+     * @param savedInstanceState from the switching of the activities (from the profile activity to here upon the profile button being clicked)
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -35,6 +44,10 @@ public class RequestsActivity extends AppCompatActivity {
 
         requestList.setAdapter(requestsAdapter);
 
+        /**
+         * uses the back button to go to the main activity, habit list screen
+         * @param view
+         */
         backBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -45,6 +58,4 @@ public class RequestsActivity extends AppCompatActivity {
         });
     }
 }
-
-
 

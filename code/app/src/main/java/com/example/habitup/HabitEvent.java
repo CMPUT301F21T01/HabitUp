@@ -38,12 +38,33 @@ public class HabitEvent  {
         Image = image;
     }
 
+    /**
+     * Temporary Test constructor. To be deleted for final release
+     * @param reflection
+     * @param location
+     * @param date
+     */
     //this is a temporary constructor for testing without an image
     public  HabitEvent(String reflection, String location, String date){
         Date = date;
         Reflection = reflection;
         Location = location;
 
+    }
+
+    /**
+     * Temporary Test constructor. To be deleted for final release
+     * @param reflection
+     * @param location
+     * @param date
+     * @param image
+     */
+    //another temp test constructor
+    public  HabitEvent(String reflection, String location, String date,Bitmap image){
+        Date = date;
+        Reflection = reflection;
+        Location = location;
+        Image = image;
     }
 
     public String getReflection() {

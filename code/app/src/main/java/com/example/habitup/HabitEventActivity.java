@@ -53,7 +53,7 @@ import java.util.HashMap;
  * outsanding issues cont:
  *          need to implement the ability to store, download, and upload photos (Bitmaps) from the fireStore database, as of now we ignore the photo
  *          need to give each HabitEvent a 'title' that can assure they can be unique and so we can order then in Firestore by recently created
- *          as of now we use 'Reflection' as a title but the issue with that is Reflection must be unique for each HabitEvent and each HabitEvent Reflection now has to be unique
+ *          as of now we use 'Date' as a title but the issue with that is Date cannot be identical for multiple events
  */
 
 
@@ -161,8 +161,8 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
         data.put("reflections", newHabitEvent.getReflection());
         data.put("date", newHabitEvent.getDate());
 
-        //TODO: we currently find and store habitEvents by reflection, we need to add a custom "title' to ensure no duplicates (Edit by Vivian: made this delete of date)
-        //TODO: this also means that new HabitEvents added are not in the order they are added right now, but alphabetical..
+        //TODO: we currently find and store habitEvents by DATE, we need to add a custom "title' to ensure no duplicates or other issues
+
         habitsRef.document(newHabitEvent.getDate())
 
                 .set(data)
@@ -202,6 +202,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
     /**
      * this function deletes a HabitEvent from fireStore when the user presses the delete button on that HabitEvent
      * @param position
+     * This is the position of the habit event inside the list
      */
     //delete HabitEvent code
     public void onDeletePressed(int position){
@@ -210,7 +211,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
 
         //this will look for the habitEvent with the same Reflection and delete it
         //the list should auto-update thanks to habitsRef.addSnapshotListener
-        habitsRef.document(habitEvent.getDate())//TODO: make this delete of a "title", not their reflection (Edit by Vivian: made this delete of date)
+        habitsRef.document(habitEvent.getDate())//TODO: make this delete of a "title", not their date
                 .delete()
                 .addOnFailureListener(new OnFailureListener() {
                     @Override

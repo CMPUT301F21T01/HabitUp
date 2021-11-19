@@ -11,10 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -23,6 +21,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+/**
+ * This is an activity that provides an interface to search for other users of the application.
+ */
 public class SearchActivity extends AppCompatActivity {
 
 
@@ -41,6 +42,12 @@ public class SearchActivity extends AppCompatActivity {
 
     FirebaseFirestore db;
 
+    /**
+     * Initializes view variables and sets a listener for the search button. When it (the search
+     * button) is clicked search through the database and display results as such:
+     *      1. If user is found -> display their name
+     *      2. If user is not found -> display "No user found"
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -34,7 +34,11 @@ class HabitEventList extends ArrayAdapter<HabitEvent> {
     private ArrayList<HabitEvent> habitEvents;
     private Context context;
 
-
+    /**
+     * The constructor for HabitEventList
+     * @param context
+     * @param habitEvents
+     */
     public HabitEventList(Context context, ArrayList<HabitEvent> habitEvents){
         super(context,0, habitEvents);
         this.habitEvents = habitEvents;

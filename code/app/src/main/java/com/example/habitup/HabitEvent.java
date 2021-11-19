@@ -17,6 +17,8 @@ public class HabitEvent  {
     private String Reflection;
     private String Location;
 
+    private String URL = "";
+
     /**
      * Constructor for HabitEvent. If no date is provided, we generate a date from current time
      * @param reflection
@@ -93,7 +95,11 @@ public class HabitEvent  {
         return Image;
     }
 
-    public void setImage(Bitmap image) {
-        Image = image;
+    public void setImage(Bitmap image) { Image = image; }
+
+    public String getURL() {
+        return URL;
     }
+
+    public void setURL(String url) { URL = url; }
 }

@@ -35,8 +35,6 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
     private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck;
     private ArrayList<String> daysSelected;
     private ProgressBar progressBar;
-    ArrayList<Habit> dataList;
-    ArrayAdapter<Habit> adapter;
     final String TAG = "DEBUG_LOG";
 
     @Override
@@ -50,8 +48,6 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
         int positionOfHabit = myIntent.getIntExtra("position", -1);
 
         // Assigning and initializing variables:
-        dataList = HabitActivity.habitDataList;
-        adapter = HabitActivity.habitAdapter;
         title = findViewById(R.id.view_habit_title);
         reason = findViewById(R.id.view_reason);
         startText = findViewById(R.id.start_date);
@@ -158,7 +154,7 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
      */
     @Override
     public void onSavePressedEdit(Habit editHabit, int posOfHabit) {
-        // send info to HabitActivity for firestore shit
+        // Send info to HabitActivity
         Intent myIntent = new Intent();
         myIntent.putExtra("position", posOfHabit);
         myIntent.putExtra("editedHabit", editHabit);

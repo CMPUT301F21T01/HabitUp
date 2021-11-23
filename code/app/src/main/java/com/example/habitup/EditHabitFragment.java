@@ -278,12 +278,17 @@ public class EditHabitFragment extends DialogFragment {
         long difference = eDate.getTime() - sDate.getTime();
         long currentDifference = current - sDate.getTime();
 
-        float progress = (float) ((currentDifference/difference) * 100);
-        if(progress > 100){
+        float progress;
+        if(difference == 0) {
             progress = 100;
-        }
-        if(progress < 0){
-            progress = 0;
+        } else {
+            progress = (float) currentDifference / difference * 100;
+            if (progress > 100) {
+                progress = 100;
+            }
+            if (progress < 0) {
+                progress = 0;
+            }
         }
         newProgress = ((int) progress);
     }

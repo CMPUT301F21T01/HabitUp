@@ -79,11 +79,6 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         habitAdapter = new HabitList(this, mainUser.getHabits());
         habitList.setAdapter(habitAdapter);
 
-        /* Occurs in ONCREATE
-        habitAdapter = new HabitList(this, mainUser.getHabits());
-        habitList.setAdapter(habitAdapter);
-        */
-
         // Set user's name
         userTitle.setText(username + "'s Habits");
 

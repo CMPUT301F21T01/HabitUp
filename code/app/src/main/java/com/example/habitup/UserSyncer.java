@@ -147,7 +147,7 @@ public class UserSyncer {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()) {
                             for(QueryDocumentSnapshot document : task.getResult())
-                                instance.user.addFriend((String) document.getData().get("username"));
+                                instance.user.addFriend((String)document.getId());
                         }
                     }
                 });
@@ -159,7 +159,7 @@ public class UserSyncer {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()) {
                             for(QueryDocumentSnapshot document : task.getResult())
-                                instance.user.addRequest((String) document.getData().get("username"));
+                                instance.user.addRequest((String) document.getId());
                         }
                     }
                 });
@@ -292,6 +292,26 @@ public class UserSyncer {
                         }
                     });
         }
+    }
+
+    /**
+     * Sends a follower request to the username provided (in Firestore).
+     * @param username to request to follow
+     */
+    public void sendRequest(String username) {
+        CollectionReference foreignRequests = instance.db
+                .collection(username + "/friends/requests");
+
+        // Send request
+        HashMap<String, Object> filler = new HashMap<>();
+        foreignRequests.document(instance.user.getUsername())
+                .set(filler)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Document failed to be created: " + e.toString());
+                    }
+                });
     }
 
     /**

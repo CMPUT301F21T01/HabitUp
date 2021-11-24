@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/btn_capture_photo"
+        android:layout_width="180dp"
+        android:layout_height="191dp"
+        android:layout_marginTop="150dp"
+        android:gravity="center"
+        android:src="@drawable/circle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </ImageView>
+
+    <Button
+        android:id="@+id/send_requests_button"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@android:color/holo_blue_dark"
+        android:text="Send Request"
+        android:textColor="#212121"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_capture_photo" />
+
+
+    <Button
+        android:id="@+id/switch_activity_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="Go back"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="5dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/userInitial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:textColor="#FFFFFF"
+        android:textSize="48sp"
+        android:hint="X"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_capture_photo"
+        app:layout_constraintEnd_toEndOf="@+id/btn_capture_photo"
+        app:layout_constraintStart_toStartOf="@+id/btn_capture_photo"
+        app:layout_constraintTop_toTopOf="@+id/btn_capture_photo" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HabitUp">
         <activity
+            android:name=".ViewProfile"
+            android:exported="false" />
+        <activity
+            android:name=".RequestActivity"
+            android:exported="false" />
+        <activity
             android:name=".RequestsActivity"
             android:exported="false" />
         <activity

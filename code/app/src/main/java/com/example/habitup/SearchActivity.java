@@ -1,11 +1,15 @@
 package com.example.habitup;
 
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -106,6 +110,19 @@ public class SearchActivity extends AppCompatActivity {
                                     if(userFound && nameList.getVisibility() == View.GONE) {
                                         displayResultText.setVisibility(View.GONE);
                                         nameList.setVisibility(View.VISIBLE);
+                                        nameList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                                            @Override
+                                            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) { //clicks on the profile of the person that popped up
+                                                String name = nameDataList.get(position);
+                                                //conditional to check if the user has this person as a follower/requests
+                                                //for now just starts the requests process
+                                                Intent intent = new Intent(SearchActivity.this, RequestActivity.class);
+                                                intent.putExtra(EXTRA_MESSAGE, name);
+                                                startActivity(intent);
+
+                                                return true;
+                                            }
+                                        });
                                     }
                                     else if (!userFound && nameList.getVisibility() == View.VISIBLE) {
                                         nameList.setVisibility(View.GONE);

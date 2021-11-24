@@ -210,6 +210,11 @@ public class UserSyncer {
                 });
     }
 
+    /**
+     * Edits a habit of the user in Firestore.
+     * @param oldName previous name of the habit (prior to editing)
+     * @param habit to be edited / re-added
+     */
     public void editHabit(String oldName, Habit habit) {
 
         // Format data into a hash map
@@ -256,6 +261,52 @@ public class UserSyncer {
                     });
         }
 
+    }
+
+    /**
+     * Accepts or rejects a friend request in Firestore.
+     * @param username to be accepted/rejected
+     * @param decision true if user is to be accepted or
+     *                 false otherwise
+     */
+    public void handleRequest(String username, boolean decision) {
+        // Delete from requests
+        instance.requestsReference.document(username)
+                .delete()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Document failed to be deleted: " + e.toString());
+                    }
+                });
+
+        if(decision) {
+            // Add to current (friends)
+            HashMap<String, Object> filler = new HashMap<>();
+            instance.friendsReference.document(username)
+                    .set(filler)
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d(TAG, "Document failed to be created: " + e.toString());
+                        }
+                    });
+        }
+    }
+
+    /**
+     * Removes provided username from user's friend/follower list in Firestore.
+     * @param username to be removed
+     */
+    public void removeFriend(String username) {
+        instance.friendsReference.document(username)
+                .delete()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Document failed to be deleted: " + e.toString());
+                    }
+                });
     }
 
     /**

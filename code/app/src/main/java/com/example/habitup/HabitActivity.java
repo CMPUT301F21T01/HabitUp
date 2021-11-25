@@ -1,38 +1,22 @@
 package com.example.habitup;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * This class manages the HabitActivity.xml, or the screen where you see the list of habits.
@@ -126,9 +110,8 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 // If habit is clicked then go to ViewHabitActivity;
-                // Getting current selected habit's information and sending it to ViewHabitActivity:
 
-                //Habit selectedHabit = habitDataList.get(position);
+                // Getting current selected habit's information and sending it to ViewHabitActivity:
                 Habit selectedHabit = mainUser.getHabits().get(position);
 
                 Intent intent = new Intent(HabitActivity.this, ViewHabitActivity.class);

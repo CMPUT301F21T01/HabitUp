@@ -142,6 +142,13 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             }
         });
 
+        habitList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                view.setOnDragListener();
+            }
+        });
+
         // Collection event listener:
         habitsRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override

@@ -230,7 +230,7 @@ public class AddHabitFragment extends DialogFragment {
 
         float progress;
         if(difference != 0)
-            progress = (float) ((currentDifference/difference) * 100);
+            progress = (float) currentDifference/difference * 100;
         else
             progress = 100;
 

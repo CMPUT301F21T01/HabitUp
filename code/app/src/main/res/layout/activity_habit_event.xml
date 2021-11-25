@@ -10,13 +10,14 @@
         android:id="@+id/habitEvent_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="3dp"
+        android:layout_marginHorizontal="7dp"
         android:divider="@android:color/black"
-        android:dividerHeight="8dp">
+        android:dividerHeight="2dp">
     </ListView>
 
     <ImageButton
         android:id="@+id/back_habit_event_button"
+        android:background="@android:color/transparent"
         android:layout_width="61dp"
         android:layout_height="54dp"
         android:src="?attr/actionModeCloseDrawable" />
@@ -24,10 +25,10 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_habit_event_button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|end"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -35,6 +36,8 @@
         android:layout_marginBottom="16dp"
         android:clickable="true"
         android:focusable="true"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:backgroundTint="#000000"
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:tint="#F2F0F0" />
 
 </RelativeLayout>

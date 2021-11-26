@@ -37,50 +37,98 @@ public class Habit implements Serializable {
         this.progress = progress;
     }
 
+    /**
+     * Returns the title of of calling habit.
+     * @return title (String)
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Returns the start date of of calling habit.
+     * @return startDate (String)
+     */
     public String getStartDate() {
         return startDate;
     }
 
+    /**
+     * Returns the end date of calling habit.
+     * @return endDate (String)
+     */
     public String getEndDate() {
         return endDate;
     }
 
+    /**
+     * Returns the frequency of calling habit.
+     * @return frequency (ArrayList of strings representing frequencies)
+     */
     public ArrayList<String> getFrequency() {
         return frequency;
     }
 
+    /**
+     * Returns the reason of calling habit.
+     * @return reason (String)
+     */
     public String getReason(){
         return reason;
     }
 
+    /**
+     * Returns the progress of calling habit.
+     * @return progress (int)
+     */
     public Integer getProgress(){
         return progress;
     }
 
+    /**
+     * Sets the title of calling habit.
+     * @param title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * Sets the start date of calling habit.
+     * @param startDate
+     */
     public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
+    /**
+     * Sets the end date of calling habit.
+     * @param endDate
+     */
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
+    /**
+     * Sets the frequency of calling habit.
+     * @param frequency
+     */
     public void setFrequency(ArrayList<String> frequency) {
         this.frequency = frequency;
     }
 
+    /**
+     * Sets the reason of calling habit.
+     * @param reason
+     */
     public void setReason(String reason){
         this.reason = reason;
     }
 
+    /**
+     * Sets the progress of calling habit.
+     * @param progress
+     */
     public void setProgress(Integer progress){
         this.progress = progress;
     }

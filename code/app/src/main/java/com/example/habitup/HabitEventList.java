@@ -15,8 +15,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -63,13 +68,31 @@ class HabitEventList extends ArrayAdapter<HabitEvent> {
         TextView habitDate = view.findViewById(R.id.textViewDate);
         TextView habitLocation = view.findViewById(R.id.textViewLocation);
         TextView habitReflection = view.findViewById(R.id.textViewReflection);
-        ImageView habitPhoto = view.findViewById(R.id.imageViewPhoto);
 
         habitDate.setText(habitEvent.getDate());
         habitLocation.setText(habitEvent.getLocation());
         habitReflection.setText(habitEvent.getReflection());
-        habitPhoto.setImageBitmap(habitEvent.getImage());
 
+        ImageView habitPhoto = view.findViewById(R.id.imageViewPhoto);
+
+        // Reference to an image file in Cloud Storage
+        // StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://habitup-d4738.appspot.com");
+        if (habitEvent.getImage() != null) {
+            habitPhoto.setImageBitmap(habitEvent.getImage());
+        }
+        else if (habitEvent.getURL() != "") {
+            StorageReference imagesRef = storageRef.child(habitEvent.getURL());
+
+            // Download directly from StorageReference using Glide
+            // (See MyAppGlideModule for Loader registration)
+            GlideApp.with(context)
+                    .load(imagesRef)
+                    .apply(RequestOptions.skipMemoryCacheOf(true))
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+                    .into(habitPhoto);
+        }
 
         //delete HabitEvent stuff here
         //button action

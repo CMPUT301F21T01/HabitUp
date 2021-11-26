@@ -109,7 +109,7 @@ public class UserSyncer {
      *         null on failure (in the case that user is already initialized)
      */
     public User initialize(String username, FirebaseFirestore firebase){
-        if(user != null) return null;            // Only initialize user once.
+        if(user != null) return user;            // Only initialize user once.
 
         // Attribute initialization
         instance.db = firebase;

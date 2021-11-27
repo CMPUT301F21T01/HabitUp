@@ -152,6 +152,7 @@ public class AddHabitFragment extends DialogFragment {
             }
         });
         // Checking to see if user clicked the habit type checkbox to set the habit private:
+        type = false;
         typeCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

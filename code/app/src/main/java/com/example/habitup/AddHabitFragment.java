@@ -41,7 +41,8 @@ public class AddHabitFragment extends DialogFragment {
     private EditText reason;
     private TextView startText;
     private TextView endText;
-    private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck;
+    private Boolean type;
+    private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck, typeCheck;
     private ArrayList<String> daysSelected;
     private int newProgress;
     private OnFragmentInteractionListener listener;
@@ -82,6 +83,7 @@ public class AddHabitFragment extends DialogFragment {
         rCheck = view.findViewById(R.id.thursday_check);
         fCheck = view.findViewById(R.id.friday_check);
         sCheck = view.findViewById(R.id.saturday_check);
+        typeCheck = view.findViewById(R.id.type_check);
         daysSelected = new ArrayList<>();
 
         // Checking all weekday checkboxes to see if user pressed them
@@ -149,6 +151,13 @@ public class AddHabitFragment extends DialogFragment {
                     daysSelected.remove("S");
             }
         });
+        // Checking to see if user clicked the habit type checkbox to set the habit private:
+        typeCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                type = typeCheck.isChecked();
+            }
+        });
 
         // Get user's selected date if StartDate button is clicked:
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -179,7 +188,7 @@ public class AddHabitFragment extends DialogFragment {
                         String startDate = startText.getText().toString();
                         String endDate = endText.getText().toString();
                         setProgress(startDate, endDate);
-                        listener.onSavePressedAdd(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress));
+                        listener.onSavePressedAdd(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress, type));
                     }
                 }).create();
     }

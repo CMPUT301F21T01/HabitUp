@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    >
 
     <TextView
         android:layout_width="match_parent"
@@ -24,9 +24,9 @@
         android:layout_marginStart="-3dp"
         android:layout_marginTop="280dp"
         android:layout_marginBottom="10dp"
-        android:background="@android:color/darker_gray"
+        android:background="@drawable/sign_in_border"
         android:hint="Username"
-        android:paddingLeft="10dp"/>
+        android:paddingLeft="10dp" />
 
     <EditText
         android:id="@+id/password"
@@ -36,9 +36,10 @@
         android:layout_marginStart="-3dp"
         android:layout_marginTop="340dp"
         android:layout_marginBottom="10dp"
-        android:background="@android:color/darker_gray"
+        android:background="@drawable/sign_in_border"
         android:hint="Password"
-        android:paddingLeft="10dp"/>
+        android:inputType="textPassword"
+        android:paddingLeft="10dp" />
 
 
     <Button

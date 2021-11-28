@@ -106,8 +106,8 @@ public class GenerateQRHabitEventFragment extends DialogFragment {
         // getting dimensions of QR code from the width and height, by getting smaller of 2(it has to be square)
         int dimensions = Math.min(width, height);
         //encoding the QR code with the dimensions
-        Log.e("Tag", "data:"+location+" "+reflection);
-        QREncoder = new QRGEncoder("test", null, QRGContents.Type.TEXT, dimensions);
+        Log.e("Tag", "location: "+location+" Reflection: "+reflection);
+        QREncoder = new QRGEncoder(location+reflection, null, QRGContents.Type.TEXT, dimensions);
         try {
             // converting to bitmap
             bitmap = QREncoder.encodeAsBitmap();

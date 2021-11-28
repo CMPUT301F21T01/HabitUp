@@ -1,22 +1,14 @@
 package com.example.habitup;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.firebase.firestore.CollectionReference;
 
 import java.util.ArrayList;
 
@@ -32,11 +24,10 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
     private TextView startText;
     private TextView endText;
     private Button deleteButton, editButton, showListButton;
-    private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck;
+    private Boolean type;
+    private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck, typeCheck;
     private ArrayList<String> daysSelected;
     private ProgressBar progressBar;
-    ArrayList<Habit> dataList;
-    ArrayAdapter<Habit> adapter;
     final String TAG = "DEBUG_LOG";
 
     @Override
@@ -50,8 +41,6 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
         int positionOfHabit = myIntent.getIntExtra("position", -1);
 
         // Assigning and initializing variables:
-        dataList = HabitActivity.habitDataList;
-        adapter = HabitActivity.habitAdapter;
         title = findViewById(R.id.view_habit_title);
         reason = findViewById(R.id.view_reason);
         startText = findViewById(R.id.start_date);
@@ -65,15 +54,18 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
         rCheck = findViewById(R.id.view_thursday_check);
         fCheck = findViewById(R.id.view_friday_check);
         sCheck = findViewById(R.id.view_saturday_check);
+        typeCheck = findViewById(R.id.type_check);
         // Setting habit's information variables:
         title.setText(habit.getTitle());
         reason.setText(habit.getReason());
         startText.setText(habit.getStartDate());
         endText.setText(habit.getEndDate());
         daysSelected = habit.getFrequency();
+        type = habit.getType();
         progressBar.setProgress(habit.getProgress());
 
         checkBoxInit(daysSelected);
+        if (type) typeCheck.setChecked(true);
 
         // Listener for edit button:
         editButton = findViewById(R.id.edit_button);
@@ -100,8 +92,7 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
             }
         });
 
-
-        // Habit event list button - Vivian:
+        // Listener for habit event list button:
         showListButton = findViewById(R.id.habit_event_list_button);
         showListButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,7 +149,7 @@ public class ViewHabitActivity extends AppCompatActivity implements EditHabitFra
      */
     @Override
     public void onSavePressedEdit(Habit editHabit, int posOfHabit) {
-        // send info to HabitActivity for firestore shit
+        // Send info to HabitActivity
         Intent myIntent = new Intent();
         myIntent.putExtra("position", posOfHabit);
         myIntent.putExtra("editedHabit", editHabit);

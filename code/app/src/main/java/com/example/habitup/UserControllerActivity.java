@@ -49,51 +49,49 @@ public class UserControllerActivity extends AppCompatActivity
         db = FirebaseFirestore.getInstance();
 
         enterButton.setOnClickListener(new View.OnClickListener() {
-                                           @Override
-                                           public void onClick(View view) {
-                                               name[0] = usernameField.getText().toString();
-                                               CollectionReference userRef = db.collection(name[0]);
-                                               userRef.get()
-                                                       .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                           @Override
-                                                           public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                               if(task.isSuccessful()) {
+            @Override
+            public void onClick(View view) {
+                name[0] = usernameField.getText().toString();
+                CollectionReference userRef = db.collection(name[0]);
+                userRef.get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()) {
+                                    // Check if user exists
+                                    boolean userFound = false;
+                                    if(!task.getResult().isEmpty())
+                                        userFound = true;
 
-                                                                   // Check if user exists
-                                                                   boolean userFound = false;
-                                                                   if(!task.getResult().isEmpty())
-                                                                       userFound = true;
+                                    if(userFound) {
+                                        ;
+                                    }
+                                    else if (!userFound ) {
+                                        // Create auth document
+                                        HashMap<String, String> data = new HashMap<>();
+                                        data.put("name", "Harry S.");
+                                        data.put("password", "1b1ddd");
+                                        userRef.document("auth")
+                                                .set(data)
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.d(TAG, "Document not added: " + e.toString());
+                                                    }
+                                                });
+                                    }
 
-                                                                   if(userFound) {
-                                                                       ;
-                                                                   }
-                                                                   else if (!userFound ) {
-                                                                       // Create auth document
-                                                                       HashMap<String, String> data = new HashMap<>();
-                                                                       data.put("name", "Harry S.");
-                                                                       data.put("password", "1b1ddd");
-                                                                       userRef.document("auth")
-                                                                               .set(data)
-                                                                               .addOnFailureListener(new OnFailureListener() {
-                                                                                   @Override
-                                                                                   public void onFailure(@NonNull Exception e) {
-                                                                                       Log.d(TAG, "Document not added: " + e.toString());
-                                                                                   }
-                                                                               });
-                                                                   }
-
-                                                                   // Pass username to HabitActivity intent and start activity
-                                                                   Intent intent = new Intent(view.getContext(), HabitActivity.class);
-                                                                   intent.putExtra(Intent.EXTRA_TEXT, name[0]);
-                                                                   startActivity(intent);
-                                                               } else {
-                                                                   Log.d(TAG, "Error getting document: ", task.getException());
-                                                               }
-                                                           }
-                                                       });
-                                           }
-                                       }
-        );
+                                    // Pass username to HabitActivity intent and start activity
+                                    Intent intent = new Intent(view.getContext(), HabitActivity.class);
+                                    intent.putExtra(Intent.EXTRA_TEXT, name[0]);
+                                    startActivity(intent);
+                                } else {
+                                    Log.d(TAG, "Error getting document: ", task.getException());
+                                }
+                            }
+                        });
+            }
+        });
         // firestore authentication: https://firebase.google.com/docs/auth/android/start
     }
 }

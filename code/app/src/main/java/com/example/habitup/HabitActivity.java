@@ -44,7 +44,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         setContentView(R.layout.habit_activity);
 
         // Variable initializations
-        habitList   = findViewById(R.id.habit_list);
+        habitList   = findViewById(R.id.habit_listView);
         searchBtn   = findViewById(R.id.search_activity_btn);
         profileBtn  = findViewById(R.id.profile_activity_btn);
         homeBtn     = findViewById(R.id.home_activity_btn);
@@ -187,5 +187,21 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                 }
             }
         }
+    }
+
+    public static void OnUpButtonClick(int position, Habit habit){
+        if (position != 0) {
+            habitAdapter.remove(habit);
+            habitAdapter.insert(habit, position - 1);
+        }
+        habitAdapter.notifyDataSetChanged();
+    }
+
+    public static void OnDownButtonClick(int position, Habit habit){
+        if (position != habitAdapter.getCount() - 1) {
+            habitAdapter.remove(habit);
+            habitAdapter.insert(habit, position + 1);
+        }
+        habitAdapter.notifyDataSetChanged();
     }
 }

@@ -105,7 +105,6 @@ public class GenerateQRHabitEventFragment extends DialogFragment {
         int height = p.y;
         // getting dimensions of QR code from the width and height, by getting smaller of 2(it has to be square)
         int dimensions = Math.min(width, height);
-        //dimensions = dimensions * 3 / 4;
         //encoding the QR code with the dimensions
         Log.e("Tag", "data:"+location+" "+reflection);
         QREncoder = new QRGEncoder("test", null, QRGContents.Type.TEXT, dimensions);

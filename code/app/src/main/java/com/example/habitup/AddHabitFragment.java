@@ -242,6 +242,7 @@ public class AddHabitFragment extends DialogFragment {
         long difference = time.convert(totalDifference, TimeUnit.MILLISECONDS);
         long daysPassed = time.convert(days, TimeUnit.MILLISECONDS);
 
+
         double rate = 1.0/difference;
         double dailyPercentage = daysPassed * rate;
 

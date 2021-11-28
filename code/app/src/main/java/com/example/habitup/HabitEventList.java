@@ -68,10 +68,10 @@ class HabitEventList extends ArrayAdapter<HabitEvent> {
         TextView habitDate = view.findViewById(R.id.textViewDate);
         TextView habitLocation = view.findViewById(R.id.textViewLocation);
         TextView habitReflection = view.findViewById(R.id.textViewReflection);
-
+        //if we add a Date: "+ to the habitDate text the hour/min/sec part disappears?
         habitDate.setText(habitEvent.getDate());
         habitLocation.setText(habitEvent.getLocation());
-        habitReflection.setText(habitEvent.getReflection());
+        habitReflection.setText("Reflection: "+habitEvent.getReflection());
 
         ImageView habitPhoto = view.findViewById(R.id.imageViewPhoto);
 
@@ -106,7 +106,7 @@ class HabitEventList extends ArrayAdapter<HabitEvent> {
         });
 
         // edit HabitEvent stuff here
-        ImageButton editButton = (ImageButton) view.findViewById(R.id.edit_habit_event_button);
+        Button editButton = (Button) view.findViewById(R.id.edit_habit_event_button);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

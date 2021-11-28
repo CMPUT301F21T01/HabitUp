@@ -226,10 +226,8 @@ public class UserSyncer {
         updateData.put("frequency", frequencyString);
         updateData.put("reason", habit.getReason());
         updateData.put("progress", habit.getProgress().toString());
-<<<<<<< HEAD
-=======
+        
         updateData.put("type", habit.getType().toString());
->>>>>>> origin/main
 
         if(oldName == habit.getTitle()) {
             // Update the document

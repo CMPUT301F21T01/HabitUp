@@ -52,10 +52,10 @@
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".AddLocation"
+            android:name=".AddLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".AddPhotograph"
+            android:name=".AddPhotographActivity"
             android:exported="false" />
 
         <meta-data

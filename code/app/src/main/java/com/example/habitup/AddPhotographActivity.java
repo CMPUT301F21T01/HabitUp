@@ -24,7 +24,7 @@ import androidx.annotation.NonNull;
  * Reference: https://newbedev.com/java-android-take-photo-and-display-in-imageview-code-example, https://www.py4u.net/discuss/624180
  * Issues: None so far
  */
-public class AddPhotograph extends Activity
+public class AddPhotographActivity extends Activity
 {
     private static final int CAMERA_REQUEST = 1888;
     public static final int GET_FROM_GALLERY = 3;

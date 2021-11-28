@@ -111,6 +111,16 @@
             android:text="Delete"
             android:textSize="8sp" />
 
+        <Button
+            android:id="@+id/QR_button"
+            android:layout_width="64dp"
+            android:layout_height="37dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="11dp"
+            android:text="QR" />
+
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>
 

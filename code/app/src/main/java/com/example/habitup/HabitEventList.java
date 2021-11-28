@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * HabitEvents for a specific Habit.
  * Known Issues: None so far!
  */
-class HabitEventList extends ArrayAdapter<HabitEvent> {
+class HabitEventList extends ArrayAdapter<HabitEvent>{
     private ArrayList<HabitEvent> habitEvents;
     private Context context;
 
@@ -112,6 +112,16 @@ class HabitEventList extends ArrayAdapter<HabitEvent> {
             public void onClick(View view) {
                 //this assumes the list is 'alive' on the HabitEventActivity
                 ((HabitEventActivity)context).onEditPressed(position);
+            }
+        });
+
+        // get QR code of a HabitEvent
+        Button getQRCodeButton = (Button) view.findViewById(R.id.QR_button);
+        getQRCodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //this assumes the list is 'alive' on the HabitEventActivity
+                ((HabitEventActivity)context).onQRPressed(position);
             }
         });
 

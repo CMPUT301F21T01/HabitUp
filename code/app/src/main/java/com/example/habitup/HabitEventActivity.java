@@ -57,7 +57,7 @@ import java.util.HashMap;
  */
 
 
-public class HabitEventActivity extends AppCompatActivity implements AddHabitEventFragment.OnFragmentInteractionListener {
+public class HabitEventActivity extends AppCompatActivity implements AddHabitEventFragment.OnFragmentInteractionListener,GenerateQRHabitEventFragment.OnFragmentInteractionListener {
 
     HabitEventInstance habitEventInstance = HabitEventInstance.getInstance("", "", null);
 
@@ -283,6 +283,31 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
         i.putExtra("username", username);
         i.putExtra("habitName", habitName);
         startActivity(i);
+    }
+
+    /**
+     * This opens the GenerateQRHabitEventFragment and displays a QR code with the Reflection+Location text
+     * @param position
+     *   This is the position of the habit event inside the list
+     */
+    //create and show QR code
+    public void onQRPressed(int position){
+
+        //get the habitEvent relating to the position of the habit
+        HabitEvent currentHabitEvent = habitEventDataList.get(position);
+
+        // Update habit event instance with current habit event
+        HabitEventInstance habitEventInstance = HabitEventInstance.getInstance();
+
+        habitEventInstance.setHabitEvent(currentHabitEvent);
+        habitEventInstance.setDate(currentHabitEvent.getDate());
+        habitEventInstance.setLocation(currentHabitEvent.getLocation());
+        habitEventInstance.setReflection(currentHabitEvent.getReflection());
+        habitEventInstance.setPhoto(currentHabitEvent.getImage());
+        habitEventInstance.setURL(username + "/habits/habitList/" + habitName +"/habitEventList/" + currentHabitEvent.getDate() + "/photo.jpg");
+
+        //we launch our new QR fragment!
+        new GenerateQRHabitEventFragment().show(getSupportFragmentManager(), "GENERATE_QR_CODE");
     }
 
 }

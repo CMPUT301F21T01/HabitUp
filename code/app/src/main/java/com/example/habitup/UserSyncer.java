@@ -89,7 +89,8 @@ public class UserSyncer {
                                         new ArrayList<String>(Arrays.asList(freq.split(",")));
 
                                 Boolean type = Boolean.parseBoolean(sType);
-                                int progressInt = Integer.parseInt(progress);
+                                int progressInt = AddHabitFragment.setProgress(startDate, endDate);
+
 
                                 // Add to our user's habits
                                 instance.user.addHabit(new Habit(

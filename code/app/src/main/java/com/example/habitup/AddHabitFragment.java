@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class is a a dialog fragment that handles the UI and information for when
@@ -188,7 +189,7 @@ public class AddHabitFragment extends DialogFragment {
                         String newReason = reason.getText().toString();
                         String startDate = startText.getText().toString();
                         String endDate = endText.getText().toString();
-                        setProgress(startDate, endDate);
+                        newProgress = setProgress(startDate, endDate);
                         listener.onSavePressedAdd(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress, type));
                     }
                 }).create();
@@ -221,10 +222,10 @@ public class AddHabitFragment extends DialogFragment {
      * @param startString the starting date for a habit
      * @param endString the ending date for a habit
      */
-    public void setProgress(String startString, String endString){
+    public static int setProgress(String startString, String endString){
         Date sDate = new Date();
         Date eDate = new Date();
-        Calendar calendar = Calendar.getInstance();
+        Date currentDate = new Date();
 
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         try{
@@ -234,22 +235,24 @@ public class AddHabitFragment extends DialogFragment {
             e.printStackTrace();
         }
 
-        long current = calendar.getTimeInMillis();
-        long difference = eDate.getTime() - sDate.getTime();
-        long currentDifference = current - sDate.getTime();
+        long totalDifference = eDate.getTime() - sDate.getTime();
+        long days = currentDate.getTime() - sDate.getTime();
 
-        float progress;
-        if(difference != 0)
-            progress = (float) ((currentDifference/difference) * 100);
-        else
-            progress = 100;
+        TimeUnit time = TimeUnit.DAYS;
+        long difference = time.convert(totalDifference, TimeUnit.MILLISECONDS);
+        long daysPassed = time.convert(days, TimeUnit.MILLISECONDS);
 
-        if(progress > 100){
-            progress = 100;
-        }
-        if(progress < 0){
+        double rate = 1.0/difference;
+        double dailyPercentage = daysPassed * rate;
+
+        int progress = 1;
+        if (currentDate.getTime() == sDate.getTime())
             progress = 0;
-        }
-        newProgress = ((int) progress);
+        else if (currentDate.getTime() > eDate.getTime())
+            progress = 100;
+        else if (difference != 0)
+            progress = (int) Math.round(dailyPercentage * 100);
+
+        return progress;
     }
 }

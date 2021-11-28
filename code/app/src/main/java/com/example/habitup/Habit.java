@@ -16,6 +16,7 @@ public class Habit implements Serializable {
     private ArrayList<String> frequency;
     private String reason;
     private Integer progress;
+    private Boolean type;
     //alex and vivian add your habit event variable here
     //alex: didn't have too...
 
@@ -28,60 +29,125 @@ public class Habit implements Serializable {
      * @param reason the user's reason for completing the habit
      * @param progress the user's progress over the the entire time they are completeing the habit
      */
-    public Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Integer progress){
+    public Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Integer progress, Boolean type){
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.frequency = frequency;
         this.reason = reason;
         this.progress = progress;
+        this.type = type;
     }
 
+    /**
+     * Returns the title of of calling habit.
+     * @return title (String)
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Returns the start date of of calling habit.
+     * @return startDate (String)
+     */
     public String getStartDate() {
         return startDate;
     }
 
+    /**
+     * Returns the end date of calling habit.
+     * @return endDate (String)
+     */
     public String getEndDate() {
         return endDate;
     }
 
+    /**
+     * Returns the frequency of calling habit.
+     * @return frequency (ArrayList of strings representing frequencies)
+     */
     public ArrayList<String> getFrequency() {
         return frequency;
     }
 
+    /**
+     * Returns the reason of calling habit.
+     * @return reason (String)
+     */
     public String getReason(){
         return reason;
     }
 
+    /**
+     * Returns the progress of calling habit.
+     * @return progress (int)
+     */
     public Integer getProgress(){
         return progress;
     }
 
+    /**
+     * Return the type of calling habit.
+     * @return type (boolean)
+     */
+    public Boolean getType(){
+        return type;
+    }
+
+    /**
+     * Sets the title of calling habit.
+     * @param title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * Sets the start date of calling habit.
+     * @param startDate
+     */
     public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
+    /**
+     * Sets the end date of calling habit.
+     * @param endDate
+     */
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
+    /**
+     * Sets the frequency of calling habit.
+     * @param frequency
+     */
     public void setFrequency(ArrayList<String> frequency) {
         this.frequency = frequency;
     }
 
+    /**
+     * Sets the reason of calling habit.
+     * @param reason
+     */
     public void setReason(String reason){
         this.reason = reason;
     }
 
+    /**
+     * Sets the progress of calling habit.
+     * @param progress
+     */
     public void setProgress(Integer progress){
         this.progress = progress;
+    }
+
+    /**
+     * Sets the type of calling habit.
+     * @param type
+     */
+    public void setType(Boolean type){
+        this.type = type;
     }
 }

@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class is a a dialog fragment that handles the UI and information for when
@@ -41,7 +42,8 @@ public class AddHabitFragment extends DialogFragment {
     private EditText reason;
     private TextView startText;
     private TextView endText;
-    private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck;
+    private Boolean type;
+    private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck, typeCheck;
     private ArrayList<String> daysSelected;
     private int newProgress;
     private OnFragmentInteractionListener listener;
@@ -82,6 +84,7 @@ public class AddHabitFragment extends DialogFragment {
         rCheck = view.findViewById(R.id.thursday_check);
         fCheck = view.findViewById(R.id.friday_check);
         sCheck = view.findViewById(R.id.saturday_check);
+        typeCheck = view.findViewById(R.id.type_check);
         daysSelected = new ArrayList<>();
 
         // Checking all weekday checkboxes to see if user pressed them
@@ -149,6 +152,14 @@ public class AddHabitFragment extends DialogFragment {
                     daysSelected.remove("S");
             }
         });
+        // Checking to see if user clicked the habit type checkbox to set the habit private:
+        type = false;
+        typeCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                type = typeCheck.isChecked();
+            }
+        });
 
         // Get user's selected date if StartDate button is clicked:
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -178,8 +189,8 @@ public class AddHabitFragment extends DialogFragment {
                         String newReason = reason.getText().toString();
                         String startDate = startText.getText().toString();
                         String endDate = endText.getText().toString();
-                        setProgress(startDate, endDate);
-                        listener.onSavePressedAdd(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress));
+                        newProgress = setProgress(startDate, endDate);
+                        listener.onSavePressedAdd(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress, type));
                     }
                 }).create();
     }
@@ -211,10 +222,10 @@ public class AddHabitFragment extends DialogFragment {
      * @param startString the starting date for a habit
      * @param endString the ending date for a habit
      */
-    public void setProgress(String startString, String endString){
+    public static int setProgress(String startString, String endString){
         Date sDate = new Date();
         Date eDate = new Date();
-        Calendar calendar = Calendar.getInstance();
+        Date currentDate = new Date();
 
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         try{
@@ -224,22 +235,25 @@ public class AddHabitFragment extends DialogFragment {
             e.printStackTrace();
         }
 
-        long current = calendar.getTimeInMillis();
-        long difference = eDate.getTime() - sDate.getTime();
-        long currentDifference = current - sDate.getTime();
+        long totalDifference = eDate.getTime() - sDate.getTime();
+        long days = currentDate.getTime() - sDate.getTime();
 
-        float progress;
-        if(difference != 0)
-            progress = (float) currentDifference/difference * 100;
-        else
-            progress = 100;
+        TimeUnit time = TimeUnit.DAYS;
+        long difference = time.convert(totalDifference, TimeUnit.MILLISECONDS);
+        long daysPassed = time.convert(days, TimeUnit.MILLISECONDS);
 
-        if(progress > 100){
-            progress = 100;
-        }
-        if(progress < 0){
+
+        double rate = 1.0/difference;
+        double dailyPercentage = daysPassed * rate;
+
+        int progress = 1;
+        if (currentDate.getTime() == sDate.getTime())
             progress = 0;
-        }
-        newProgress = ((int) progress);
+        else if (currentDate.getTime() > eDate.getTime())
+            progress = 100;
+        else if (difference != 0)
+            progress = (int) Math.round(dailyPercentage * 100);
+
+        return progress;
     }
 }

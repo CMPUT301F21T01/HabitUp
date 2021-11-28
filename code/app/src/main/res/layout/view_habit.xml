@@ -265,11 +265,35 @@
     </TextView>
 
     <TextView
+        android:id="@+id/type_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reason_title"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:text="Private habit: "
+        android:textSize="30sp">
+
+    </TextView>
+
+    <CheckBox
+        android:id="@+id/type_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reason_title"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:enabled="false"
+        android:layout_toEndOf="@+id/type_title">
+
+    </CheckBox>
+
+    <TextView
         android:id="@+id/progress_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_reason"
-        android:layout_marginTop="30dp"
+        android:layout_below="@+id/type_title"
+        android:layout_marginTop="25dp"
         android:gravity="center"
         android:text="Progress"
         android:textSize="30sp">
@@ -293,7 +317,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/view_progress_bar"
         android:layout_centerInParent="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:text="Habit Event List"
         android:textSize="20sp">
 

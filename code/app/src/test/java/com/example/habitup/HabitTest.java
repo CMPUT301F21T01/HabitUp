@@ -29,8 +29,9 @@ public class HabitTest {
         frequency.add("F");
         String reason = "get strong";
         Integer progress = 40;
+        Boolean type = true;
         Habit testHabit = new Habit(title, startDate, endDate, frequency,
-                reason, progress);
+                reason, progress, type);
 
         assertEquals(title, testHabit.getTitle());
         assertEquals(startDate, testHabit.getStartDate());
@@ -38,6 +39,7 @@ public class HabitTest {
         assertEquals(frequency, testHabit.getFrequency());
         assertEquals(reason, testHabit.getReason());
         assertEquals(progress, testHabit.getProgress());
+        assertEquals(type, testHabit.getType());
     }
 
     /**
@@ -55,8 +57,9 @@ public class HabitTest {
         frequency.add("F");
         String reason = "get strong";
         Integer progress = 40;
+        Boolean type = true;
         Habit testHabit = new Habit(title, startDate, endDate, frequency,
-                reason, progress);
+                reason, progress, type);
 
         String newTitle = "sleep";
         String newStartDate = "15-10-2021";
@@ -65,6 +68,7 @@ public class HabitTest {
         newFrequency.add("W");
         String newReason = "need rest";
         Integer newProgress = 30;
+        Boolean newType = false;
 
         testHabit.setTitle(newTitle);
         testHabit.setStartDate(newStartDate);
@@ -72,6 +76,7 @@ public class HabitTest {
         testHabit.setFrequency(newFrequency);
         testHabit.setReason(newReason);
         testHabit.setProgress(newProgress);
+        testHabit.setType(newType);
 
         assertEquals(newTitle, testHabit.getTitle());
         assertEquals(newStartDate, testHabit.getStartDate());

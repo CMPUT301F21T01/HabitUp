@@ -176,27 +176,39 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
         // Store Image to Firebase File Storage
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Bitmap bitmap = newHabitEvent.getImage();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageData = baos.toByteArray();
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://habitup-d4738.appspot.com");
+        // Upload image if it is not null
+        if (bitmap != null) {
 
-        String URL = username + "/habits/habitList/" + habitName +"/habitEventList/" + newHabitEvent.getDate() + "/photo.jpg";
-        newHabitEvent.setURL(URL);
-        StorageReference imagesRef = storageRef.child(URL);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] imageData = baos.toByteArray();
 
-        // Upload the image
-        UploadTask uploadTask = imagesRef.putBytes(imageData);
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://habitup-d4738.appspot.com");
 
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Log.d(TAG, "Document not added: " + exception.toString());
-            }
-        });
+            String URL = username + "/habits/habitList/" + habitName +"/habitEventList/" + newHabitEvent.getDate() + "/photo.jpg";
+            newHabitEvent.setURL(URL);
+            StorageReference imagesRef = storageRef.child(URL);
+
+            // Upload the image
+            UploadTask uploadTask = imagesRef.putBytes(imageData);
+
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Log.d(TAG, "Document not added: " + exception.toString());
+                }
+            });
+
+
+        }
 
         habitEventAdapter.notifyDataSetChanged();
+
+        // Refresh current activity
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 
     /**

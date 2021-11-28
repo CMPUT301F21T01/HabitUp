@@ -188,4 +188,13 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             }
         }
     }
+
+    /**
+     * Once a user signs in they should not be able to switch back to the main screen activity
+     * by the back button. Instead we might provide some sign out functionality so that we
+     * may reset static variables / initializers. As a result we override the onBackPressed
+     * method to remove said feature.
+     */
+    @Override
+    public void onBackPressed() {}
 }

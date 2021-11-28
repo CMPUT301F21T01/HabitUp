@@ -13,7 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.habitup.databinding.SignUpFragmentLayoutBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -27,8 +29,7 @@ import java.util.Objects;
 /**
  * This activity provides an interface through which a user can sign in.
  */
-public class UserControllerActivity extends AppCompatActivity
-{
+public class UserControllerActivity extends AppCompatActivity implements SignUpFragment.OnFragmentInteractionListener {
     // Variable declarations
     Button enterButton;
     Button signUpButton;
@@ -57,6 +58,13 @@ public class UserControllerActivity extends AppCompatActivity
         passwordField = findViewById(R.id.password);
 
         db = FirebaseFirestore.getInstance();
+
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SignUpFragment().show(getSupportFragmentManager(), "SIGN_UP");
+            }
+        });
 
         enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,19 +117,6 @@ public class UserControllerActivity extends AppCompatActivity
                                         usernameField.setBackgroundResource(R.drawable.sign_in_border);
                                     }
                                 }, 3800);
-
-                                // Create auth document
-                                       /* HashMap<String, String> data = new HashMap<>();
-                                        data.put("name", "Harry S.");
-                                        data.put("password", "1b1ddd");
-                                        userRef.document("auth")
-                                                .set(data)
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Log.d(TAG, "Document not added: " + e.toString());
-                                                    }
-                                                });*/
                             }
                         } else {
                             Log.d(TAG, "Error getting document: ", task.getException());
@@ -131,5 +126,62 @@ public class UserControllerActivity extends AppCompatActivity
             }
         });
         // firestore authentication: https://firebase.google.com/docs/auth/android/start
+    }
+
+    /**
+     * This method is called when a user attempts to create a new account from SignUpFragment.
+     * It assures that a user with the provided username does not already exist, otherwise it
+     * adds said user to the database with the provided password and name.
+     * @param username of new user
+     * @param password of new user
+     * @param name     of new user
+     */
+    @Override
+    public void onConfirmPressed(String username, String password, String name) {
+        final String[] newUser = new String[3];
+        newUser[0] = username;
+        newUser[1] = password;
+        newUser[2] = name;
+
+        // Create new user (as long as username is not already taken)
+        DocumentReference authRef   = db.collection(newUser[0]).document("auth");
+        authRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()) {
+                        Toast.makeText(getApplication().getBaseContext(),
+                                "Username taken. Please pick another username.",
+                                Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        // Create User
+                        HashMap<String, String> data = new HashMap<>();
+                        data.put("name", newUser[2]);
+                        data.put("password", newUser[1]);
+                        authRef.set(data)
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getApplication().getBaseContext(),
+                                                "Database may be down: could not create user." +
+                                                        "Please try again later.",
+                                                Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+                        // Pass username to HabitActivity intent and start activity
+                        Intent intent = new Intent(getApplicationContext(), HabitActivity.class);
+                        intent.putExtra(Intent.EXTRA_TEXT, newUser[0]);
+                        startActivity(intent);
+                    }
+                } else {
+                    Log.d(TAG, "Error getting document: ", task.getException());
+                }
+            }
+        });
+
+
     }
 }

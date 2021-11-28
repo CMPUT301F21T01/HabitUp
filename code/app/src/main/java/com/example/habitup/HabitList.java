@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +26,7 @@ import java.util.Calendar;
  * in the habit's list in HabitActivity.
  * Known Issues: None so far...
  */
-public class HabitList extends ArrayAdapter<Habit> {
+public class HabitList extends ArrayAdapter<Habit>{
 
     private ArrayList<Habit> habits;
     private Context context;
@@ -50,7 +51,7 @@ public class HabitList extends ArrayAdapter<Habit> {
         View view = convertView;
 
         if(view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.content, parent,false);
+            view = LayoutInflater.from(context).inflate(R.layout.habit_list, parent,false);
         }
 
         Habit habit = habits.get(position);
@@ -59,8 +60,8 @@ public class HabitList extends ArrayAdapter<Habit> {
         TextView habitTitle = view.findViewById(R.id.habit_title);
         ProgressBar progressBar = view.findViewById(R.id.progress_bar);
         TextView progressText = view.findViewById(R.id.progress_text);
-        /* Button upButton = view.findViewById(R.id.button_up);
-        Button downButton = view.findViewById(R.id.button_down); */
+        Button upButton = view.findViewById(R.id.button_up);
+        Button downButton = view.findViewById(R.id.button_down);
 
         habitTitle.setText(habit.getTitle());
         progressBar.setProgress((int) habit.getProgress());
@@ -68,6 +69,21 @@ public class HabitList extends ArrayAdapter<Habit> {
 
         // changing bg color based on if habit is due today:
         setColor(habit, view);
+
+        upButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HabitActivity.OnUpButtonClick(position, habit);
+            }
+        });
+
+
+        downButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HabitActivity.OnDownButtonClick(position, habit);
+            }
+        });
 
         return view;
 

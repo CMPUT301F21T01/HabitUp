@@ -15,13 +15,6 @@
         android:dividerHeight="2dp">
     </ListView>
 
-    <ImageButton
-        android:id="@+id/back_habit_event_button"
-        android:background="@android:color/transparent"
-        android:layout_width="61dp"
-        android:layout_height="54dp"
-        android:src="?attr/actionModeCloseDrawable" />
-
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_habit_event_button"

@@ -126,11 +126,6 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
             new AddHabitEventFragment().show(getSupportFragmentManager(), "ADD_HABIT_EVENT");
         });
 
-        // back to previous activity
-        final ImageButton backHabitEventButton = findViewById(R.id.back_habit_event_button);
-        backHabitEventButton.setOnClickListener((v) -> {
-            finish();
-        });
     }
 
     /**
@@ -218,7 +213,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
 
         //this will look for the habitEvent with the same Reflection and delete it
         //the list should auto-update thanks to habitsRef.addSnapshotListener
-        habitsRef.document(habitEvent.getDate())//TODO: make this delete of a "title", not their date
+        habitsRef.document(habitEvent.getDate())
                 .delete()
                 .addOnFailureListener(new OnFailureListener() {
                     @Override

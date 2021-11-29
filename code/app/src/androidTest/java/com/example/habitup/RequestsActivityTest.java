@@ -50,20 +50,11 @@ public class RequestsActivityTest {
     {
         solo.assertCurrentActivity("Wrong activity.", RequestsActivity.class);
         assertTrue(solo.searchText("Requests"));
+        assertTrue(solo.searchButton("Accept"));
+        assertTrue(solo.searchButton("Decline"));
         assertTrue(solo.searchButton("Go back"));
     }
 
 
-    /*
-    /**
-     @Test
-      * tests users' abilities to go back to the Profile Activity
-      * still being worked on to effectively use solo to do the switches between these activities
-     public void testActivitySwitch() {
-     solo.clickOnButton("Go back");
-     solo.goBackToActivity("ProfileActivity");
-     solo.assertCurrentActivity("Wrong activity.", ProfileActivity.class);
-     solo.goBackToActivity("RequestsActivity");
-     }
-     */
+
 }

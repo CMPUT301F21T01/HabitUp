@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * this activity allows the user to view the profile of a friend via search
+ * this actvity allows the user to view the profile of a friend via search
  */
 public class ViewProfile extends AppCompatActivity {
 
@@ -110,6 +111,7 @@ public class ViewProfile extends AppCompatActivity {
                                 System.out.println(viewingHabitNameList);
 
 
+
                             }
                         }
                     }
@@ -120,6 +122,8 @@ public class ViewProfile extends AppCompatActivity {
 
         viewingHabitNameListAdapter = new ArrayAdapter(this, R.layout.view_profile_content, viewingHabitNameList);
         viewingHabitsListView.setAdapter(viewingHabitNameListAdapter);
-
+        viewingHabitsListView.setVisibility(View.VISIBLE);
+        //viewingHabitAdapter = new HabitList(this, viewingUser.getHabits());
+        //viewingHabitsList.setAdapter(viewingHabitAdapter);
     }
 }

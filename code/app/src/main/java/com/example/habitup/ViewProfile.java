@@ -109,7 +109,7 @@ public class ViewProfile extends AppCompatActivity {
 
                                 // Add to our user's habits
 
-                                if (type = true) {
+                                if (type == true) {
                                     viewingUser.addHabit(new Habit(
                                             name, startDate, endDate,
                                             frequency, reason, progressInt, true, positionInt));

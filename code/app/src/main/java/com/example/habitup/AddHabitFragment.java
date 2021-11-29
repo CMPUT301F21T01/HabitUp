@@ -10,8 +10,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -34,7 +36,6 @@ import java.util.concurrent.TimeUnit;
  * This class is a a dialog fragment that handles the UI and information for when
  * a user wants to add a new habit.
  * It displays add_habit_fragment_layout.xml.
- * Issues: None so far...
  */
 public class AddHabitFragment extends DialogFragment {
     // initialize variables:
@@ -45,7 +46,7 @@ public class AddHabitFragment extends DialogFragment {
     private Boolean type;
     private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck, typeCheck;
     private ArrayList<String> daysSelected;
-    private int newProgress;
+    private int newProgress, position;
     private OnFragmentInteractionListener listener;
 
     public interface OnFragmentInteractionListener {
@@ -190,7 +191,18 @@ public class AddHabitFragment extends DialogFragment {
                         String startDate = startText.getText().toString();
                         String endDate = endText.getText().toString();
                         newProgress = setProgress(startDate, endDate);
-                        listener.onSavePressedAdd(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress, type));
+
+                        // setting habit's position:
+                        if (HabitActivity.habitAdapter.getCount() == 0)
+                            position = 0;
+                        else
+                            position = HabitActivity.habitAdapter.getCount();
+
+                        // making sure there is a habit title if user doesn't enter one:
+                        if (newTitle.isEmpty())
+                            newTitle = "No title!";
+
+                        listener.onSavePressedAdd(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress, type, position));
                     }
                 }).create();
     }
@@ -223,6 +235,7 @@ public class AddHabitFragment extends DialogFragment {
      * @param endString the ending date for a habit
      */
     public static int setProgress(String startString, String endString){
+        // initializing variables:
         Date sDate = new Date();
         Date eDate = new Date();
         Date currentDate = new Date();
@@ -238,16 +251,20 @@ public class AddHabitFragment extends DialogFragment {
         long totalDifference = eDate.getTime() - sDate.getTime();
         long days = currentDate.getTime() - sDate.getTime();
 
+        // converting time from milliseconds to days:
         TimeUnit time = TimeUnit.DAYS;
         long difference = time.convert(totalDifference, TimeUnit.MILLISECONDS);
         long daysPassed = time.convert(days, TimeUnit.MILLISECONDS);
 
-
+        // calculating the daily rate and the percentage that the progress goes up by every day:
         double rate = 1.0/difference;
         double dailyPercentage = daysPassed * rate;
 
+        // setting the progress:
         int progress = 1;
-        if (currentDate.getTime() == sDate.getTime())
+        if (startString.isEmpty() || endString.isEmpty())
+            progress = 0;
+        else if (currentDate.getTime() == sDate.getTime())
             progress = 0;
         else if (currentDate.getTime() > eDate.getTime())
             progress = 100;

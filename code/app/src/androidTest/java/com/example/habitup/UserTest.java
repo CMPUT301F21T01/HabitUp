@@ -43,13 +43,13 @@ public class UserTest {
         frequency1.add("M");
         frequency1.add("W");
         frequency1.add("F");
-        Habit habit1 = new Habit("sleep early", "nov 4, 2021", "dec 21, 2021", frequency1, "sleep makes me feel happy!", 50, false);
+        Habit habit1 = new Habit("sleep early", "nov 4, 2021", "dec 21, 2021", frequency1, "sleep makes me feel happy!", 50, false, 0);
 
 
         ArrayList<String> frequency2 = new ArrayList<String>();
         frequency2.add("T");
         frequency2.add("TR");
-        Habit habit2 = new Habit("go biking","nov 4, 2021","dec 22, 2021", frequency2, "biking makes me feel happy!", 50, false);
+        Habit habit2 = new Habit("go biking","nov 4, 2021","dec 22, 2021", frequency2, "biking makes me feel happy!", 50, false, 1);
 
         habits.add(habit1);
         habits.add(habit2);
@@ -131,8 +131,8 @@ public class UserTest {
 
 
 
-        Habit habit1 = new Habit("sleep early", "nov 4, 2021", "dec 21, 2021", frequency1, "sleep makes me feel happy!", 50, false);
-        Habit habit2 = new Habit("go biking","nov 4, 2021","dec 22, 2021", frequency2, "biking makes me feel happy!", 50, false );
+        Habit habit1 = new Habit("sleep early", "nov 4, 2021", "dec 21, 2021", frequency1, "sleep makes me feel happy!", 50, false, 0);
+        Habit habit2 = new Habit("go biking","nov 4, 2021","dec 22, 2021", frequency2, "biking makes me feel happy!", 50, false, 1);
         expectedOutput.add(habit1);
         expectedOutput.add(habit2);
         assertEquals(expectedOutput.get(0).getTitle(), habitsGet.get(0).getTitle());
@@ -148,7 +148,7 @@ public class UserTest {
         frequency3.add("T");
         frequency3.add("TR");
         frequency3.add("F");
-        Habit newHabit = new Habit("run 5 km", "nov 5, 2021", "dec 8, 2021", frequency3, "i like running!", 50, false);
+        Habit newHabit = new Habit("run 5 km", "nov 5, 2021", "dec 8, 2021", frequency3, "i like running!", 50, false, 0);
         user.addHabit(newHabit);
         ArrayList<Habit> habits = user.getHabits();
         assertTrue(habits.contains(newHabit));

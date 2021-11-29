@@ -6,7 +6,6 @@ import java.util.ArrayList;
 /**
  * This is the class for the creating a Habit object, storing the variables each Habit needs
  * as well as containing constructors for the getters and setters.
- * Known Issues: None so far...
  */
 public class Habit implements Serializable {
 
@@ -17,6 +16,7 @@ public class Habit implements Serializable {
     private String reason;
     private Integer progress;
     private Boolean type;
+    private Integer position;
     //alex and vivian add your habit event variable here
     //alex: didn't have too...
 
@@ -27,9 +27,11 @@ public class Habit implements Serializable {
      * @param endDate ending date of habit
      * @param frequency how many times a week the habit occurs
      * @param reason the user's reason for completing the habit
-     * @param progress the user's progress over the the entire time they are completeing the habit
+     * @param progress the user's progress over the the entire time they are completing the habit
+     * @param type the type of habit shows whether the habit is private or public. Type is set to true for private and false for public
+     * @param position the position of habit in the habitlist
      */
-    public Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Integer progress, Boolean type){
+    public Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Integer progress, Boolean type, Integer position){
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -37,6 +39,7 @@ public class Habit implements Serializable {
         this.reason = reason;
         this.progress = progress;
         this.type = type;
+        this.position = position;
     }
 
     /**
@@ -96,8 +99,16 @@ public class Habit implements Serializable {
     }
 
     /**
+     * Return the position of calling habit.
+     * @return position (integer)
+     */
+    public Integer getPosition() {
+        return position;
+    }
+
+    /**
      * Sets the title of calling habit.
-     * @param title
+     * @param title name of habit
      */
     public void setTitle(String title) {
         this.title = title;
@@ -105,7 +116,7 @@ public class Habit implements Serializable {
 
     /**
      * Sets the start date of calling habit.
-     * @param startDate
+     * @param startDate starting date of habit
      */
     public void setStartDate(String startDate) {
         this.startDate = startDate;
@@ -113,7 +124,7 @@ public class Habit implements Serializable {
 
     /**
      * Sets the end date of calling habit.
-     * @param endDate
+     * @param endDate ending date of habit
      */
     public void setEndDate(String endDate) {
         this.endDate = endDate;
@@ -121,7 +132,7 @@ public class Habit implements Serializable {
 
     /**
      * Sets the frequency of calling habit.
-     * @param frequency
+     * @param frequency how many times a week the habit occurs
      */
     public void setFrequency(ArrayList<String> frequency) {
         this.frequency = frequency;
@@ -129,7 +140,7 @@ public class Habit implements Serializable {
 
     /**
      * Sets the reason of calling habit.
-     * @param reason
+     * @param reason the user's reason for completing the habit
      */
     public void setReason(String reason){
         this.reason = reason;
@@ -137,7 +148,7 @@ public class Habit implements Serializable {
 
     /**
      * Sets the progress of calling habit.
-     * @param progress
+     * @param progress the user's progress over the the entire time they are completing the habit
      */
     public void setProgress(Integer progress){
         this.progress = progress;
@@ -145,9 +156,17 @@ public class Habit implements Serializable {
 
     /**
      * Sets the type of calling habit.
-     * @param type
+     * @param type the type of habit shows whether the habit is private or public. Type is set to true for private and false for public
      */
     public void setType(Boolean type){
         this.type = type;
+    }
+
+    /**
+     * Sets the position of calling habit.
+     * @param position the position of habit in the habitlist
+     */
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 }

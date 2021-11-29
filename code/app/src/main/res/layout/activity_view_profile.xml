@@ -6,28 +6,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <ImageView
         android:id="@+id/btn_capture_photo"
         android:layout_width="180dp"
         android:layout_height="191dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="32dp"
         android:gravity="center"
         android:src="@drawable/circle"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </ImageView>
-
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
 
     <ListView
         android:id="@+id/profile_view_habits_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="424dp"
+        android:layout_width="240dp"
+        android:layout_height="193dp"
         android:gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toBottomOf="@+id/btn_capture_photo"
+        app:layout_constraintVertical_bias="0.441" />
 
     <TextView
         android:id="@+id/userInitial"

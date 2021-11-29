@@ -107,6 +107,7 @@ public class ViewProfile extends AppCompatActivity {
                                             frequency, reason, progressInt, true, positionInt));
                                     viewingHabitNameList.add(name);
                                 }
+                                System.out.println(viewingHabitNameList);
 
 
                             }
@@ -123,4 +124,3 @@ public class ViewProfile extends AppCompatActivity {
         //viewingHabitsList.setAdapter(viewingHabitAdapter);
     }
 }
-

@@ -40,7 +40,8 @@ public class HabitActivityTest {
         solo.assertCurrentActivity("Wrong activity.", UserControllerActivity.class);
         solo.waitForText("HabitUp");
         solo.enterText((EditText) solo.getView(R.id.username), "dummy2");
-        solo.clickOnButton("enter");
+        solo.enterText((EditText) solo.getView(R.id.password), "a");
+        solo.clickOnButton("sign in");
         assertTrue(solo.waitForActivity(HabitActivity.class, 2000));
     }
 
@@ -52,10 +53,11 @@ public class HabitActivityTest {
      *          This test WILL fail if this is not the case.
      */
     public void testAllSequentially() {
-        aTestHabitList();
-        bTestActivitySwitch();
-        cTestAddHabit();
-        dTestDeleteHabit();
+        // aTestHabitList();
+        // bTestActivitySwitch();
+        // cTestAddHabit();
+        // dTestDeleteHabit();
+        eTestReorder();
     }
 
     /**
@@ -78,11 +80,11 @@ public class HabitActivityTest {
      */
     @Test
     public void bTestActivitySwitch() {
-        solo.clickOnImageButton(2);
+        solo.clickOnView(solo.getView(R.id.search_activity_btn));
         solo.assertCurrentActivity("Wrong activity.", SearchActivity.class);
         solo.goBack();
         solo.waitForText("Go outside");
-        solo.clickOnImageButton(1);
+        solo.clickOnView(solo.getView(R.id.profile_activity_btn));
         solo.assertCurrentActivity("Wrong activity.", ProfileActivity.class);
         solo.goBack();
         solo.assertCurrentActivity("Wrong activity.", HabitActivity.class);
@@ -97,7 +99,7 @@ public class HabitActivityTest {
     @Test
     public void cTestAddHabit() {
         // Add habit, assert it was added to the list
-        solo.clickOnImageButton(3);
+        solo.clickOnView(solo.getView(R.id.add_fab));
         assertTrue(solo.searchText("Add a Habit"));
         solo.enterText((EditText) solo.getView(R.id.habitEdit), "Sleep");
         solo.clickOnCheckBox(3);
@@ -122,14 +124,20 @@ public class HabitActivityTest {
      */
     @Test
     public void dTestDeleteHabit() {
-        if(solo.searchText("Sleep")) {
-            // Delete habit, assert it is no longer in the ListView
-            solo.clickInList(4);
-            assertTrue(solo.searchText("Sleep"));
-            solo.clickOnView(solo.getView(R.id.delete_button));
-            assertFalse(solo.searchText("Sleep"));
-        }
+        // Delete habit, assert it is no longer in the ListView
+        solo.clickInList(4);
+        assertTrue(solo.searchText("Sleep"));
+        solo.clickOnView(solo.getView(R.id.delete_button));
+        assertFalse(solo.searchText("Sleep"));
+    }
 
+    @Test
+    public void eTestReorder(){
+        solo.clickOnButton(1);
+        solo.clickOnButton(3);
+        solo.clickInList(3);
+        assertTrue(solo.searchText("Eat food"));
+        solo.goBack();
     }
 
 

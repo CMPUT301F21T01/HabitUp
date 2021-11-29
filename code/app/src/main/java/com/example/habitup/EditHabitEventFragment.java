@@ -19,7 +19,6 @@ import androidx.fragment.app.DialogFragment;
 /**
  * EditHabitEventFragment class by Vivian
  * This is a fragment that allows the user to edit a habit event
- * Issues: None
  */
 
 public class EditHabitEventFragment extends DialogFragment {

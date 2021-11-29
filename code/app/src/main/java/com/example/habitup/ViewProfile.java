@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * this actvity allows the user to view the profile of a friend via search
+ * this activity allows the user to view the profile of a friend via search
  */
 public class ViewProfile extends AppCompatActivity {
 
@@ -119,8 +119,7 @@ public class ViewProfile extends AppCompatActivity {
 
         viewingHabitNameListAdapter = new ArrayAdapter(this, R.layout.view_profile_content, viewingHabitNameList);
         viewingHabitsListView.setAdapter(viewingHabitNameListAdapter);
-        //viewingHabitAdapter = new HabitList(this, viewingUser.getHabits());
-        //viewingHabitsList.setAdapter(viewingHabitAdapter);
+
     }
 }
 

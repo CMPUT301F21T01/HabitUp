@@ -8,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 /**
  * This is the class for HabitEvent, storing the variables each HabitEvent needs
  * it as well has constructors and the getters and setters
- * Known Issues: None
  */
 public class HabitEvent  {
 

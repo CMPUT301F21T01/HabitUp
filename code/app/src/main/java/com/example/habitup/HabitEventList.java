@@ -28,7 +28,6 @@ import java.util.ArrayList;
 /**
  * HabitEventList communicates with HabitEvent, HabitEventContent, and HabitEventActivity in order to display a list of
  * HabitEvents for a specific Habit.
- * Known Issues: None so far!
  */
 class HabitEventList extends ArrayAdapter<HabitEvent>{
     private ArrayList<HabitEvent> habitEvents;
@@ -37,7 +36,7 @@ class HabitEventList extends ArrayAdapter<HabitEvent>{
     /**
      * The constructor for HabitEventList
      * @param context
-     * context of current acticity
+     * context of current activity
      * @param habitEvents
      * an ArrayList of all habitEvents
      */
@@ -49,7 +48,7 @@ class HabitEventList extends ArrayAdapter<HabitEvent>{
 
     /**
      * the getView loads information into the display view content from each HabitEvent
-     * and sets a listener for the deleteButton
+     * and sets a listener for the deleteButton, editButton, and QRButton
      * @param position
      * the position of the HabitEvent
      * @param convertView
@@ -71,7 +70,7 @@ class HabitEventList extends ArrayAdapter<HabitEvent>{
         TextView habitDate = view.findViewById(R.id.textViewDate);
         TextView habitLocation = view.findViewById(R.id.textViewLocation);
         TextView habitReflection = view.findViewById(R.id.textViewReflection);
-        //if we add a Date: "+ to the habitDate text the hour/min/sec part disappears?
+        //we don't need a "Date: " because its obvious it's a date
         habitDate.setText(habitEvent.getDate());
         habitLocation.setText(habitEvent.getLocation());
         habitReflection.setText("Reflection: "+habitEvent.getReflection());

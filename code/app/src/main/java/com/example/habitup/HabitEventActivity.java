@@ -67,7 +67,12 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
     FirebaseFirestore db;
     final String TAG = "DEBUG_LOG"; //for debugging
 
-
+    /**
+     *  This initializes the creation of the HabitEvent activity
+     *  The HabitEvent activity grabs the username that was passed in through the intent, for communication with firebase
+     *  it also listens for updates to the firebase, and adds listeners for the add habitEvent and back button
+     * @param savedInstanceState bundle that stores & passes data among activities
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -222,7 +227,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
                     }
                 });
 
-        // delete image from firestore
+        // delete image from firebase
         String URL = username + "/habits/habitList/" + habitName +"/habitEventList/" + habitEvent.getDate() + "/photo.jpg";
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://habitup-d4738.appspot.com");

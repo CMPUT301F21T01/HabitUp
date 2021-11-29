@@ -19,7 +19,6 @@ import androidx.fragment.app.DialogFragment;
 /**
  * AddHabitEventFragment class by Vivian
  * This is a fragment that allows the user to add a habit event
- * Issues: None
  */
 
 public class AddHabitEventFragment extends DialogFragment {

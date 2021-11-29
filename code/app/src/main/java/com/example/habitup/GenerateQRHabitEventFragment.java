@@ -40,7 +40,6 @@ public class GenerateQRHabitEventFragment extends DialogFragment {
     private ImageView QRImage;
     Bitmap bitmap;
     QRGEncoder QREncoder;
-    private Button makeQR;
 
     private GenerateQRHabitEventFragment.OnFragmentInteractionListener listner;
 

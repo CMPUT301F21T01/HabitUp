@@ -51,6 +51,8 @@ public class ProfileActivity extends AppCompatActivity{
 
         // Set user initial
         //initial.setText(name.charAt(0).toString());
+        char textForInsideBubble = String.valueOf(name).charAt(0);
+        initial.setText(String.valueOf(textForInsideBubble));
 
         friendsAdapter = new ArrayAdapter<>(this, R.layout.profile_content, friendsDataList);
         friendsList.setAdapter(friendsAdapter);

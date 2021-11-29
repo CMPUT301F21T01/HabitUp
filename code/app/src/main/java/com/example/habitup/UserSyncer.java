@@ -82,17 +82,20 @@ public class UserSyncer {
                                 String reason    = (String) document.getData().get("reason");
                                 String freq      = (String) document.getData().get("frequency");
                                 String progress  = (String) document.getData().get("progress");
+                                String sType     = (String) document.getData().get("type");
                                 if(freq == null) continue;
 
                                 ArrayList<String> frequency =
                                         new ArrayList<String>(Arrays.asList(freq.split(",")));
 
-                                int progressInt = Integer.parseInt(progress);
+                                Boolean type = Boolean.parseBoolean(sType);
+                                int progressInt = AddHabitFragment.setProgress(startDate, endDate);
+
 
                                 // Add to our user's habits
                                 instance.user.addHabit(new Habit(
                                         name, startDate, endDate,
-                                        frequency, reason, progressInt));
+                                        frequency, reason, progressInt, type));
                             }
 
                             firebaseCallback.onCallback();
@@ -179,6 +182,8 @@ public class UserSyncer {
         data.put("reason", habit.getReason());
         data.put("progress", habit.getProgress().toString());
 
+        data.put("type", habit.getType().toString());
+
         // Add habit to User's habitList collection in Firestore
         instance.habitsReference.document(habit.getTitle())
                 .set(data)
@@ -221,6 +226,8 @@ public class UserSyncer {
         updateData.put("frequency", frequencyString);
         updateData.put("reason", habit.getReason());
         updateData.put("progress", habit.getProgress().toString());
+
+        updateData.put("type", habit.getType().toString());
 
         if(oldName == habit.getTitle()) {
             // Update the document

@@ -17,7 +17,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,7 +37,8 @@ public class EditHabitFragment extends DialogFragment {
     private EditText reason;
     private TextView startText;
     private TextView endText;
-    private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck;
+    private Boolean type;
+    private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck, typeCheck;
     private ArrayList<String> daysSelected;
     private int newProgress;
     private EditHabitFragment.OnFragmentInteractionListener listener;
@@ -91,14 +91,18 @@ public class EditHabitFragment extends DialogFragment {
         rCheck = view.findViewById(R.id.thursday_check);
         fCheck = view.findViewById(R.id.friday_check);
         sCheck = view.findViewById(R.id.saturday_check);
+        typeCheck = view.findViewById(R.id.type_check);
         // Setting habit's current information variables:
         title.setText(habit.getTitle());
         reason.setText(habit.getReason());
         startText.setText(habit.getStartDate());
         endText.setText(habit.getEndDate());
         daysSelected = habit.getFrequency();
+        type = habit.getType();
 
+        // Getting the state of all the checkboxes for a habit:
         checkBoxInit(daysSelected);
+        if (type) typeCheck.setChecked(true);
 
         // Checking all weekday checkboxes to see if user pressed them
         // and adds them to a daysSelected list if pressed:
@@ -165,6 +169,13 @@ public class EditHabitFragment extends DialogFragment {
                     daysSelected.remove("S");
             }
         });
+        // Checking to see if user clicked the habit type checkbox to set the habit private:
+        typeCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                type = typeCheck.isChecked();
+            }
+        });
 
         // Get user's selected date if StartDate button is clicked:
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -194,8 +205,9 @@ public class EditHabitFragment extends DialogFragment {
                         String newReason = reason.getText().toString();
                         String startDate = startText.getText().toString();
                         String endDate = endText.getText().toString();
-                        setProgress(startDate, endDate);
-                        listener.onSavePressedEdit(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress), pos);
+                        //setProgress(startDate, endDate);
+                        newProgress = AddHabitFragment.setProgress(startDate, endDate);
+                        listener.onSavePressedEdit(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress, type), pos);
                     }
                 }).create();
     }

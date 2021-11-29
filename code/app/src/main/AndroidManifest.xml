@@ -17,7 +17,7 @@
             android:name=".ViewProfile"
             android:exported="false" />
         <activity
-            android:name=".RequestActivity"
+            android:name=".RequestToFollowActivity"
             android:exported="false" />
         <activity
             android:name=".RequestsActivity"
@@ -58,7 +58,7 @@
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".AddLocation"
+            android:name=".AddLocationActivity"
             android:exported="false" />
         <activity
             android:name=".AddPhotograph"

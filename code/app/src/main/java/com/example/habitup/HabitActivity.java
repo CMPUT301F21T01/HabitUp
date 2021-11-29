@@ -71,6 +71,8 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             @Override
             public void onClick(View view) {
                 Intent switchIntent = new Intent(view.getContext(), SearchActivity.class);
+                switchIntent.putExtra("name_of_main_user", mainUser.getName());
+                switchIntent.putExtra("username_of_main_user", mainUser.getUsername());
                 startActivity(switchIntent);
             }
         });

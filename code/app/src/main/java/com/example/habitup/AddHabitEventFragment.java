@@ -7,10 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -82,7 +80,7 @@ public class AddHabitEventFragment extends DialogFragment {
         addLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent locationIntent = new Intent(AddHabitEventFragment.this.getActivity(), AddLocation.class);
+                Intent locationIntent = new Intent(AddHabitEventFragment.this.getActivity(), AddLocationActivity.class);
                 startActivity(locationIntent);
             }
         });
@@ -92,7 +90,7 @@ public class AddHabitEventFragment extends DialogFragment {
         addPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent photoIntent = new Intent(AddHabitEventFragment.this.getActivity(), AddPhotograph.class);
+                Intent photoIntent = new Intent(AddHabitEventFragment.this.getActivity(), AddPhotographActivity.class);
                 startActivity(photoIntent);
                 // photo = (Bitmap) photoIntent.getExtras().get("habit_event_photo");;
             }
@@ -118,5 +116,4 @@ public class AddHabitEventFragment extends DialogFragment {
     }
 
 }
-
 

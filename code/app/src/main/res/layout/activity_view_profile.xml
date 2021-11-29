@@ -20,7 +20,7 @@
 
 
     <ListView
-        android:id="@+id/habits_list"
+        android:id="@+id/profile_view_habits_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="424dp"

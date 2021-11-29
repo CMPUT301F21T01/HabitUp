@@ -26,7 +26,7 @@ import java.util.Arrays;
 public class ViewProfile extends AppCompatActivity {
 
 
-    ListView viewingHabitsList;
+    ListView viewingHabitsListView;
     ArrayAdapter<Habit> viewingHabitAdapter;
     ArrayAdapter<String> viewingHabitNameListAdapter;
     ArrayList<String> viewingHabitNameList = new ArrayList<String>();
@@ -49,7 +49,7 @@ public class ViewProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
-        viewingHabitsList = findViewById(R.id.habits_list);
+        viewingHabitsListView = findViewById(R.id.profile_view_habits_list);
         initial = findViewById(R.id.userInitial);
         //unpacks the intent from the search activity
         Bundle extras = getIntent().getExtras();
@@ -95,7 +95,10 @@ public class ViewProfile extends AppCompatActivity {
 
                                 ArrayList<String> frequency =
                                         new ArrayList<String>(Arrays.asList(freq.split(",")));
-
+                                if (position == null)
+                                {
+                                    position = "0";
+                                }
                                 int progressInt = Integer.parseInt(progress);
                                 int positionInt = Integer.parseInt(position);
                                 Boolean.parseBoolean(sType);
@@ -107,7 +110,7 @@ public class ViewProfile extends AppCompatActivity {
                                 {
                                     viewingUser.addHabit(new Habit(
                                         name, startDate, endDate,
-                                        frequency, reason, progressInt, type, positionInt));
+                                        frequency, reason, progressInt, true, positionInt));
                                     viewingHabitNameList.add(name);
                                 }
 
@@ -117,9 +120,11 @@ public class ViewProfile extends AppCompatActivity {
                     }
                 });
 
+        System.out.println(viewingHabitNameList);
 
-        viewingHabitNameListAdapter = new ArrayAdapter<>(this, R.layout.view_profile_content, viewingHabitNameList);
-        viewingHabitsList.setAdapter(viewingHabitNameListAdapter);
+
+        viewingHabitNameListAdapter = new ArrayAdapter(this, R.layout.view_profile_content, viewingHabitNameList);
+        viewingHabitsListView.setAdapter(viewingHabitNameListAdapter);
        //viewingHabitAdapter = new HabitList(this, viewingUser.getHabits());
        //viewingHabitsList.setAdapter(viewingHabitAdapter);
 

@@ -11,7 +11,11 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This is a class for having a custom adapter to display the requests a user has along with Accept/Decline buttons
@@ -22,6 +26,7 @@ import java.util.ArrayList;
 public class RequestsCustomAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<String> list = new ArrayList<String>();
     private Context context;
+    FirebaseFirestore db;
 
 
     /**
@@ -85,6 +90,9 @@ public class RequestsCustomAdapter extends BaseAdapter implements ListAdapter {
 
         Button declineBtn = (Button)view.findViewById(R.id.decline_btn);
         Button approveBtn = (Button)view.findViewById(R.id.approve_btn);
+        db = FirebaseFirestore.getInstance();
+
+        CollectionReference collUser = db.collection(mainUser.getName());
         /**
          * @param new View.OnClickListener()
          * on click listener for the decline button that deletes the request from the user's requests
@@ -93,10 +101,11 @@ public class RequestsCustomAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 String usernameOfNotFriend = list.get(position);
+                System.out.println(usernameOfNotFriend);
+                collUser.document("friends").collection("requests").document(usernameOfNotFriend).delete();
+                mainUser.getRequests().remove(usernameOfNotFriend);
+                System.out.println(mainUser.getRequests());
                 list.remove(position);
-                notifyDataSetChanged();
-                ArrayList<String> requests = mainUser.getRequests();
-                requests.remove(usernameOfNotFriend);
                 notifyDataSetChanged();
             }
         });
@@ -108,9 +117,13 @@ public class RequestsCustomAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 String usernameOfNewFriend = list.get(position);
-                mainUser.addFriend(usernameOfNewFriend);
-                ArrayList<String> requests = mainUser.getRequests();
-                requests.remove(usernameOfNewFriend);
+                HashMap<String, String> data = new HashMap<>();
+                data.put("username", usernameOfNewFriend);
+                data.put("name", usernameOfNewFriend);
+                collUser.document("friends").collection("requests").document(usernameOfNewFriend).delete();
+                collUser.document("friends").collection("current").document(usernameOfNewFriend).set(data);
+                mainUser.getRequests().remove(usernameOfNewFriend);
+                mainUser.getFriends().add(usernameOfNewFriend);
                 list.remove(position);
                 notifyDataSetChanged();
             }

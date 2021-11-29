@@ -19,7 +19,6 @@ import androidx.fragment.app.DialogFragment;
 /**
  * AddHabitEventFragment class by Vivian
  * This is a fragment that allows the user to add a habit event
- * Issues: None so far
  */
 
 public class AddHabitEventFragment extends DialogFragment {
@@ -44,6 +43,7 @@ public class AddHabitEventFragment extends DialogFragment {
     /**
      * This is called when a fragment is first attached to its context.
      * @param context
+     * the context of current activity
      */
     @Override
     public void onAttach(Context context) {
@@ -60,6 +60,7 @@ public class AddHabitEventFragment extends DialogFragment {
     /**
      * This initializes the creation of the AddHabitEvent fragment
      * @param savedInstanceState
+     * bundle that stores the data of current activity
      */
     @NonNull
     @Override

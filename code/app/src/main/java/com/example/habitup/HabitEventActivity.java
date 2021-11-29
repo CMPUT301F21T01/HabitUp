@@ -49,11 +49,6 @@ import java.util.HashMap;
 /**
  * This class manages the HabitEventActivity, or the screen where you see the HabitEvents for each Habit
  * It establishes connection with the fireStore database, and communicates with it to update,store, and add habitEvents
- * Outstanding issues: read the "to.do" comments below (should be yellow)
- * outsanding issues cont:
- *          need to implement the ability to store, download, and upload photos (Bitmaps) from the fireStore database, as of now we ignore the photo
- *          need to give each HabitEvent a 'title' that can assure they can be unique and so we can order then in Firestore by recently created
- *          as of now we use 'Date' as a title but the issue with that is Date cannot be identical for multiple events
  */
 
 
@@ -152,6 +147,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
     /**
      * this function updates the Firestore database whenever the user presses the confirm button when adding a HabitEvent
      * @param newHabitEvent
+     * This is the new habit event that is created
      */
     public void onOkPressed(HabitEvent newHabitEvent) {
         // add habitEvent to firebase:
@@ -160,8 +156,6 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
         data.put("location", newHabitEvent.getLocation());
         data.put("reflections", newHabitEvent.getReflection());
         data.put("date", newHabitEvent.getDate());
-
-        //TODO: we currently find and store habitEvents by DATE, we need to add a custom "title' to ensure no duplicates or other issues
 
         habitsRef.document(newHabitEvent.getDate())
 

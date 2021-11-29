@@ -120,13 +120,6 @@ public class ViewProfile extends AppCompatActivity {
 
         viewingHabitNameListAdapter = new ArrayAdapter<>(this, R.layout.view_profile_content, viewingHabitNameList);
         viewingHabitsList.setAdapter(viewingHabitNameListAdapter);
-       //viewingHabitAdapter = new HabitList(this, viewingUser.getHabits());
-       //viewingHabitsList.setAdapter(viewingHabitAdapter);
-
-
-
-
-
 
     }
 }

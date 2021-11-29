@@ -37,7 +37,9 @@ class HabitEventList extends ArrayAdapter<HabitEvent>{
     /**
      * The constructor for HabitEventList
      * @param context
+     * context of current acticity
      * @param habitEvents
+     * an ArrayList of all habitEvents
      */
     public HabitEventList(Context context, ArrayList<HabitEvent> habitEvents){
         super(context,0, habitEvents);
@@ -49,14 +51,15 @@ class HabitEventList extends ArrayAdapter<HabitEvent>{
      * the getView loads information into the display view content from each HabitEvent
      * and sets a listener for the deleteButton
      * @param position
+     * the position of the HabitEvent
      * @param convertView
+     * current activity view
      * @param parent
-     * @return
+     * the parent ViewGroup
      */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//        return super.getView(position, convertView, parent);
         View view = convertView;
 
         if(view == null){

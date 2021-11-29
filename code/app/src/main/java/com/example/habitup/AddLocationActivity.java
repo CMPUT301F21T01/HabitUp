@@ -22,7 +22,6 @@ import java.text.DecimalFormat;
  * AddLocation class by Vivian
  * This is an activity that displays a Google map with a marker (pin) to indicate a particular location.
  * Reference: https://developers.google.com/maps/documentation/android-sdk/map-with-marker
- * Issues: None so far
  */
 // [START maps_marker_on_map_ready]
 public class AddLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -36,17 +35,15 @@ public class AddLocationActivity extends AppCompatActivity implements OnMapReady
     /**
      * This initializes the creation of the AddLocation activity
      * @param savedInstanceState
+     * bundle that stores & passes data among activities
      */
-    // [START_EXCLUDE]
-    // [START maps_marker_get_map_async]
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_add_location);
 
-        // Get the SupportMapFragment and request notification
-        // when the map is ready to be used.
+        // Get the SupportMapFragment and request notification when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -70,23 +67,16 @@ public class AddLocationActivity extends AppCompatActivity implements OnMapReady
             }
         });
     }
-    // [END maps_marker_get_map_async]
-    // [END_EXCLUDE]
 
-    // [START_EXCLUDE silent]
     /**
      * This manipulates the map when it's available.
      * This is where we can add markers or lines, add listeners or move the camera.
      * @param googleMap
+     * the googleMap instance
      */
-    // [END_EXCLUDE]
-    // [START maps_marker_on_map_ready_add_marker]
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        // [START_EXCLUDE silent]
-        // Add a marker in Sydney, Australia,
-        // and move the map's camera to the same location.
-        // [END_EXCLUDE]
+        // Add a marker for University of Alberta
         myMap = googleMap;
 
         Marker marker = googleMap.addMarker(
@@ -95,12 +85,13 @@ public class AddLocationActivity extends AppCompatActivity implements OnMapReady
                         .title("Marker")
                         .draggable(true)
         );
-        // [START_EXCLUDE silent]
+
+        // Adjust zoom level
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
         float size = googleMap.getMaxZoomLevel();
         googleMap.setMaxZoomPreference(size);
-        // [END_EXCLUDE]
 
+        // Set the text box to the latitude and longitude
         TextView locationText = (TextView) this.findViewById(R.id.location_text);
         double lat = marker.getPosition().latitude;
         double lng = marker.getPosition().longitude;
@@ -109,18 +100,15 @@ public class AddLocationActivity extends AppCompatActivity implements OnMapReady
         selected_location = df.format(lat) + ", " + df.format(lng);
         locationText.setText(selected_location);
 
+        // Set up the drag marker listener
         googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener()
         {
             @Override
-            public void onMarkerDragStart(Marker marker)
-            {
-                // TODO Auto-generated method stub
-            }
+            public void onMarkerDragStart(Marker marker) { }
 
             @Override
             public void onMarkerDragEnd(Marker marker)
             {
-                // TODO Auto-generated method stub
                 double lat = marker.getPosition().latitude;
                 double lng = marker.getPosition().longitude;
 
@@ -133,20 +121,17 @@ public class AddLocationActivity extends AppCompatActivity implements OnMapReady
             }
 
             @Override
-            public void onMarkerDrag(Marker marker)
-            {
-                // TODO Auto-generated method stub
-            }
+            public void onMarkerDrag(Marker marker) { }
         });
 
 
     }
-    // [END maps_marker_on_map_ready_add_marker]
 
     /**
      * This handles the Zoom In and Zoom Out buttons
      * Reference: https://www.youtube.com/watch?v=B4OCSRBFjkM
      * @param view
+     * view of the googleMap activity
      */
     public void onZoom(View view) {
         if (view.getId() == R.id.zoom_in) {
@@ -158,4 +143,3 @@ public class AddLocationActivity extends AppCompatActivity implements OnMapReady
     }
 
 }
-// [END maps_marker_on_map_ready]

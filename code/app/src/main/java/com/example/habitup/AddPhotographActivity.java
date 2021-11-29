@@ -35,6 +35,7 @@ public class AddPhotographActivity extends Activity
 
     /**
      * This initializes the creation of the AddPhotograph activity
+     * It as well sets the OnClickListeners for all buttons within the activity
      * @param savedInstanceState
      * bundle that stores & passes data among activities
      */

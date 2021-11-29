@@ -51,7 +51,6 @@ import java.util.HashMap;
  * It establishes connection with the fireStore database, and communicates with it to update,store, and add habitEvents
  */
 
-
 public class HabitEventActivity extends AppCompatActivity implements AddHabitEventFragment.OnFragmentInteractionListener,GenerateQRHabitEventFragment.OnFragmentInteractionListener {
 
     HabitEventInstance habitEventInstance = HabitEventInstance.getInstance("", "", null);
@@ -68,7 +67,12 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
     FirebaseFirestore db;
     final String TAG = "DEBUG_LOG"; //for debugging
 
-
+    /**
+     *  This initializes the creation of the HabitEvent activity
+     *  The HabitEvent activity grabs the username that was passed in through the intent, for communication with firebase
+     *  it also listens for updates to the firebase, and adds listeners for the add habitEvent and back button
+     * @param savedInstanceState bundle that stores & passes data among activities
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +93,6 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
         username = (String) intent.getStringExtra("username");
         habitName = (String) intent.getStringExtra("habitName");
         habitsRef = db.collection(username + "/habits/habitList/" + habitName +"/habitEventList");
-        //Log.d("DEBUG_LOG", username + "/habits/habitList/" + habitName +"/habitEventList");
         //we then read from firebase and fill up our HabitEventList from the SnapshotListener! (it also updates whenever there is a change in firebase too)
 
         ContentResolver result = (ContentResolver) this.getContentResolver();
@@ -100,8 +103,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
             public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException error) {
                 habitEventDataList.clear();
                 for (QueryDocumentSnapshot doc : documentSnapshots) {
-                    String Date = (String) doc.getData().get("date"); //TODO: change HabitEvent constructor to accept Date
-                    //Bitmap Image = (Bitmap) doc.getData().get("photo"); //TODO: learn how to upload/download Bitmaps!
+                    String Date = (String) doc.getData().get("date");
                     String Reflection = (String) doc.getData().get("reflections");
                     String Location = (String) doc.getData().get("location");
 
@@ -134,7 +136,6 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
     /**
      * the onStart function ensures that when a user returns back to this Activity from anywhere, the HabitEventList gets updated accordingly
      */
-    //this is when they go back to this activity from somewhere else??? (like a fragment or other activity)????
     @Override
     protected void onStart() {
         super.onStart();
@@ -226,7 +227,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
                     }
                 });
 
-        // delete image from firestore
+        // delete image from firebase
         String URL = username + "/habits/habitList/" + habitName +"/habitEventList/" + habitEvent.getDate() + "/photo.jpg";
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://habitup-d4738.appspot.com");

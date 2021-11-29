@@ -23,6 +23,7 @@ import androidx.fragment.app.DialogFragment;
 
 public class AddHabitEventFragment extends DialogFragment {
 
+
     private EditText addReflections;
     private Button addPhoto;
     private Button addLocation;
@@ -93,7 +94,7 @@ public class AddHabitEventFragment extends DialogFragment {
             public void onClick(View view) {
                 Intent photoIntent = new Intent(AddHabitEventFragment.this.getActivity(), AddPhotographActivity.class);
                 startActivity(photoIntent);
-                // photo = (Bitmap) photoIntent.getExtras().get("habit_event_photo");;
+
             }
         });
 

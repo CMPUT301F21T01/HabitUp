@@ -49,10 +49,17 @@ public class AddHabitFragment extends DialogFragment {
     private int newProgress, position;
     private OnFragmentInteractionListener listener;
 
+    /**
+     * This is the fragment interaction listener and handles when save is pressed
+     */
     public interface OnFragmentInteractionListener {
         void onSavePressedAdd(Habit newHabit);
     }
 
+    /**
+     * This is called when a fragment is first attached to its context.
+     * @param context context of current activity
+     */
     @Override
     public void onAttach(@NonNull Context context){
         super.onAttach(context);
@@ -64,6 +71,10 @@ public class AddHabitFragment extends DialogFragment {
         }
     }
 
+    /**
+     * This initializes the creation of the AddHabit fragment
+     * @param savedInstanceState bundle that stores & passes data among activities
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState){
@@ -208,7 +219,7 @@ public class AddHabitFragment extends DialogFragment {
     }
 
     /**
-     * This method displays a DatepickerDialog and gets the date selected by user.
+     * This method displays a DatePickerDialog and gets the date selected by user.
      * @param setDate the selected date from user
      */
     public void getCurrentDate(TextView setDate) {

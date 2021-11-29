@@ -25,10 +25,18 @@ public class SignUpFragment extends DialogFragment {
     private EditText name;
     private OnFragmentInteractionListener listener;
 
+    /**
+     * This is the fragment interaction listener and handles when confirm is pressed
+     */
     public interface OnFragmentInteractionListener {
         void onConfirmPressed(String username, String password, String name);
     }
 
+    /**
+     * This is called when a fragment is first attached to its context.
+     * @param context
+     * the context of current activity
+     */
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -40,6 +48,11 @@ public class SignUpFragment extends DialogFragment {
         }
     }
 
+    /**
+     * This initializes the creation of the SignUp fragment
+     * @param savedInstanceState
+     * bundle that stores the data of current activity
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {

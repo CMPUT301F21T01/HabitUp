@@ -53,7 +53,7 @@ public class ViewHabitEventActivity extends AppCompatActivity implements EditHab
         date += habitEventInstance.getDate();
         location += habitEventInstance.getLocation();
         reflection += habitEventInstance.getReflection();
-        // photo = habitEventInstance.getPhoto();
+
 
         // Set TextView and ImageView for current HabitEvent
         TextView habitEventDate = findViewById(R.id.habit_event_date);

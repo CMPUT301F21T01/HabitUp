@@ -97,7 +97,7 @@ public class EditHabitEventFragment extends DialogFragment {
             public void onClick(View view) {
                 Intent photoIntent = new Intent(EditHabitEventFragment.this.getActivity(), AddPhotographActivity.class);
                 startActivity(photoIntent);
-                // photo = (Bitmap) photoIntent.getExtras().get("habit_event_photo");;
+
             }
         });
 

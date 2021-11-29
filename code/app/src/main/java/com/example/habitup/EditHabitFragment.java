@@ -42,10 +42,17 @@ public class EditHabitFragment extends DialogFragment {
     private int newProgress, position;
     private EditHabitFragment.OnFragmentInteractionListener listener;
 
+    /**
+     * This is the fragment interaction listener and handles when save is pressed
+     */
     public interface OnFragmentInteractionListener {
         void onSavePressedEdit(Habit editHabit, int position);
     }
 
+    /**
+     * This is called when a fragment is first attached to its context.
+     * @param context context of current activity
+     */
     @Override
     public void onAttach(@NonNull Context context){
         super.onAttach(context);
@@ -57,6 +64,12 @@ public class EditHabitFragment extends DialogFragment {
         }
     }
 
+    /**
+     * This creates an instance of the Habit where "edit" was pressed, to pass in information
+     * @param habit , the habit object itself, with name and details
+     * @param position , the position of the habit in the list
+     * @return returns the fragment/ instance
+     */
     // Get information passed from ViewHabitActivity:
     public static EditHabitFragment newInstance(Habit habit, int position) {
         EditHabitFragment fragment = new EditHabitFragment();
@@ -67,6 +80,10 @@ public class EditHabitFragment extends DialogFragment {
         return fragment;
     }
 
+    /**
+     * This initializes the creation of the EditHabit fragment
+     * @param savedInstanceState
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState){
@@ -212,7 +229,7 @@ public class EditHabitFragment extends DialogFragment {
     }
 
     /**
-     * This method displays a DatepickerDialog and gets the date selected by user.
+     * This method displays a DatePickerDialog and gets the date selected by user.
      * @param setDate the selected date from user
      */
     public void getCurrentDate(TextView setDate) {

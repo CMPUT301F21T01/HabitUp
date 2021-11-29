@@ -145,7 +145,7 @@ public class ViewHabitEventActivity extends AppCompatActivity implements EditHab
         // Update image if new image is not null
         Bitmap photo = habitEvent.getImage();
         if (photo != null) {
-            // delete image from firestore
+            // delete image from firebase
             String URL = username + "/habits/habitList/" + habitName + "/habitEventList/" + habitEvent.getDate() + "/photo.jpg";
             FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference storageRef = storage.getReferenceFromUrl("gs://habitup-d4738.appspot.com");

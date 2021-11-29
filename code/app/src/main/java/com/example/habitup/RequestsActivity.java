@@ -29,8 +29,6 @@ public class RequestsActivity extends AppCompatActivity {
     public static UserSyncer syncer;
     public static User mainUser;
 
-
-
     FirebaseFirestore db;
     /**
      * This brings up the proper displays from the XML to be shown on the screen

@@ -52,7 +52,7 @@ public class GenerateQRHabitEventFragment extends DialogFragment {
      * This is the fragment interaction listener
      */
     public interface OnFragmentInteractionListener {
-        //void onOkPressed(HabitEvent habitEvent);
+        //nothing is needed here for this fragment
     }
 
     /**

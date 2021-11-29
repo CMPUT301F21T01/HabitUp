@@ -60,6 +60,7 @@ public class AddHabitEventFragment extends DialogFragment {
 
     /**
      * This initializes the creation of the AddHabitEvent fragment
+     * it also adds listeners for the location and photo button
      * @param savedInstanceState
      * bundle that stores the data of current activity
      */

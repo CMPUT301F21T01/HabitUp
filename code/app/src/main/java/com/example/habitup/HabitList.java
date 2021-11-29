@@ -30,12 +30,24 @@ public class HabitList extends ArrayAdapter<Habit>{
     private ArrayList<Habit> habits;
     private Context context;
 
+    /**
+     * a constructor for HabitList
+     * @param context  context of current activity
+     * @param habits the array of habits
+     */
     public HabitList(Context context, ArrayList<Habit> habits){
         super(context,0, habits);
         this.habits = habits;
         this.context = context;
     }
 
+    /**
+     * This function "generates" each habit, adding listeners for when they are clicked on as well
+     * @param position the position of the habit in the list
+     * @param convertView the view we get references from
+     * @param parent the parent ViewGroup
+     * @return returns the View
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

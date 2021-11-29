@@ -21,6 +21,8 @@ public class RequestsActivity extends AppCompatActivity {
     ArrayAdapter<String> requestsAdapter;
     ArrayList<String> requestsDataList;
     Button backBtn;
+    Button approveBtn;
+    Button deleteBtn;
 
     /**
      * This brings up the proper displays from the XML to be shown on the screen
@@ -35,6 +37,8 @@ public class RequestsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_requests);
 
         backBtn = findViewById(R.id.go_back_btn);
+        approveBtn = findViewById(R.id.approve_btn);
+        deleteBtn = findViewById(R.id.delete_btn);
         requestList = findViewById(R.id.requests_list);
 
         // Unpack intent
@@ -56,6 +60,10 @@ public class RequestsActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
+
+
     }
 }
 

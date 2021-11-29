@@ -175,7 +175,7 @@ public class SearchActivity extends AppCompatActivity {
                                         }
                                     }
 
-                                    if(userFound == true)
+                                    if(userFound)
                                     {
 
 

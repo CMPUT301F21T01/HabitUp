@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -24,10 +25,13 @@ public class ViewProfile extends AppCompatActivity {
 
     ListView viewingHabitsList;
     ArrayAdapter<Habit> viewingHabitAdapter;
-    ArrayList<String> habitsDataList;
     TextView initial;
-    public static UserSyncer viewingSyncer;
-    public static User viewingUser;
+    User viewingUser = new User();
+    String vName = null;
+    String vUsername = null;
+    String pCurrentUser = null;
+    String pCurrentUserUsername = null;
+
 
     FirebaseFirestore db;
 
@@ -39,16 +43,25 @@ public class ViewProfile extends AppCompatActivity {
         viewingHabitsList = findViewById(R.id.habits_list);
         initial = findViewById(R.id.userInitial);
 
-        String name = getIntent().getStringExtra("name_of_user");
-        String username = getIntent().getStringExtra("username_searched");
-        char textForInsideBubble = String.valueOf(name).charAt(0);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+        {
+            vName = extras.getString("name_of_user");
+            vUsername = extras.getString("username_searched");
+            pCurrentUser = extras.getString("name_of_main_user");
+            pCurrentUserUsername = extras.getString("username_of_current_user");
+
+        }
+        char textForInsideBubble = String.valueOf(vName).charAt(0);
         initial.setText(String.valueOf(textForInsideBubble));
 
+        db = FirebaseFirestore.getInstance();
+        CollectionReference collRefSearchedUserHabits = db.collection(vUsername).document("habits").collection("habitList");
 
-        CollectionReference collRefSearchedUserHabits = db.collection(username).document("habits").collection("habitList");
+       viewingUser.setUsername(vUsername);
+       viewingUser.setName(vName);
 
-        viewingUser.setUsername(username);
-        viewingUser.setName(name);
+
 
         collRefSearchedUserHabits.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()

@@ -42,7 +42,8 @@ public class HabitEventTest {
         solo.assertCurrentActivity("Wrong activity.", UserControllerActivity.class);
         solo.waitForText("HabitUp");
         solo.enterText((EditText) solo.getView(R.id.username), "john23");
-        solo.clickOnButton("enter");
+        solo.enterText((EditText) solo.getView(R.id.password), "password");
+        solo.clickOnButton("sign in");
         assertTrue(solo.waitForActivity(HabitActivity.class, 2000));
         // Click on first habit. This test assumes there is at least 1 habit
         solo.clickInList(1);

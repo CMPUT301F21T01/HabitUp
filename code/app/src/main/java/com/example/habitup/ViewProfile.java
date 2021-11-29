@@ -3,6 +3,7 @@ package com.example.habitup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +38,7 @@ public class ViewProfile extends AppCompatActivity {
     String vUsername = null;
     String pCurrentUser = null;
     String pCurrentUserUsername = null;
+    TextView label;
 
 
     FirebaseFirestore db;
@@ -52,6 +54,7 @@ public class ViewProfile extends AppCompatActivity {
         setContentView(R.layout.activity_view_profile);
         viewingHabitsListView = findViewById(R.id.profile_view_habits_list);
         initial = findViewById(R.id.userInitial);
+        label = findViewById(R.id.personshabitname);
         //unpacks the intent from the search activity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -64,13 +67,18 @@ public class ViewProfile extends AppCompatActivity {
         char textForInsideBubble = String.valueOf(vName).charAt(0);
         initial.setText(String.valueOf(textForInsideBubble));
 
+        label.setText("Your friend "+ vName + "'s Habits");
+
         db = FirebaseFirestore.getInstance();
         CollectionReference collRefSearchedUserHabits = db.collection(vUsername).document("habits").collection("habitList");
 
         viewingUser.setUsername(vUsername);
         viewingUser.setName(vName);
 
-
+        //viewingHabitNameListAdapter = new ArrayAdapter<String>(this, R.layout.view_profile_content, viewingHabitNameList);
+        //viewingHabitsListView.setAdapter(viewingHabitNameListAdapter);
+        viewingHabitAdapter = new HabitList(this, viewingUser.getHabits());
+        viewingHabitsListView.setAdapter(viewingHabitAdapter);
         //unpacks the searched user's habits from its collection in the database so the habits can be displayed
         collRefSearchedUserHabits.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -97,8 +105,8 @@ public class ViewProfile extends AppCompatActivity {
                                 }
                                 int progressInt = Integer.parseInt(progress);
                                 int positionInt = Integer.parseInt(position);
-                                Boolean.parseBoolean(sType);
-                                Boolean type;
+                                Boolean type = Boolean.parseBoolean(sType);
+
 
                                 // Add to our user's habits
 
@@ -113,17 +121,17 @@ public class ViewProfile extends AppCompatActivity {
 
 
                             }
+                            viewingHabitAdapter.notifyDataSetChanged();
+                            viewingHabitsListView.setVisibility(View.VISIBLE);
                         }
                     }
+
+
                 });
 
         System.out.println(viewingHabitNameList);
 
 
-        viewingHabitNameListAdapter = new ArrayAdapter(this, R.layout.view_profile_content, viewingHabitNameList);
-        viewingHabitsListView.setAdapter(viewingHabitNameListAdapter);
-        viewingHabitsListView.setVisibility(View.VISIBLE);
-        //viewingHabitAdapter = new HabitList(this, viewingUser.getHabits());
-        //viewingHabitsList.setAdapter(viewingHabitAdapter);
+
     }
 }

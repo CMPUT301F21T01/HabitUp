@@ -31,7 +31,6 @@ public class ViewProfile extends AppCompatActivity {
 
     ListView viewingHabitsListView;
     ArrayAdapter<Habit> viewingHabitAdapter;
-    ArrayAdapter<String> viewingHabitNameListAdapter;
     ArrayList<String> viewingHabitNameList = new ArrayList<String>();
     TextView initial;
     User viewingUser = new User();
@@ -76,8 +75,7 @@ public class ViewProfile extends AppCompatActivity {
         viewingUser.setUsername(vUsername);
         viewingUser.setName(vName);
 
-        //viewingHabitNameListAdapter = new ArrayAdapter<String>(this, R.layout.view_profile_content, viewingHabitNameList);
-        //viewingHabitsListView.setAdapter(viewingHabitNameListAdapter);
+
         viewingHabitAdapter = new HabitListForProfile(this, viewingUser.getHabits());
         viewingHabitsListView.setAdapter(viewingHabitAdapter);
         //unpacks the searched user's habits from its collection in the database so the habits can be displayed

@@ -25,6 +25,8 @@ public class ViewProfile extends AppCompatActivity {
 
     ListView viewingHabitsList;
     ArrayAdapter<Habit> viewingHabitAdapter;
+    ArrayAdapter<String> viewingHabitNameListAdapter;
+    ArrayList<String> viewingHabitNameList = new ArrayList<String>();
     TextView initial;
     User viewingUser = new User();
     String vName = null;
@@ -87,7 +89,8 @@ public class ViewProfile extends AppCompatActivity {
                                         new ArrayList<String>(Arrays.asList(freq.split(",")));
 
                                 int progressInt = Integer.parseInt(progress);
-                                Boolean type = Boolean.parseBoolean(sType);
+                                Boolean.parseBoolean(sType);
+                                Boolean type;
 
                                 // Add to our user's habits
 
@@ -96,6 +99,7 @@ public class ViewProfile extends AppCompatActivity {
                                     viewingUser.addHabit(new Habit(
                                         name, startDate, endDate,
                                         frequency, reason, progressInt, type));
+                                    viewingHabitNameList.add(name);
                                 }
 
 
@@ -105,10 +109,10 @@ public class ViewProfile extends AppCompatActivity {
                 });
 
 
-
-        viewingHabitAdapter = new HabitList(this, viewingUser.getHabits());
-        viewingHabitsList.setAdapter(viewingHabitAdapter);
-
+        viewingHabitNameListAdapter = new ArrayAdapter<>(this, R.layout.view_profile_content, viewingHabitNameList);
+        viewingHabitsList.setAdapter(viewingHabitNameListAdapter);
+       //viewingHabitAdapter = new HabitList(this, viewingUser.getHabits());
+       //viewingHabitsList.setAdapter(viewingHabitAdapter);
 
 
 

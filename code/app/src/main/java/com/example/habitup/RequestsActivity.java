@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -18,12 +20,18 @@ import java.util.Arrays;
 public class RequestsActivity extends AppCompatActivity {
 
     ListView requestList;
-    ArrayAdapter<String> requestsAdapter;
+    //ArrayAdapter<String> requestsAdapter;
     ArrayList<String> requestsDataList;
     Button backBtn;
     Button approveBtn;
     Button deleteBtn;
+    RequestsCustomAdapter requestsAdapter;
+    public static UserSyncer syncer;
+    public static User mainUser;
 
+
+
+    FirebaseFirestore db;
     /**
      * This brings up the proper displays from the XML to be shown on the screen
      * @param savedInstanceState from the switching of the activities (from the profile activity to here upon the profile button being clicked)
@@ -36,30 +44,22 @@ public class RequestsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_requests);
 
-        backBtn = findViewById(R.id.go_back_btn);
         approveBtn = findViewById(R.id.approve_btn);
-        deleteBtn = findViewById(R.id.delete_btn);
+        deleteBtn = findViewById(R.id.decline_btn);
         requestList = findViewById(R.id.requests_list);
+        db = FirebaseFirestore.getInstance();
+        syncer   = UserSyncer.getInstance();
 
-        // Unpack intent
+
+        // Unpack intents
         ArrayList<String> requestsDataList = (ArrayList<String>) getIntent().getSerializableExtra("requests");
+        String usernameOfCurrentUser = getIntent().getStringExtra("usernameOfCurrentUser");
+        String nameOfCurrentUser = getIntent().getStringExtra("nameOfCurrentUser");
 
-        requestsAdapter = new ArrayAdapter<>(this, R.layout.requests_content, requestsDataList);
+        mainUser = syncer.initialize(usernameOfCurrentUser, db);
+        requestsAdapter = new RequestsCustomAdapter(requestsDataList, this);
 
         requestList.setAdapter(requestsAdapter);
-
-        /**
-         * uses the back button to go to the main activity, habit list screen
-         * @param view
-         */
-        backBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                finish();
-            }
-        });
 
 
 

@@ -61,7 +61,7 @@
             android:name=".AddLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".AddPhotograph"
+            android:name=".AddPhotographActivity"
             android:exported="false" />
 
         <meta-data

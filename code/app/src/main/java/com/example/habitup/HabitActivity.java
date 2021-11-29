@@ -22,7 +22,6 @@ import java.util.Comparator;
 /**
  * This class manages the HabitActivity.xml, or the screen where you see the list of habits.
  * This class establishes connection with the fireStore database, and communicates with it to update, store, add, edit, and delete habits.
- * Issues: None so far...
  */
 public class HabitActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
     // Variable declarations

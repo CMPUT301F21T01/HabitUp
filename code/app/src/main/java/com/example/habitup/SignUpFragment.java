@@ -66,4 +66,4 @@ public class SignUpFragment extends DialogFragment {
                     }
                 }).create();
     }
-}
+

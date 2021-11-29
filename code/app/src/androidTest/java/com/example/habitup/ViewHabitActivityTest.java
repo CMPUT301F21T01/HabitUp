@@ -37,27 +37,29 @@ public class ViewHabitActivityTest {
         solo.assertCurrentActivity("Wrong activity.", UserControllerActivity.class);
         solo.waitForText("HabitUp");
         solo.enterText((EditText) solo.getView(R.id.username), "dummy1");
-        solo.clickOnButton("enter");
+        solo.enterText((EditText) solo.getView(R.id.password), "a");
+        solo.clickOnButton("sign in");
         assertTrue(solo.waitForActivity(HabitActivity.class, 2000));
     }
 
     /**
      * Runs all tests sequentially. Add @Test at start to run test.
      */
-    @Test
     public void testAllSequentially() {
-        testViewHabitActivity();
-        testViewHabitActivityEdit();
-        testViewHabitActivityDelete();
+        aTestViewHabitActivity();
+        bTestViewHabitActivityEdit();
+        cTestViewHabitActivityDelete();
     }
 
 
     /**
      * Test functionality to add habit(s), DatePickerDialog, and progress specifically
      * @see AddHabitFragment
+     * @see EditHabitFragment
      * @see HabitList
      */
-    public void testViewHabitActivity() {
+    @Test
+    public void aTestViewHabitActivity() {
         // Add habit, assert it was added to the list
         solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.add_fab));
         assertTrue(solo.searchText("Add a Habit"));
@@ -89,8 +91,8 @@ public class ViewHabitActivityTest {
      * @see EditHabitFragment
      * @see HabitList
      */
-
-    public void testViewHabitActivityEdit() {
+    @Test
+    public void bTestViewHabitActivityEdit() {
         solo.clickInList(4);
         assertTrue(solo.searchText("sleep"));
         solo.clickOnButton("edit");
@@ -124,8 +126,8 @@ public class ViewHabitActivityTest {
     /**
      * Testing functionality for delete, makes sure item is removed
      */
-
-    public void testViewHabitActivityDelete() {
+    @Test
+    public void cTestViewHabitActivityDelete() {
         if(solo.searchText("work out")) {
             // Delete habit, assert it is no longer in the ListView
             solo.clickInList(4);

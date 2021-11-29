@@ -53,10 +53,10 @@ public class HabitActivityTest {
      *          This test WILL fail if this is not the case.
      */
     public void testAllSequentially() {
-        // aTestHabitList();
-        // bTestActivitySwitch();
-        // cTestAddHabit();
-        // dTestDeleteHabit();
+        aTestHabitList();
+        bTestActivitySwitch();
+        cTestAddHabit();
+        dTestDeleteHabit();
         eTestReorder();
     }
 

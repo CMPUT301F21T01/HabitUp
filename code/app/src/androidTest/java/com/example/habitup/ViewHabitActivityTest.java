@@ -11,14 +11,17 @@ import androidx.test.rule.ActivityTestRule;
 import com.robotium.solo.Solo;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * Intent test for ViewHabitActivity
  * @see ViewHabitActivity
  */
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ViewHabitActivityTest {
     private Solo solo;
 

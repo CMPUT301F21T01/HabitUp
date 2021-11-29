@@ -33,7 +33,8 @@ public class RequestsActivityTest {
         solo.assertCurrentActivity("Wrong activity.", UserControllerActivity.class);
         solo.waitForText("HabitUp");
         solo.enterText((EditText) solo.getView(R.id.username), "john23");
-        solo.clickOnButton("enter");
+        solo.enterText((EditText) solo.getView(R.id.password), "password");
+        solo.clickOnButton("sign in");
         assertTrue(solo.waitForActivity(HabitActivity.class, 9000));
         View profileButton = solo.getCurrentActivity().findViewById(R.id.profile_activity_btn); //https://stackoverflow.com/questions/33125017/how-to-access-floatingactionmenu-and-floating-action-button-in-robotium
         solo.clickOnView(profileButton);
@@ -42,6 +43,7 @@ public class RequestsActivityTest {
         assertTrue(solo.waitForActivity(RequestsActivity.class, 9000));
 
     }
+
     @Test
     /**
      * ensures what we want is showing up in terms of the display for this activity
@@ -50,9 +52,8 @@ public class RequestsActivityTest {
     {
         solo.assertCurrentActivity("Wrong activity.", RequestsActivity.class);
         assertTrue(solo.searchText("Requests"));
-        assertTrue(solo.searchButton("Accept"));
+        assertTrue(solo.searchButton("Approve"));
         assertTrue(solo.searchButton("Decline"));
-        assertTrue(solo.searchButton("Go back"));
     }
 
 

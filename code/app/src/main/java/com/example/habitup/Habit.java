@@ -6,7 +6,6 @@ import java.util.ArrayList;
 /**
  * This is the class for the creating a Habit object, storing the variables each Habit needs
  * as well as containing constructors for the getters and setters.
- * Known Issues: None so far...
  */
 public class Habit implements Serializable {
 

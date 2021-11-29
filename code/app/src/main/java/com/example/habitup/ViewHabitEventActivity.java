@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -16,7 +15,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -24,7 +22,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
 
 /**
  * ViewHabitEventActivity class by Vivian
@@ -144,42 +141,46 @@ public class ViewHabitEventActivity extends AppCompatActivity implements EditHab
                     }
                 });
 
-        // TODO: Update photograph
-        // delete image from firestore
-        String URL = username + "/habits/habitList/" + habitName +"/habitEventList/" + habitEvent.getDate() + "/photo.jpg";
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://habitup-d4738.appspot.com");
-        StorageReference imagesRef = storageRef.child(habitEvent.getURL());
 
-        imagesRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                // File deleted successfully
-                Log.d(TAG, "onSuccess: deleted file");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Uh-oh, an error occurred!
-                Log.d(TAG, "onFailure: did not delete file");
-            }
-        });
+        // Update image if new image is not null
+        Bitmap photo = habitEvent.getImage();
+        if (photo != null) {
+            // delete image from firestore
+            String URL = username + "/habits/habitList/" + habitName + "/habitEventList/" + habitEvent.getDate() + "/photo.jpg";
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://habitup-d4738.appspot.com");
+            StorageReference imagesRef = storageRef.child(habitEvent.getURL());
 
-        // Store Image to Firebase File Storage
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        Bitmap bitmap = habitEvent.getImage();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageData = baos.toByteArray();
+            imagesRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    // File deleted successfully
+                    Log.d(TAG, "onSuccess: deleted file");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Uh-oh, an error occurred!
+                    Log.d(TAG, "onFailure: did not delete file");
+                }
+            });
 
-        // Upload the image
-        UploadTask uploadTask = imagesRef.putBytes(imageData);
+            // Store Image to Firebase File Storage
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Log.d(TAG, "Document not added: " + exception.toString());
-            }
-        });
+            photo.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] imageData = baos.toByteArray();
+
+            // Upload the image
+            UploadTask uploadTask = imagesRef.putBytes(imageData);
+
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Log.d(TAG, "Document not added: " + exception.toString());
+                }
+            });
+        }
 
         // refresh current activity
         finish();

@@ -51,7 +51,7 @@ public class ProfileActivity extends AppCompatActivity{
         String username = getIntent().getStringExtra("username");
 
         // Set user initial
-        //initial.setText(name.charAt(0).toString());
+        //dynamically changes the initial in the profile picture bubble based on that of the appropriate user
         char textForInsideBubble = String.valueOf(name).charAt(0);
         initial.setText(String.valueOf(textForInsideBubble));
 

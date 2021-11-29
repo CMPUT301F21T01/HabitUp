@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * HabitEvents for a specific Habit.
  * Known Issues: None so far!
  */
-class HabitEventList extends ArrayAdapter<HabitEvent> {
+class HabitEventList extends ArrayAdapter<HabitEvent>{
     private ArrayList<HabitEvent> habitEvents;
     private Context context;
 
@@ -68,10 +68,10 @@ class HabitEventList extends ArrayAdapter<HabitEvent> {
         TextView habitDate = view.findViewById(R.id.textViewDate);
         TextView habitLocation = view.findViewById(R.id.textViewLocation);
         TextView habitReflection = view.findViewById(R.id.textViewReflection);
-
+        //if we add a Date: "+ to the habitDate text the hour/min/sec part disappears?
         habitDate.setText(habitEvent.getDate());
         habitLocation.setText(habitEvent.getLocation());
-        habitReflection.setText(habitEvent.getReflection());
+        habitReflection.setText("Reflection: "+habitEvent.getReflection());
 
         ImageView habitPhoto = view.findViewById(R.id.imageViewPhoto);
 
@@ -106,12 +106,22 @@ class HabitEventList extends ArrayAdapter<HabitEvent> {
         });
 
         // edit HabitEvent stuff here
-        ImageButton editButton = (ImageButton) view.findViewById(R.id.edit_habit_event_button);
+        Button editButton = (Button) view.findViewById(R.id.edit_habit_event_button);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //this assumes the list is 'alive' on the HabitEventActivity
                 ((HabitEventActivity)context).onEditPressed(position);
+            }
+        });
+
+        // get QR code of a HabitEvent
+        Button getQRCodeButton = (Button) view.findViewById(R.id.QR_button);
+        getQRCodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //this assumes the list is 'alive' on the HabitEventActivity
+                ((HabitEventActivity)context).onQRPressed(position);
             }
         });
 

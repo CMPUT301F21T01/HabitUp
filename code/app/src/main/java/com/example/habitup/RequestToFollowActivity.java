@@ -15,7 +15,9 @@ import java.util.Collection;
 import java.util.HashMap;
 
 
-//this activity includes the idea that the
+/**
+ * This activity is prompted by the Search Actvity if the username searched for is NOT yet a friend of the main user so they're able to send requests
+ */
 
 public class RequestToFollowActivity extends AppCompatActivity {
     Button sendRequestBtn;
@@ -28,6 +30,9 @@ public class RequestToFollowActivity extends AppCompatActivity {
     String g_TAG = "TEST_LOG";
 
     @Override
+    /**
+     * sets the proper XML activities to so the requests activity is able to occur
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_to_follow);
@@ -44,19 +49,14 @@ public class RequestToFollowActivity extends AppCompatActivity {
             currentUsersUsername = extras.getString("username_of_current_user");
 
         }
-        Log.d(g_TAG, "Found user" + nameToRequest + "!");
-        Log.d(g_TAG, "current main user " + currentUser);
+        //dynamically changes the initial in the profile picture bubble based on that of the appropriate user
         nameText = (TextView) findViewById(R.id.userInitial);
         char textForInsideBubble = String.valueOf(nameToRequest).charAt(0);
         nameText.setText(String.valueOf(textForInsideBubble));
 
         CollectionReference collUserBeingRequested = db.collection(userNameToRequest);
 
-        //database listener here for the searched user/nameToRequest that adds current user to its requests collection as a document
-        //UserSyncer syncer   = UserSyncer.getInstance();
-        //User nameToRequestUserObj = syncer.initialize(nameToRequest, db);
-
-
+        //when a request is sent, the user we are is added to the requests list for the searched user in the database
         sendRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

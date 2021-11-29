@@ -20,6 +20,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * this actvity allows the user to view the profile of a friend via search
+ */
 public class ViewProfile extends AppCompatActivity {
 
 
@@ -39,12 +42,16 @@ public class ViewProfile extends AppCompatActivity {
 
 
     @Override
+    /**
+     * This brings up the proper displays from the XML to be shown on the screen
+     * @param savedInstanceState from the switching of the activities (from the search activity to here upon the name of the person being long clicked)
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
         viewingHabitsList = findViewById(R.id.habits_list);
         initial = findViewById(R.id.userInitial);
-
+        //unpacks the intent from the search activity
         Bundle extras = getIntent().getExtras();
         if (extras != null)
         {
@@ -64,7 +71,7 @@ public class ViewProfile extends AppCompatActivity {
        viewingUser.setName(vName);
 
 
-
+        //unpacks the searched user's habits from its collection in the database so the habits can be displayed
         collRefSearchedUserHabits.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
                 {

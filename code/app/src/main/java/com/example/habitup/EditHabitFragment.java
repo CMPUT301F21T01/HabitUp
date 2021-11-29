@@ -29,7 +29,6 @@ import java.util.Locale;
  * This class is a a dialog fragment that handles the UI and information for when
  * a user wants to edit a habit.
  * It displays add_habit_fragment_layout.xml.
- * Issues: None so far...
  */
 public class EditHabitFragment extends DialogFragment {
     // Initialize variables:
@@ -40,7 +39,7 @@ public class EditHabitFragment extends DialogFragment {
     private Boolean type;
     private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck, typeCheck;
     private ArrayList<String> daysSelected;
-    private int newProgress;
+    private int newProgress, position;
     private EditHabitFragment.OnFragmentInteractionListener listener;
 
     public interface OnFragmentInteractionListener {
@@ -99,6 +98,7 @@ public class EditHabitFragment extends DialogFragment {
         endText.setText(habit.getEndDate());
         daysSelected = habit.getFrequency();
         type = habit.getType();
+        position = habit.getPosition();
 
         // Getting the state of all the checkboxes for a habit:
         checkBoxInit(daysSelected);
@@ -205,9 +205,8 @@ public class EditHabitFragment extends DialogFragment {
                         String newReason = reason.getText().toString();
                         String startDate = startText.getText().toString();
                         String endDate = endText.getText().toString();
-                        //setProgress(startDate, endDate);
                         newProgress = AddHabitFragment.setProgress(startDate, endDate);
-                        listener.onSavePressedEdit(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress, type), pos);
+                        listener.onSavePressedEdit(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress, type, position), pos);
                     }
                 }).create();
     }
@@ -266,42 +265,5 @@ public class EditHabitFragment extends DialogFragment {
                 }
             }
         }
-    }
-
-    /**
-     * This method calculates and sets the progress for a habit.
-     * @param startString the starting date for a habit
-     * @param endString the ending date for a habit
-     */
-    public void setProgress(String startString, String endString){
-        Date sDate = new Date();
-        Date eDate = new Date();
-        Calendar calendar = Calendar.getInstance();
-
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        try{
-            sDate = format.parse(startString);
-            eDate = format.parse(endString);
-        } catch (ParseException e){
-            e.printStackTrace();
-        }
-
-        long current = calendar.getTimeInMillis();
-        long difference = eDate.getTime() - sDate.getTime();
-        long currentDifference = current - sDate.getTime();
-
-        float progress;
-        if(difference == 0) {
-            progress = 100;
-        } else {
-            progress = (float) currentDifference / difference * 100;
-            if (progress > 100) {
-                progress = 100;
-            }
-            if (progress < 0) {
-                progress = 0;
-            }
-        }
-        newProgress = ((int) progress);
     }
 }

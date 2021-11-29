@@ -130,7 +130,6 @@ public class SearchActivity extends AppCompatActivity {
 
             }
         });
-        //getting to
         nameList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) { //clicks on the profile of the person that popped up

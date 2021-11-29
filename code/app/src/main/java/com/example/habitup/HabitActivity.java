@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * This class manages the HabitActivity.xml, or the screen where you see the list of habits.
@@ -44,7 +45,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
         setContentView(R.layout.habit_activity);
 
         // Variable initializations
-        habitList   = findViewById(R.id.habit_list);
+        habitList   = findViewById(R.id.habit_listView);
         searchBtn   = findViewById(R.id.search_activity_btn);
         profileBtn  = findViewById(R.id.profile_activity_btn);
         homeBtn     = findViewById(R.id.home_activity_btn);
@@ -136,7 +137,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                 syncer.syncHabits(new UserSyncer.FirebaseCallback() {
                     @Override
                     public void onCallback() {
-                        habitAdapter.notifyDataSetChanged();
+                        habitlistSort();
                     }
                 });
             }
@@ -157,12 +158,11 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
      * This method overrides onStart() to update the UI info whenever user goes back to HabitActivity
      * from a different Activity.
      */
-    // used this image ot help me understand how onStart() works: https://developer.android.com/images/activity_lifecycle.png
+    // used this image to help me understand how onStart() works: https://developer.android.com/images/activity_lifecycle.png
     @Override
     protected void onStart() {
         super.onStart();
-
-        // Update adapter and list
+        // Update adapter and list:
         habitAdapter = new HabitList(this, mainUser.getHabits());
         habitList.setAdapter(habitAdapter);
     }
@@ -184,6 +184,9 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                 // Edit or Delete habit depending on key
                 if (!data.getExtras().containsKey("editedHabit")) {
                     syncer.deleteHabit(mainUser.getHabits().get(pos));
+                    habitAdapter.remove(habitAdapter.getItem(pos));
+                    updateHabitsPosition();
+                    habitlistSort();
                 } else {
                     String selectedName = mainUser.getHabits().get(pos).getTitle();
                     Habit editedHabit = (Habit) data.getSerializableExtra("editedHabit");
@@ -192,4 +195,69 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             }
         }
     }
+
+    /**
+     * This method handles the up button for a habit in the listview. It updates the position of the habit that is to be moved up in
+     * the listview and also updates the swapped habit's position.
+     * @param position the position of the clicked habit
+     * @param habit the selected habit to be moved up
+     */
+    public static void OnUpButtonClick(int position, Habit habit){
+        if (position != 0) {
+            habitAdapter.getItem(position).setPosition(position-1);
+            habitAdapter.getItem(position-1).setPosition(position);
+            habitlistSort();
+            syncer.editHabit(habit.getTitle(), habit);
+            syncer.editHabit(habitAdapter.getItem(position).getTitle(), habitAdapter.getItem(position));
+        }
+    }
+
+    /**
+     * This method handles the down button for a habit in the listview. It updates the position of the habit that is to be moved down in
+     * the listview and also updates the swapped habit's position.
+     * @param position the position of the clicked habit
+     * @param habit the selected habit to be moved down
+     */
+    public static void OnDownButtonClick(int position, Habit habit){
+        if (position != habitAdapter.getCount() - 1) {
+            habitAdapter.getItem(position).setPosition(position+1);
+            habitAdapter.getItem(position+1).setPosition(position);
+            habitlistSort();
+            syncer.editHabit(habit.getTitle(), habit);
+            syncer.editHabit(habitAdapter.getItem(position).getTitle(), habitAdapter.getItem(position));
+        }
+    }
+
+    /**
+     * This method runs through every habit in the habitAdapter (the list of habits) and updates each habit's position to be its
+     * correct position in the list.
+     */
+    public static void updateHabitsPosition(){
+        for(int i = 0; i < habitAdapter.getCount(); i++) {
+            habitAdapter.getItem(i).setPosition(i);
+            syncer.editHabit(habitAdapter.getItem(i).getTitle(), habitAdapter.getItem(i));
+        }
+    }
+
+    /**
+     * This method sorts the habitAdapter by each habit's position in ascending order.
+     */
+    public static void habitlistSort(){
+        habitAdapter.sort(new Comparator<Habit>() {
+            @Override
+            public int compare(Habit h1, Habit h2) {
+                return h1.getPosition().compareTo((h2.getPosition()));
+            }
+        });
+        habitAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Once a user signs in they should not be able to switch back to the main screen activity
+     * by the back button. Instead we might provide some sign out functionality so that we
+     * may reset static variables / initializers. As a result we override the onBackPressed
+     * method to remove said feature.
+     */
+    @Override
+    public void onBackPressed() {}
 }

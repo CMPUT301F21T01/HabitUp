@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * This class manages the HabitActivity.xml, or the screen where you see the list of habits.
@@ -132,8 +133,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                 syncer.syncHabits(new UserSyncer.FirebaseCallback() {
                     @Override
                     public void onCallback() {
-                        // I think this is where we need to sort the habitadapter / habitlist by a habit's position
-                        habitAdapter.notifyDataSetChanged();
+                        habitlistSort();
                     }
                 });
             }
@@ -181,6 +181,9 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                 // Edit or Delete habit depending on key
                 if (!data.getExtras().containsKey("editedHabit")) {
                     syncer.deleteHabit(mainUser.getHabits().get(pos));
+                    habitAdapter.remove(habitAdapter.getItem(pos));
+                    updateHabitsPosition();
+                    habitlistSort();
                 } else {
                     String selectedName = mainUser.getHabits().get(pos).getTitle();
                     Habit editedHabit = (Habit) data.getSerializableExtra("editedHabit");
@@ -192,28 +195,38 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
 
     public static void OnUpButtonClick(int position, Habit habit){
         if (position != 0) {
-            habitAdapter.remove(habit);
-            habitAdapter.insert(habit, position - 1);
+            habitAdapter.getItem(position).setPosition(position-1);
+            habitAdapter.getItem(position-1).setPosition(position);
+            habitlistSort();
+            syncer.editHabit(habit.getTitle(), habit);
+            syncer.editHabit(habitAdapter.getItem(position).getTitle(), habitAdapter.getItem(position));
         }
-        habitAdapter.notifyDataSetChanged();
-        updateHabitsPosition();
-        syncer.editHabit(habit.getTitle(), habit);
     }
 
     public static void OnDownButtonClick(int position, Habit habit){
         if (position != habitAdapter.getCount() - 1) {
-            habitAdapter.remove(habit);
-            habitAdapter.insert(habit, position + 1);
+            habitAdapter.getItem(position).setPosition(position+1);
+            habitAdapter.getItem(position+1).setPosition(position);
+            habitlistSort();
+            syncer.editHabit(habit.getTitle(), habit);
+            syncer.editHabit(habitAdapter.getItem(position).getTitle(), habitAdapter.getItem(position));
         }
-        habitAdapter.notifyDataSetChanged();
-        updateHabitsPosition();
-        syncer.editHabit(habit.getTitle(), habit);
     }
 
     public static void updateHabitsPosition(){
         for(int i = 0; i < habitAdapter.getCount(); i++) {
-            Habit currentHabit = habitAdapter.getItem(i);
-            currentHabit.setPosition(i);
+            habitAdapter.getItem(i).setPosition(i);
+            syncer.editHabit(habitAdapter.getItem(i).getTitle(), habitAdapter.getItem(i));
         }
+    }
+
+    public static void habitlistSort(){
+        habitAdapter.sort(new Comparator<Habit>() {
+            @Override
+            public int compare(Habit h1, Habit h2) {
+                return h1.getPosition().compareTo((h2.getPosition()));
+            }
+        });
+        habitAdapter.notifyDataSetChanged();
     }
 }

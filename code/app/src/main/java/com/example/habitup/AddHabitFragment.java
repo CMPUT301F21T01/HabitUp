@@ -194,6 +194,8 @@ public class AddHabitFragment extends DialogFragment {
                             position = 0;
                         else
                             position = HabitActivity.habitAdapter.getCount();
+                        // if anything is null: toast "need to fill stuff out first"
+                        // else:
                         listener.onSavePressedAdd(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress, type, position));
                     }
                 }).create();

@@ -104,7 +104,7 @@ public class ViewHabitEventTest {
         assertTrue(solo.searchText("It's a beautiful day"));
         // Back to the HabitEventList and try check again
         solo.clickOnView(solo.getView(R.id.habit_event_back_button));
-        assertTrue(solo.searchText("It's a beautiful"));
+        assertTrue(solo.searchText("It's a beautiful day"));
     }
 }
 

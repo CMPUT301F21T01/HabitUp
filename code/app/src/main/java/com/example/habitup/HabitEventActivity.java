@@ -56,7 +56,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddHabitEve
     HabitEventInstance habitEventInstance = HabitEventInstance.getInstance("", "", null);
 
     ListView habitEventList;
-    ArrayAdapter<HabitEvent> habitEventAdapter;
+    HabitEventList habitEventAdapter;
     ArrayList<HabitEvent> habitEventDataList;
 
     String username;

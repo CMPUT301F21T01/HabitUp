@@ -83,6 +83,7 @@ public class UserSyncer {
                                 String freq      = (String) document.getData().get("frequency");
                                 String progress  = (String) document.getData().get("progress");
                                 String sType     = (String) document.getData().get("type");
+                                String pos       = (String) document.getData().get("position");
                                 if(freq == null) continue;
 
                                 ArrayList<String> frequency =
@@ -90,12 +91,12 @@ public class UserSyncer {
 
                                 Boolean type = Boolean.parseBoolean(sType);
                                 int progressInt = AddHabitFragment.setProgress(startDate, endDate);
-
+                                int position = Integer.parseInt(pos);
 
                                 // Add to our user's habits
                                 instance.user.addHabit(new Habit(
                                         name, startDate, endDate,
-                                        frequency, reason, progressInt, type));
+                                        frequency, reason, progressInt, type, position));
                             }
 
                             firebaseCallback.onCallback();
@@ -182,6 +183,7 @@ public class UserSyncer {
         data.put("reason", habit.getReason());
         data.put("progress", habit.getProgress().toString());
         data.put("type", habit.getType().toString());
+        data.put("position", habit.getPosition().toString());
 
         // Add habit to User's habitList collection in Firestore
         instance.habitsReference.document(habit.getTitle())
@@ -226,6 +228,7 @@ public class UserSyncer {
         updateData.put("reason", habit.getReason());
         updateData.put("progress", habit.getProgress().toString());
         updateData.put("type", habit.getType().toString());
+        updateData.put("position", habit.getPosition().toString());
 
         if(oldName == habit.getTitle()) {
             // Update the document

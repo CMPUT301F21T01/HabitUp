@@ -132,6 +132,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
                 syncer.syncHabits(new UserSyncer.FirebaseCallback() {
                     @Override
                     public void onCallback() {
+                        // I think this is where we need to sort the habitadapter / habitlist by a habit's position
                         habitAdapter.notifyDataSetChanged();
                     }
                 });
@@ -195,6 +196,8 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             habitAdapter.insert(habit, position - 1);
         }
         habitAdapter.notifyDataSetChanged();
+        updateHabitsPosition();
+        syncer.editHabit(habit.getTitle(), habit);
     }
 
     public static void OnDownButtonClick(int position, Habit habit){
@@ -203,5 +206,14 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
             habitAdapter.insert(habit, position + 1);
         }
         habitAdapter.notifyDataSetChanged();
+        updateHabitsPosition();
+        syncer.editHabit(habit.getTitle(), habit);
+    }
+
+    public static void updateHabitsPosition(){
+        for(int i = 0; i < habitAdapter.getCount(); i++) {
+            Habit currentHabit = habitAdapter.getItem(i);
+            currentHabit.setPosition(i);
+        }
     }
 }

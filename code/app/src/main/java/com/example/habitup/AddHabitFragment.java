@@ -45,7 +45,7 @@ public class AddHabitFragment extends DialogFragment {
     private Boolean type;
     private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck, typeCheck;
     private ArrayList<String> daysSelected;
-    private int newProgress;
+    private int newProgress, position;
     private OnFragmentInteractionListener listener;
 
     public interface OnFragmentInteractionListener {
@@ -190,7 +190,11 @@ public class AddHabitFragment extends DialogFragment {
                         String startDate = startText.getText().toString();
                         String endDate = endText.getText().toString();
                         newProgress = setProgress(startDate, endDate);
-                        listener.onSavePressedAdd(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress, type));
+                        if (HabitActivity.habitAdapter.getCount() == 0)
+                            position = 0;
+                        else
+                            position = HabitActivity.habitAdapter.getCount();
+                        listener.onSavePressedAdd(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress, type, position));
                     }
                 }).create();
     }

@@ -17,6 +17,7 @@ public class Habit implements Serializable {
     private String reason;
     private Integer progress;
     private Boolean type;
+    private Integer position;
     //alex and vivian add your habit event variable here
     //alex: didn't have too...
 
@@ -29,7 +30,7 @@ public class Habit implements Serializable {
      * @param reason the user's reason for completing the habit
      * @param progress the user's progress over the the entire time they are completeing the habit
      */
-    public Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Integer progress, Boolean type){
+    public Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Integer progress, Boolean type, Integer position){
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -37,6 +38,7 @@ public class Habit implements Serializable {
         this.reason = reason;
         this.progress = progress;
         this.type = type;
+        this.position = position;
     }
 
     /**
@@ -96,6 +98,14 @@ public class Habit implements Serializable {
     }
 
     /**
+     * Return the position of calling habit.
+     * @return position (integer)
+     */
+    public Integer getPosition() {
+        return position;
+    }
+
+    /**
      * Sets the title of calling habit.
      * @param title
      */
@@ -149,5 +159,13 @@ public class Habit implements Serializable {
      */
     public void setType(Boolean type){
         this.type = type;
+    }
+
+    /**
+     * Sets the position of calling habit.
+     * @param position
+     */
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 }

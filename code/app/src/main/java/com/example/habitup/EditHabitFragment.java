@@ -38,7 +38,7 @@ public class EditHabitFragment extends DialogFragment {
     private Boolean type;
     private CheckBox uCheck, mCheck, tCheck, wCheck, rCheck, fCheck, sCheck, typeCheck;
     private ArrayList<String> daysSelected;
-    private int newProgress;
+    private int newProgress, position;
     private EditHabitFragment.OnFragmentInteractionListener listener;
 
     public interface OnFragmentInteractionListener {
@@ -97,6 +97,7 @@ public class EditHabitFragment extends DialogFragment {
         endText.setText(habit.getEndDate());
         daysSelected = habit.getFrequency();
         type = habit.getType();
+        position = habit.getPosition();
 
         // Getting the state of all the checkboxes for a habit:
         checkBoxInit(daysSelected);
@@ -203,9 +204,8 @@ public class EditHabitFragment extends DialogFragment {
                         String newReason = reason.getText().toString();
                         String startDate = startText.getText().toString();
                         String endDate = endText.getText().toString();
-                        //setProgress(startDate, endDate);
                         newProgress = AddHabitFragment.setProgress(startDate, endDate);
-                        listener.onSavePressedEdit(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress, type), pos);
+                        listener.onSavePressedEdit(new Habit(newTitle, startDate, endDate, daysSelected, newReason, newProgress, type, position), pos);
                     }
                 }).create();
     }

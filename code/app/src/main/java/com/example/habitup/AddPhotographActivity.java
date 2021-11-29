@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
  * AddPhotograph class by Vivian
  * This is an activity that handles adding photograph from camera or gallery, and display ths image on screen
  * Reference: https://newbedev.com/java-android-take-photo-and-display-in-imageview-code-example, https://www.py4u.net/discuss/624180
+ * Issues: None
  */
 public class AddPhotographActivity extends Activity
 {
@@ -35,6 +36,7 @@ public class AddPhotographActivity extends Activity
 
     /**
      * This initializes the creation of the AddPhotograph activity
+     * It as well sets the OnClickListeners for all buttons within the activity
      * @param savedInstanceState
      * bundle that stores & passes data among activities
      */

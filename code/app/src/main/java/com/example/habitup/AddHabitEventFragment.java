@@ -19,9 +19,11 @@ import androidx.fragment.app.DialogFragment;
 /**
  * AddHabitEventFragment class by Vivian
  * This is a fragment that allows the user to add a habit event
+ * Issues: None
  */
 
 public class AddHabitEventFragment extends DialogFragment {
+
 
     private EditText addReflections;
     private Button addPhoto;
@@ -93,7 +95,7 @@ public class AddHabitEventFragment extends DialogFragment {
             public void onClick(View view) {
                 Intent photoIntent = new Intent(AddHabitEventFragment.this.getActivity(), AddPhotographActivity.class);
                 startActivity(photoIntent);
-                // photo = (Bitmap) photoIntent.getExtras().get("habit_event_photo");;
+
             }
         });
 

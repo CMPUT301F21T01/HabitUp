@@ -33,6 +33,7 @@ import androidmads.library.qrgenearator.QRGEncoder;
 /**
  * GenerateQRHabitEventFragment class
  * This is a fragment that generates a QR for a habitEvent
+ * Issues: None
  */
 public class GenerateQRHabitEventFragment extends DialogFragment {
 
@@ -74,7 +75,7 @@ public class GenerateQRHabitEventFragment extends DialogFragment {
 
     /**
      * This initializes the creation of the GenerateQR fragment
-     * @param savedInstanceState
+     * @param savedInstanceState bundle that stores & passes data among activities
      */
     @NonNull
     @Override

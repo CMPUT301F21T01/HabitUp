@@ -22,9 +22,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * HabitEventList acts as HabitActivity's adapter as it is used to display each habit's content
+ * HabitList acts as HabitActivity's adapter as it is used to display each habit's content
  * in the habit's list in HabitActivity.
- * Known Issues: None so far...
  */
 public class HabitList extends ArrayAdapter<Habit>{
 
@@ -37,14 +36,6 @@ public class HabitList extends ArrayAdapter<Habit>{
         this.context = context;
     }
 
-    /**
-     * The getView loads information into the display view content from each Habit
-     * and tests to see if any habit is due today.
-     * @param position
-     * @param convertView
-     * @param parent
-     * @return
-     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -70,6 +61,7 @@ public class HabitList extends ArrayAdapter<Habit>{
         // changing bg color based on if habit is due today:
         setColor(habit, view);
 
+        // Up button listener:
         upButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,7 +69,7 @@ public class HabitList extends ArrayAdapter<Habit>{
             }
         });
 
-
+        // Down button listener:
         downButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,6 +81,11 @@ public class HabitList extends ArrayAdapter<Habit>{
 
     }
 
+    /**
+     * This method changes the background color of a habit in the listview if the habit is due today.
+     * @param habit the habit that is due today
+     * @param view the listview's content's view
+     */
     private void setColor(Habit habit, View view){
         Calendar calendar = Calendar.getInstance();
         String day = LocalDate.now().getDayOfWeek().name();

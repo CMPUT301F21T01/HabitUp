@@ -15,7 +15,6 @@ import java.util.ArrayList;
 /**
  * This class manages view_habit.xml, or the screen where you see a selected habit from the listview in HabitActivity.
  * It displays all of the selected habit's information and manages the edit habit button and the delete habit button.
- * Issues: None so far...
  */
 public class ViewHabitActivity extends AppCompatActivity implements EditHabitFragment.OnFragmentInteractionListener {
     // Initialize variables:

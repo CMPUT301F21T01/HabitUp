@@ -29,7 +29,6 @@ import java.util.Locale;
  * This class is a a dialog fragment that handles the UI and information for when
  * a user wants to edit a habit.
  * It displays add_habit_fragment_layout.xml.
- * Issues: None so far...
  */
 public class EditHabitFragment extends DialogFragment {
     // Initialize variables:
@@ -266,42 +265,5 @@ public class EditHabitFragment extends DialogFragment {
                 }
             }
         }
-    }
-
-    /**
-     * This method calculates and sets the progress for a habit.
-     * @param startString the starting date for a habit
-     * @param endString the ending date for a habit
-     */
-    public void setProgress(String startString, String endString){
-        Date sDate = new Date();
-        Date eDate = new Date();
-        Calendar calendar = Calendar.getInstance();
-
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        try{
-            sDate = format.parse(startString);
-            eDate = format.parse(endString);
-        } catch (ParseException e){
-            e.printStackTrace();
-        }
-
-        long current = calendar.getTimeInMillis();
-        long difference = eDate.getTime() - sDate.getTime();
-        long currentDifference = current - sDate.getTime();
-
-        float progress;
-        if(difference == 0) {
-            progress = 100;
-        } else {
-            progress = (float) currentDifference / difference * 100;
-            if (progress > 100) {
-                progress = 100;
-            }
-            if (progress < 0) {
-                progress = 0;
-            }
-        }
-        newProgress = ((int) progress);
     }
 }

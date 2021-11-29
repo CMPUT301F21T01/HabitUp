@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -77,7 +78,7 @@ public class ViewProfile extends AppCompatActivity {
 
         //viewingHabitNameListAdapter = new ArrayAdapter<String>(this, R.layout.view_profile_content, viewingHabitNameList);
         //viewingHabitsListView.setAdapter(viewingHabitNameListAdapter);
-        viewingHabitAdapter = new HabitList(this, viewingUser.getHabits());
+        viewingHabitAdapter = new HabitListForProfile(this, viewingUser.getHabits());
         viewingHabitsListView.setAdapter(viewingHabitAdapter);
         //unpacks the searched user's habits from its collection in the database so the habits can be displayed
         collRefSearchedUserHabits.get()
@@ -124,7 +125,17 @@ public class ViewProfile extends AppCompatActivity {
                             viewingHabitAdapter.notifyDataSetChanged();
                             viewingHabitsListView.setVisibility(View.VISIBLE);
                         }
+                        else
+                        {
+                            Context context = getApplicationContext();
+                            CharSequence text = "This user does not have any habits yet. Encourage them to habit it all up on HabitUp!";
+                            int duration = Toast.LENGTH_LONG;
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+                        }
                     }
+
+
 
 
                 });

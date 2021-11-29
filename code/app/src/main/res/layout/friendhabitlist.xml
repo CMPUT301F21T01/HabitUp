@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#2B4470"
+    android:orientation="horizontal"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginBottom="30dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/habit_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="14dp"
+            android:layout_toStartOf="@+id/progress_bar"
+            android:padding="20dp"
+            android:text="Habit Name"
+            android:textColor="#FBFBFB"
+            android:textSize="30sp">
+
+        </TextView>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="85dp"
+            android:layout_height="81dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="19dp"
+            android:background="@drawable/circle_shape"
+            android:progress="50"
+            android:progressDrawable="@drawable/circle_progress_bar"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/progress_text"
+            android:layout_width="52dp"
+            android:layout_height="29dp"
+            android:layout_alignStart="@+id/progress_bar"
+            android:layout_alignEnd="@+id/progress_bar"
+            android:layout_alignBottom="@+id/progress_bar"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="19dp"
+            android:text="75%"
+            android:textAlignment="center"
+            android:textColor="#34DECD"
+            android:textSize="20sp" />
+
+        <!--        <Button
+                    android:id="@+id/button_up"
+                    android:layout_width="41dp"
+                    android:layout_height="37dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="5dp"
+                    android:text="+" />
+
+                <Button
+                    android:id="@+id/button_down"
+                    android:layout_width="41dp"
+                    android:layout_height="37dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="43dp"
+                    android:text="-" /> -->
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

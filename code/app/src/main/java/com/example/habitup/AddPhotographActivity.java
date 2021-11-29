@@ -31,7 +31,7 @@ public class AddPhotographActivity extends Activity
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
     private Bitmap selectedPhoto;
-    HabitEventInstance habitEventInstance;
+    private HabitEventInstance habitEventInstance;
 
     /**
      * This initializes the creation of the AddPhotograph activity

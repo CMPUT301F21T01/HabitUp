@@ -23,7 +23,6 @@ import java.text.DecimalFormat;
  * This is an activity that displays a Google map with a marker (pin) to indicate a particular location.
  * Reference: https://developers.google.com/maps/documentation/android-sdk/map-with-marker
  */
-// [START maps_marker_on_map_ready]
 public class AddLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private LatLng location = new LatLng(53.5232, -113.5263);

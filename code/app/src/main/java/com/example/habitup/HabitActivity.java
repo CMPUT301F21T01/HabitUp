@@ -32,7 +32,7 @@ public class HabitActivity extends AppCompatActivity implements AddHabitFragment
     TextView userTitle;
     ListView habitList;
 
-    public static ArrayAdapter<Habit> habitAdapter;
+    public static HabitList habitAdapter;
     public static UserSyncer syncer;
     public static User mainUser;
 

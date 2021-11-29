@@ -19,7 +19,6 @@ import androidx.fragment.app.DialogFragment;
 /**
  * EditHabitEventFragment class by Vivian
  * This is a fragment that allows the user to edit a habit event
- * Issues: Need connection to the database
  */
 
 public class EditHabitEventFragment extends DialogFragment {
@@ -44,6 +43,7 @@ public class EditHabitEventFragment extends DialogFragment {
     /**
      * This is called when a fragment is first attached to its context.
      * @param context
+     * the context of current activity
      */
     @Override
     public void onAttach(Context context) {
@@ -61,6 +61,7 @@ public class EditHabitEventFragment extends DialogFragment {
     /**
      * This initializes the creation of the EditHabitEvent fragment
      * @param savedInstanceState
+     * bundle that stores the data of current activity
      */
     @NonNull
     @Override

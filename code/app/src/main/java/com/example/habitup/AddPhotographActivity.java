@@ -22,7 +22,6 @@ import androidx.annotation.NonNull;
  * AddPhotograph class by Vivian
  * This is an activity that handles adding photograph from camera or gallery, and display ths image on screen
  * Reference: https://newbedev.com/java-android-take-photo-and-display-in-imageview-code-example, https://www.py4u.net/discuss/624180
- * Issues: None so far
  */
 public class AddPhotographActivity extends Activity
 {
@@ -37,6 +36,7 @@ public class AddPhotographActivity extends Activity
     /**
      * This initializes the creation of the AddPhotograph activity
      * @param savedInstanceState
+     * bundle that stores & passes data among activities
      */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -101,8 +101,11 @@ public class AddPhotographActivity extends Activity
      * This requests camera permission from the user.
      * If permission is granted, open the camera.
      * @param requestCode
+     * request code
      * @param permissions
+     * permission text
      * @param grantResults
+     * result of requesting for permission
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
@@ -127,8 +130,11 @@ public class AddPhotographActivity extends Activity
      * This handles the activity result from the camera or gallery activity
      * If an OK result is returned, get the selected image and display it on screen
      * @param requestCode
+     * request code for camera permission
      * @param resultCode
+     * request code for gallery permission
      * @param data
+     * the current intent/activity
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -150,10 +156,8 @@ public class AddPhotographActivity extends Activity
                 selectedPhoto = bitmap;
                 imageView.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }

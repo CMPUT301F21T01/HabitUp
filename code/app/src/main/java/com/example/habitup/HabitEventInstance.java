@@ -5,9 +5,6 @@ import android.graphics.Bitmap;
 /**
  * HabitEventInstance class by Vivian
  * This is a class that encapsulate a HabitEvent and expose it as a singleton
- * Reference to: https://eclass.srv.ualberta.ca/mod/forum/discuss.php?d=1791757#p4711112
- * Author: Alexandru Ianta - Friday, 17 September 2021, 4:52 PM
- * Issues: None so far
  */
 
 public class HabitEventInstance {

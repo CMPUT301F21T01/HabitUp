@@ -26,7 +26,6 @@ import java.io.ByteArrayOutputStream;
 /**
  * ViewHabitEventActivity class by Vivian
  * This is an activity that allows the user to view a habit event
- * Issues: None so far
  */
 
 public class ViewHabitEventActivity extends AppCompatActivity implements EditHabitEventFragment.OnFragmentInteractionListener {
@@ -40,6 +39,7 @@ public class ViewHabitEventActivity extends AppCompatActivity implements EditHab
     /**
      * This initializes the creation of the ViewHabitEventActivity
      * @param savedInstanceState
+     * bundle that stores & passes data among activities
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +107,7 @@ public class ViewHabitEventActivity extends AppCompatActivity implements EditHab
     /**
      * This handles when ok of the EditHabitEventFragment is pressed
      * @param habitEvent
-     *    This is the habit event that has been modified
+     * the habit event that has been modified
      */
     public void onEditOkPressed(HabitEvent habitEvent) {
 

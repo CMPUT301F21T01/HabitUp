@@ -53,8 +53,7 @@ public class ViewProfile extends AppCompatActivity {
         initial = findViewById(R.id.userInitial);
         //unpacks the intent from the search activity
         Bundle extras = getIntent().getExtras();
-        if (extras != null)
-        {
+        if (extras != null) {
             vName = extras.getString("name_of_user");
             vUsername = extras.getString("username_searched");
             pCurrentUser = extras.getString("name_of_main_user");
@@ -67,36 +66,32 @@ public class ViewProfile extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         CollectionReference collRefSearchedUserHabits = db.collection(vUsername).document("habits").collection("habitList");
 
-       viewingUser.setUsername(vUsername);
-       viewingUser.setName(vName);
+        viewingUser.setUsername(vUsername);
+        viewingUser.setName(vName);
 
 
         //unpacks the searched user's habits from its collection in the database so the habits can be displayed
         collRefSearchedUserHabits.get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-                {
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task)
-                    {
-                        if(task.isSuccessful())
-                        {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
                             viewingUser.clearHabits();
-                            for(QueryDocumentSnapshot document : task.getResult()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
                                 // Extract data i.e. name, reason, etc.
-                                String name      = (String) document.getData().get("name");
+                                String name = (String) document.getData().get("name");
                                 String startDate = (String) document.getData().get("start date");
-                                String endDate   = (String) document.getData().get("end date");
-                                String reason    = (String) document.getData().get("reason");
-                                String freq      = (String) document.getData().get("frequency");
-                                String progress  = (String) document.getData().get("progress");
+                                String endDate = (String) document.getData().get("end date");
+                                String reason = (String) document.getData().get("reason");
+                                String freq = (String) document.getData().get("frequency");
+                                String progress = (String) document.getData().get("progress");
                                 String position = (String) document.getData().get("position");
                                 String sType = (String) document.getData().get("type");
-                                if(freq == null) continue;
+                                if (freq == null) continue;
 
                                 ArrayList<String> frequency =
                                         new ArrayList<String>(Arrays.asList(freq.split(",")));
-                                if (position == null)
-                                {
+                                if (position == null) {
                                     position = "0";
                                 }
                                 int progressInt = Integer.parseInt(progress);
@@ -106,11 +101,10 @@ public class ViewProfile extends AppCompatActivity {
 
                                 // Add to our user's habits
 
-                                if (type = true)
-                                {
+                                if (type = true) {
                                     viewingUser.addHabit(new Habit(
-                                        name, startDate, endDate,
-                                        frequency, reason, progressInt, true, positionInt));
+                                            name, startDate, endDate,
+                                            frequency, reason, progressInt, true, positionInt));
                                     viewingHabitNameList.add(name);
                                 }
 
@@ -125,13 +119,8 @@ public class ViewProfile extends AppCompatActivity {
 
         viewingHabitNameListAdapter = new ArrayAdapter(this, R.layout.view_profile_content, viewingHabitNameList);
         viewingHabitsListView.setAdapter(viewingHabitNameListAdapter);
-       //viewingHabitAdapter = new HabitList(this, viewingUser.getHabits());
-       //viewingHabitsList.setAdapter(viewingHabitAdapter);
-
-
-
-
-
-
+        //viewingHabitAdapter = new HabitList(this, viewingUser.getHabits());
+        //viewingHabitsList.setAdapter(viewingHabitAdapter);
     }
 }
+

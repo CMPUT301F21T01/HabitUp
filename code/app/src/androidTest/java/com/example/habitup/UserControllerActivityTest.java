@@ -40,21 +40,44 @@ public class UserControllerActivityTest {
     @Test
     public void testDisplay() {
         assertTrue(solo.searchText("HabitUp"));
-        assertTrue(solo.searchText("Enter a username"));
-        assertTrue(solo.searchButton("enter"));
+        assertTrue(solo.searchText("Username"));
+        assertTrue(solo.searchText("Password"));
+        assertTrue(solo.searchButton("sign in"));
+        assertTrue(solo.searchButton("sign up"));
     }
 
     /**
-     * Tests ability to sign in as an existing user.
-     * (Non-existing user sign-in test will be implemented later, therefore this type of test
-     * does not exist yet).
+     * Tests the ability to attempt to sign in as a non-existing user.
      */
     @Test
-    public void testSignIn() {
+    public void testFailSignIn() {
         solo.waitForText("HabitUp");
-        solo.enterText((EditText)solo.getView(R.id.username), "john23");
-        solo.clickOnButton("enter");
-        solo.waitForActivity(HabitActivity.class, 2000);
+        solo.enterText((EditText)solo.getView(R.id.username), "not_a_user");
+        solo.clickOnButton("sign in");
+        solo.assertCurrentActivity("Wrong activity.", UserControllerActivity.class);
     }
 
+    /**
+     * Tests the ability to attempt to sign in as an existing user but with incorrect password.
+     */
+    @Test
+    public void testFailSignInPassword() {
+        solo.waitForText("HabitUp");
+        solo.enterText((EditText)solo.getView(R.id.username), "john23");
+        solo.enterText((EditText)solo.getView(R.id.password), "incorrect");
+        solo.clickOnButton("sign in");
+        solo.assertCurrentActivity("Wrong activity.", UserControllerActivity.class);
+    }
+
+    /**
+     * Tests the ability to sign in successfully.
+     */
+    @Test
+    public void testSuccessSignIn() {
+        solo.waitForText("HabitUp");
+        solo.enterText((EditText)solo.getView(R.id.username), "john23");
+        solo.enterText((EditText)solo.getView(R.id.password), "password");
+        solo.clickOnButton("sign in");
+        solo.waitForActivity(HabitActivity.class, 2000);
+    }
 }

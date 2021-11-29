@@ -181,6 +181,7 @@ public class UserSyncer {
         data.put("frequency", frequencyString);
         data.put("reason", habit.getReason());
         data.put("progress", habit.getProgress().toString());
+
         data.put("type", habit.getType().toString());
 
         // Add habit to User's habitList collection in Firestore
@@ -225,6 +226,7 @@ public class UserSyncer {
         updateData.put("frequency", frequencyString);
         updateData.put("reason", habit.getReason());
         updateData.put("progress", habit.getProgress().toString());
+
         updateData.put("type", habit.getType().toString());
 
         if(oldName == habit.getTitle()) {

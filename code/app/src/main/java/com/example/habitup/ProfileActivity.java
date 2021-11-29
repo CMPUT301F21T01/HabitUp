@@ -48,9 +48,12 @@ public class ProfileActivity extends AppCompatActivity{
         ArrayList<String> friendsDataList = (ArrayList<String>) getIntent().getSerializableExtra("friends");
         ArrayList<String> requestsDataList = (ArrayList<String>) getIntent().getSerializableExtra("requests");
         String name = getIntent().getStringExtra("name");
+        String username = getIntent().getStringExtra("username");
 
         // Set user initial
-        //initial.setText(name.charAt(0).toString());
+        //dynamically changes the initial in the profile picture bubble based on that of the appropriate user
+        char textForInsideBubble = String.valueOf(name).charAt(0);
+        initial.setText(String.valueOf(textForInsideBubble));
 
         friendsAdapter = new ArrayAdapter<>(this, R.layout.profile_content, friendsDataList);
         friendsList.setAdapter(friendsAdapter);
@@ -65,6 +68,8 @@ public class ProfileActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Intent requestsSwitchIntent = new Intent(v.getContext(), RequestsActivity.class);
                 requestsSwitchIntent.putExtra("requests", requestsDataList);
+                requestsSwitchIntent.putExtra("nameOfCurrentUser", name);
+                requestsSwitchIntent.putExtra("usernameOfCurrentUser", username);
                 startActivity(requestsSwitchIntent);
             }
         });

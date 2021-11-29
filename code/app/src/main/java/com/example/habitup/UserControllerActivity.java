@@ -184,4 +184,3 @@ public class UserControllerActivity extends AppCompatActivity implements SignUpF
 
 
     }
-}

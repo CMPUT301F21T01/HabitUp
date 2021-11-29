@@ -18,9 +18,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -264,5 +266,42 @@ public class EditHabitFragment extends DialogFragment {
                 }
             }
         }
+    }
+
+    /**
+     * This method calculates and sets the progress for a habit.
+     * @param startString the starting date for a habit
+     * @param endString the ending date for a habit
+     */
+    public void setProgress(String startString, String endString){
+        Date sDate = new Date();
+        Date eDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        try{
+            sDate = format.parse(startString);
+            eDate = format.parse(endString);
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
+
+        long current = calendar.getTimeInMillis();
+        long difference = eDate.getTime() - sDate.getTime();
+        long currentDifference = current - sDate.getTime();
+
+        float progress;
+        if(difference == 0) {
+            progress = 100;
+        } else {
+            progress = (float) currentDifference / difference * 100;
+            if (progress > 100) {
+                progress = 100;
+            }
+            if (progress < 0) {
+                progress = 0;
+            }
+        }
+        newProgress = ((int) progress);
     }
 }

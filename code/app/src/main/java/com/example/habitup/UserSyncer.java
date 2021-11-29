@@ -182,6 +182,7 @@ public class UserSyncer {
         data.put("frequency", frequencyString);
         data.put("reason", habit.getReason());
         data.put("progress", habit.getProgress().toString());
+
         data.put("type", habit.getType().toString());
         data.put("position", habit.getPosition().toString());
 
@@ -227,6 +228,7 @@ public class UserSyncer {
         updateData.put("frequency", frequencyString);
         updateData.put("reason", habit.getReason());
         updateData.put("progress", habit.getProgress().toString());
+
         updateData.put("type", habit.getType().toString());
         updateData.put("position", habit.getPosition().toString());
 

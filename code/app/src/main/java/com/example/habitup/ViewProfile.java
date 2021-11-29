@@ -89,6 +89,7 @@ public class ViewProfile extends AppCompatActivity {
                                 String reason    = (String) document.getData().get("reason");
                                 String freq      = (String) document.getData().get("frequency");
                                 String progress  = (String) document.getData().get("progress");
+                                String position = (String) document.getData().get("position");
                                 String sType = (String) document.getData().get("type");
                                 if(freq == null) continue;
 
@@ -96,6 +97,7 @@ public class ViewProfile extends AppCompatActivity {
                                         new ArrayList<String>(Arrays.asList(freq.split(",")));
 
                                 int progressInt = Integer.parseInt(progress);
+                                int positionInt = Integer.parseInt(position);
                                 Boolean.parseBoolean(sType);
                                 Boolean type;
 
@@ -105,7 +107,7 @@ public class ViewProfile extends AppCompatActivity {
                                 {
                                     viewingUser.addHabit(new Habit(
                                         name, startDate, endDate,
-                                        frequency, reason, progressInt, type));
+                                        frequency, reason, progressInt, type, positionInt));
                                     viewingHabitNameList.add(name);
                                 }
 

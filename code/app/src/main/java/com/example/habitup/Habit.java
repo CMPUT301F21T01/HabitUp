@@ -22,16 +22,17 @@ public class Habit implements Serializable {
 
     /**
      * public constructor for Habit.
-     * @param title name of habit
+     *
+     * @param title     name of habit
      * @param startDate starting date of habit
-     * @param endDate ending date of habit
+     * @param endDate   ending date of habit
      * @param frequency how many times a week the habit occurs
-     * @param reason the user's reason for completing the habit
-     * @param progress the user's progress over the the entire time they are completing the habit
-     * @param type the type of habit shows whether the habit is private or public. Type is set to true for private and false for public
-     * @param position the position of habit in the habitlist
+     * @param reason    the user's reason for completing the habit
+     * @param progress  the user's progress over the the entire time they are completing the habit
+     * @param type      the type of habit shows whether the habit is private or public. Type is set to true for private and false for public
+     * @param position  the position of habit in the habitlist
      */
-    public Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Integer progress, Boolean type, Integer position){
+    public Habit(String title, String startDate, String endDate, ArrayList<String> frequency, String reason, Integer progress, Boolean type, Integer position) {
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -44,6 +45,7 @@ public class Habit implements Serializable {
 
     /**
      * Returns the title of of calling habit.
+     *
      * @return title (String)
      */
     public String getTitle() {
@@ -52,6 +54,7 @@ public class Habit implements Serializable {
 
     /**
      * Returns the start date of of calling habit.
+     *
      * @return startDate (String)
      */
     public String getStartDate() {
@@ -60,6 +63,7 @@ public class Habit implements Serializable {
 
     /**
      * Returns the end date of calling habit.
+     *
      * @return endDate (String)
      */
     public String getEndDate() {
@@ -68,6 +72,7 @@ public class Habit implements Serializable {
 
     /**
      * Returns the frequency of calling habit.
+     *
      * @return frequency (ArrayList of strings representing frequencies)
      */
     public ArrayList<String> getFrequency() {
@@ -76,30 +81,34 @@ public class Habit implements Serializable {
 
     /**
      * Returns the reason of calling habit.
+     *
      * @return reason (String)
      */
-    public String getReason(){
+    public String getReason() {
         return reason;
     }
 
     /**
      * Returns the progress of calling habit.
+     *
      * @return progress (int)
      */
-    public Integer getProgress(){
+    public Integer getProgress() {
         return progress;
     }
 
     /**
      * Return the type of calling habit.
+     *
      * @return type (boolean)
      */
-    public Boolean getType(){
+    public Boolean getType() {
         return type;
     }
 
     /**
      * Return the position of calling habit.
+     *
      * @return position (integer)
      */
     public Integer getPosition() {
@@ -108,6 +117,7 @@ public class Habit implements Serializable {
 
     /**
      * Sets the title of calling habit.
+     *
      * @param title name of habit
      */
     public void setTitle(String title) {
@@ -116,6 +126,7 @@ public class Habit implements Serializable {
 
     /**
      * Sets the start date of calling habit.
+     *
      * @param startDate starting date of habit
      */
     public void setStartDate(String startDate) {
@@ -124,6 +135,7 @@ public class Habit implements Serializable {
 
     /**
      * Sets the end date of calling habit.
+     *
      * @param endDate ending date of habit
      */
     public void setEndDate(String endDate) {
@@ -132,6 +144,7 @@ public class Habit implements Serializable {
 
     /**
      * Sets the frequency of calling habit.
+     *
      * @param frequency how many times a week the habit occurs
      */
     public void setFrequency(ArrayList<String> frequency) {
@@ -140,33 +153,41 @@ public class Habit implements Serializable {
 
     /**
      * Sets the reason of calling habit.
+     *
      * @param reason the user's reason for completing the habit
      */
-    public void setReason(String reason){
+    public void setReason(String reason) {
         this.reason = reason;
     }
 
     /**
      * Sets the progress of calling habit.
+     *
      * @param progress the user's progress over the the entire time they are completing the habit
      */
-    public void setProgress(Integer progress){
+    public void setProgress(Integer progress) {
         this.progress = progress;
     }
 
     /**
      * Sets the type of calling habit.
+     *
      * @param type the type of habit shows whether the habit is private or public. Type is set to true for private and false for public
      */
-    public void setType(Boolean type){
+    public void setType(Boolean type) {
         this.type = type;
     }
 
     /**
      * Sets the position of calling habit.
+     *
      * @param position the position of habit in the habitlist
      */
     public void setPosition(Integer position) {
         this.position = position;
     }
+}
+
+
+
 

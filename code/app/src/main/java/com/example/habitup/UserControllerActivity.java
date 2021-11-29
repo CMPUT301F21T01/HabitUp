@@ -43,17 +43,18 @@ public class UserControllerActivity extends AppCompatActivity implements SignUpF
      * Initializes view variables and saves the username which was entered. This username
      * is then passed through an intent to HabitActivity which pulls the appropriate user data
      * from Firestore.
+     *
      * @see HabitActivity
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_controller);
 
         // Variable initializations
         final String[] signInfo = new String[2];
-        enterButton   = findViewById(R.id.enter_button);
-        signUpButton  = findViewById(R.id.signup_button);
+        enterButton = findViewById(R.id.enter_button);
+        signUpButton = findViewById(R.id.signup_button);
         usernameField = findViewById(R.id.username);
         passwordField = findViewById(R.id.password);
 
@@ -71,7 +72,7 @@ public class UserControllerActivity extends AppCompatActivity implements SignUpF
             public void onClick(View view) {
                 signInfo[0] = usernameField.getText().toString();
                 signInfo[1] = passwordField.getText().toString();
-                if(signInfo[1].length() == 0) {
+                if (signInfo[1].length() == 0) {
                     Toast.makeText(getApplication().getBaseContext(),
                             "Password must be provided.",
                             Toast.LENGTH_LONG).show();
@@ -81,10 +82,10 @@ public class UserControllerActivity extends AppCompatActivity implements SignUpF
                 authRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if(task.isSuccessful()) {
+                        if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            if(document.exists()) {
-                                if(signInfo[1].compareTo(document.getString("password")) == 0) {
+                            if (document.exists()) {
+                                if (signInfo[1].compareTo(document.getString("password")) == 0) {
                                     // Pass username to HabitActivity intent and start activity
                                     Intent intent = new Intent(view.getContext(), HabitActivity.class);
                                     intent.putExtra(Intent.EXTRA_TEXT, signInfo[0]);
@@ -103,8 +104,7 @@ public class UserControllerActivity extends AppCompatActivity implements SignUpF
                                         }
                                     }, 3800);
                                 }
-                            }
-                            else {
+                            } else {
                                 // Display that user does not exist
                                 usernameField.setBackgroundResource(R.drawable.sign_in_border_error);
                                 Toast.makeText(getApplication().getBaseContext(),
@@ -132,6 +132,7 @@ public class UserControllerActivity extends AppCompatActivity implements SignUpF
      * This method is called when a user attempts to create a new account from SignUpFragment.
      * It assures that a user with the provided username does not already exist, otherwise it
      * adds said user to the database with the provided password and name.
+     *
      * @param username of new user
      * @param password of new user
      * @param name     of new user
@@ -144,18 +145,17 @@ public class UserControllerActivity extends AppCompatActivity implements SignUpF
         newUser[2] = name;
 
         // Create new user (as long as username is not already taken)
-        DocumentReference authRef   = db.collection(newUser[0]).document("auth");
+        DocumentReference authRef = db.collection(newUser[0]).document("auth");
         authRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()) {
+                if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    if(document.exists()) {
+                    if (document.exists()) {
                         Toast.makeText(getApplication().getBaseContext(),
                                 "Username taken. Please pick another username.",
                                 Toast.LENGTH_LONG).show();
-                    }
-                    else {
+                    } else {
                         // Create User
                         HashMap<String, String> data = new HashMap<>();
                         data.put("name", newUser[2]);
@@ -184,3 +184,4 @@ public class UserControllerActivity extends AppCompatActivity implements SignUpF
 
 
     }
+}

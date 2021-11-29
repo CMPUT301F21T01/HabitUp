@@ -49,7 +49,7 @@ public class SignUpFragment extends DialogFragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.sign_up_fragment_layout, null);
         username = view.findViewById(R.id.usernameField);
         password = view.findViewById(R.id.passwordField);
-        name     = view.findViewById(R.id.nameField);
+        name = view.findViewById(R.id.nameField);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
@@ -61,9 +61,10 @@ public class SignUpFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         String newUsername = username.getText().toString();
                         String newPassword = password.getText().toString();
-                        String newName     = name.getText().toString();
+                        String newName = name.getText().toString();
                         listener.onConfirmPressed(newUsername, newPassword, newName);
                     }
                 }).create();
     }
+}
 
